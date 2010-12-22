@@ -53,10 +53,12 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 		{
 			var result = new InformationResponse();
 			
-			var assembly = ModuleDefinition.ReadModule(request.Assembly);
-			var allTypes = assembly.GetAllTypes().Where(t => t.IsClass || t.IsEnum || t.IsInterface)
-			                          .Where(t => !t.Name.StartsWith("<>c__DisplayClass")) // remove delegate compiler hack classes
-			                          .Where(t => t.Name != "<Module>").ToList();
+			var assembly = ModuleDefinition.ReadModule(request.Assemblies[0]);
+			var allTypes = request.Assemblies.Select(a => ModuleDefinition.ReadModule(a))
+				.Select(a => a.GetAllTypes().Where(t => t.IsClass || t.IsEnum || t.IsInterface)
+									  .Where(t => !t.Name.StartsWith("<>c__DisplayClass")) // remove delegate compiler hack classes
+									  .Where(t => t.Name != "<Module>"))
+				.SelectMany(t => t).ToList();
 			result.Types.AddRange(allTypes.Select(t => GenerateEntity(t)));
 			result.TypesInheritance.AddRange(allTypes.Where(t => t.BaseType != null).Select(t => GenerateEntityRel(t)));
 			result.TypesImplementing.AddRange(allTypes.Where(t => t.Interfaces.Any())

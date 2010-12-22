@@ -186,6 +186,12 @@ namespace Landman.Rascal.CLRInfo.Protobuf
       [global::ProtoBuf.ProtoEnum(Name=@"Enumeration", Value=5)]
       Enumeration = 5,
             
+      [global::ProtoBuf.ProtoEnum(Name=@"AnonymousClass", Value=6)]
+      AnonymousClass = 6,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"DisplayClass", Value=7)]
+      DisplayClass = 7,
+            
       [global::ProtoBuf.ProtoEnum(Name=@"Method", Value=10)]
       Method = 10,
             
@@ -341,18 +347,11 @@ namespace Landman.Rascal.CLRInfo.Protobuf
   {
     public InformationRequest() {}
     
-    private string _Assembly;
-    [global::ProtoBuf.ProtoMember(1, IsRequired = true, Name=@"Assembly", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public string Assembly
+    private readonly global::System.Collections.Generic.List<string> _Assemblies = new global::System.Collections.Generic.List<string>();
+    [global::ProtoBuf.ProtoMember(1, Name=@"Assemblies", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    public global::System.Collections.Generic.List<string> Assemblies
     {
-      get { return _Assembly; }
-      set { _Assembly = value; }
-    }
-    private readonly global::System.Collections.Generic.List<string> _RelatedAssemblies = new global::System.Collections.Generic.List<string>();
-    [global::ProtoBuf.ProtoMember(2, Name=@"RelatedAssemblies", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public global::System.Collections.Generic.List<string> RelatedAssemblies
-    {
-      get { return _RelatedAssemblies; }
+      get { return _Assemblies; }
     }
   
     private global::ProtoBuf.IExtension extensionObject;
@@ -372,32 +371,39 @@ namespace Landman.Rascal.CLRInfo.Protobuf
       get { return _Types; }
     }
   
+    private readonly global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.Entity> _Methods = new global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.Entity>();
+    [global::ProtoBuf.ProtoMember(2, Name=@"Methods", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    public global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.Entity> Methods
+    {
+      get { return _Methods; }
+    }
+  
     private readonly global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.EntityRel> _TypesInheritance = new global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.EntityRel>();
-    [global::ProtoBuf.ProtoMember(2, Name=@"TypesInheritance", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::ProtoBuf.ProtoMember(10, Name=@"TypesInheritance", DataFormat = global::ProtoBuf.DataFormat.Default)]
     public global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.EntityRel> TypesInheritance
     {
       get { return _TypesInheritance; }
     }
   
-    private readonly global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.ModifierRel> _Modifiers = new global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.ModifierRel>();
-    [global::ProtoBuf.ProtoMember(3, Name=@"Modifiers", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.ModifierRel> Modifiers
-    {
-      get { return _Modifiers; }
-    }
-		
     private readonly global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.EntityRel> _TypesImplementing = new global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.EntityRel>();
-    [global::ProtoBuf.ProtoMember(4, Name=@"TypesImplementing", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::ProtoBuf.ProtoMember(11, Name=@"TypesImplementing", DataFormat = global::ProtoBuf.DataFormat.Default)]
     public global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.EntityRel> TypesImplementing
     {
       get { return _TypesImplementing; }
     }
-
+  
     private readonly global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.EntityRel> _MethodCalls = new global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.EntityRel>();
-    [global::ProtoBuf.ProtoMember(5, Name=@"MethodCalls", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::ProtoBuf.ProtoMember(20, Name=@"MethodCalls", DataFormat = global::ProtoBuf.DataFormat.Default)]
     public global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.EntityRel> MethodCalls
     {
       get { return _MethodCalls; }
+    }
+  
+    private readonly global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.ModifierRel> _Modifiers = new global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.ModifierRel>();
+    [global::ProtoBuf.ProtoMember(30, Name=@"Modifiers", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    public global::System.Collections.Generic.List<Landman.Rascal.CLRInfo.Protobuf.ModifierRel> Modifiers
+    {
+      get { return _Modifiers; }
     }
   
     private global::ProtoBuf.IExtension extensionObject;
