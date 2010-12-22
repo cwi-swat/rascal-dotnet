@@ -60,6 +60,8 @@ public class CLRInfoRascalBridge {
 	private static final Type resourceDataType;
 	private static final Type file;
 	private static final Type entityRel;
+	private static final Type method;
+	private static final Type constructor;
 
 	static {
 		 entityDataType =TF.abstractDataType(store, "Entity");
@@ -78,6 +80,9 @@ public class CLRInfoRascalBridge {
 		 typeParameter = TF.constructor(store, idDataType, "typeParameter", TF.stringType(), "name", TF.listType(constrainDataType), "constrains");
 		 enumz = TF.constructor(store, idDataType, "enum", TF.stringType(), "name");
 
+		 method = TF.constructor(store, idDataType, "method", TF.stringType(), "name", TF.listType(entity), "params", entity, "returnType");
+		 constructor = TF.constructor(store, idDataType, "constr", TF.listType(entity), "params");
+		 
 		 none = TF.constructor(store, constrainDataType, "none");
 		 isClass = TF.constructor(store, constrainDataType, "isClass");
 		 isStruct = TF.constructor(store, constrainDataType, "isStruct");
@@ -91,6 +96,7 @@ public class CLRInfoRascalBridge {
 		 store.declareAnnotation(resourceDataType, "implements", TF.relType(entity, entity));
 		 store.declareAnnotation(resourceDataType, "extends", TF.relType(entity, entity));
 		 store.declareAnnotation(resourceDataType, "calls", TF.relType(entity, entity));
+		 store.declareAnnotation(resourceDataType, "methods", TF.setType(entity));
 	}
 	
 	public CLRInfoRascalBridge(IValueFactory vf) {
@@ -111,6 +117,7 @@ public class CLRInfoRascalBridge {
 			
 			IConstructor result = (IConstructor)file.make(VF, locs.done());
 			result = result.setAnnotation("types", generateEntitySet(actualResult.getTypesList()));
+			result = result.setAnnotation("methods", generateEntitySet(actualResult.getMethodsList()));
 			result = result.setAnnotation("extends", generateEntityRel(actualResult.getTypesInheritanceList()));
 			result = result.setAnnotation("implements", generateEntityRel(actualResult.getTypesImplementingList()));
 			return result;
@@ -170,11 +177,20 @@ public class CLRInfoRascalBridge {
 			case TypeParameter:
 				currentEntity.add(createTypeParameter(currentId));
 				break;
+			case Method:
+				currentEntity.add(createMethodType(currentId));
+			case Constructor:
+				currentEntity.add(createTypeWithNameAndParameters(constructor, currentId));
 			default:
 				break;
 			}
 		}
 		return entity.make(VF, VF.list(currentEntity.toArray(new IValue[0])));
+	}
+
+	private static IValue createMethodType(Id currentId) {
+		assert(currentId.getKind() == IdKind.Method);
+		return method.make(VF, VF.string(currentId.getName()), generateEntityList(currentId.getParamsList()), generateSingleEntityArray(currentId.getReturnType())); 
 	}
 
 	private static IValue createTypeParameter(Id currentId) {
@@ -220,7 +236,7 @@ public class CLRInfoRascalBridge {
 		//ISet result = getTypes(VF.string("../../../TestProject/bin/Debug/TestProject.exe"), VF.list());
 		IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
 		
-		System.out.print(((IConstructor)result).getAnnotation("implements"));
+		System.out.print(((IConstructor)result).getAnnotation("methods"));
 	} 
 	
 	private static InformationResponse getInformationFromCLR(String... assemblies)
