@@ -223,6 +223,7 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			else 
 				methodId.ReturnType = GenerateEntity(m.ReturnType.Resolve());
 			methodId.Params.AddRange(m.Parameters.Select(p => GenerateParameter(p)));
+			result.Ids.Add(methodId);
 			return result;
 		}
 		
