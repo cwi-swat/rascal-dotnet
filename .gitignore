@@ -1,0 +1,15 @@
+.metadata
+.metadata/
+*/bin/*
+*.swp
+*.bak
+*/bin/*
+*/obj/*
+bin
+obj
+*.user
+*.vspscc
+*.cache
+*.vssscc
+*.suo
+

@@ -1,0 +1,120 @@
+package Landman.Rascal.CLRInfo.Protobuf;
+
+
+message EntityRel {
+	required Entity From = 1;
+	required Entity To = 2;
+}
+
+message ModifierRel {
+	required Entity Entity = 1;
+	required Modifier Modifier = 2;
+}
+
+message Entity {
+	repeated Id Ids= 1;
+}
+
+message Id {
+	enum IdKind {
+		Namespace = 0;
+		Class = 1;
+        GenericClass = 2;
+        Interface = 3;
+        GenericInterface = 4;
+		Enumeration  = 5;
+		AnonymousClass= 6;
+		DisplayClass = 7;
+		
+        
+        Method = 10;
+        Constructor = 11;
+        Finalizer = 12;
+        Initializer = 13;
+
+        Field = 20;
+        Property = 21;
+        Event = 22;
+        Parameter = 23;
+        Variable = 24;
+        EnumConstant = 25;
+        
+        Primitive = 30;
+        Array = 31;
+        
+        TypeParameter = 40;
+        Unkown = 41;
+        Wildcard = 42;
+	}
+
+	enum PrimitiveType {
+		Bool = 0;
+		Byte = 1;
+		Sbyte = 2;
+		Char = 3;
+		Decimal = 4;
+		Double = 5;
+		Float = 6;
+		Int = 7;
+		Uint = 8;
+		Long = 9;
+		Ulong = 10;
+		Object = 11;
+		Short = 12;
+		Ushort = 13;
+		String = 14;
+		Void = 15;
+	}
+
+
+
+	required IdKind Kind  = 1;
+
+	optional string Name = 2;
+	repeated Entity Params = 3;
+	optional Entity ReturnType = 4;
+	optional Entity Setter = 5;
+	optional Entity Getter = 6;
+	optional int32 _Id = 7;
+	optional PrimitiveType _PrimitiveType = 8;
+	optional Entity ElementType = 9;
+	repeated Constrain Constrains = 10;
+}
+
+message Constrain {
+	enum ConstrainKind {
+		None =0;
+		Entity = 1;
+		IsClass = 2;
+		IsStruct = 3;
+		HasConstructor = 4;
+	}
+	required ConstrainKind Kind = 1;
+	optional Entity ConstrainEntity = 2;
+}
+
+enum Modifier {
+	Public = 0;
+	Protected = 1;
+	Internal = 2;
+	Private = 3;
+	Static = 4;
+	Abstract = 5;
+}
+
+
+message InformationRequest {
+	repeated string Assemblies = 1;
+}
+
+message InformationResponse {
+	repeated Entity Types = 1;
+	repeated Entity Methods = 2;
+
+	repeated EntityRel TypesInheritance = 10;
+	repeated EntityRel TypesImplementing = 11;
+
+	repeated EntityRel MethodCalls = 20;
+
+	repeated ModifierRel Modifiers = 30;
+}
