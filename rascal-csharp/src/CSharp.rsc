@@ -9,7 +9,8 @@ data Id = namespace(str name)
         | class(str name, list[Entity] params)
         | interface(str name)
         | interface(str name, list[Entity] params)
-        //| anonymousClass(int nr) // C# anonymous classes are only internal 
+        | anonymousClass(int nr) // C# anonymous classes are only internal
+        | displayClass(int nr) 
         | enum(str name)
         
         | method(str name, list[Entity] params, Entity returnType)

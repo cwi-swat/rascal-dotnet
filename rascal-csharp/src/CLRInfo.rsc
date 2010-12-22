@@ -5,4 +5,4 @@ import CSharp;
 
 
 @javaClass{Landman.Rascal.CLRInfo.CLRInfoRascalBridge}
-public Resource java readCLRInfo(str assemblyName, list[str] relatedAssemblies);
+public Resource java readCLRInfo(list[str] assemblies);

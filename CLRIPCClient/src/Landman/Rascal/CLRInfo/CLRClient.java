@@ -20,7 +20,7 @@ public class CLRClient {
 		 DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		 DataInputStream inFromServer = new DataInputStream(clientSocket.getInputStream());
 		 Builder req = InformationRequest.newBuilder();
-		 req.setAssembly("/usr/lib/mono/2.0/System.dll");
+		 req.addAssemblies("/usr/lib/mono/2.0/System.dll");
 		 InformationRequest actualRequest = req.build();
 		 byte[] data = actualRequest.toByteArray();
 		 outToServer.writeInt(data.length);

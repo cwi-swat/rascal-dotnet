@@ -96,22 +96,20 @@ public class CLRInfoRascalBridge {
 	public CLRInfoRascalBridge(IValueFactory vf) {
 	}
 
-	public static IValue readCLRInfo(IString assemblyName, IList relatedAssemblies) {
+	public static IValue readCLRInfo(IList assemblyNames) {
 		try{
-			InformationResponse actualResult = null;
-			if (relatedAssemblies.isEmpty()) {
-				actualResult = getInformationFromCLR(assemblyName.getValue());
-			} 
-			else {
-				ArrayList<String> actualRelated = new ArrayList<String>();
-				for (IValue val: relatedAssemblies) {
-					if (val instanceof IString) {
-						actualRelated.add(((IString)val).getValue());
-					}
+			ArrayList<String> actualAssemblies = new ArrayList<String>();
+			IListWriter locs = VF.listWriter(TF.sourceLocationType());
+			for (IValue val: assemblyNames) {
+				if (val instanceof IString) {
+					actualAssemblies.add(((IString)val).getValue());
+					locs.append(VF.sourceLocation(((IString)val).getValue()));
 				}
-				actualResult = getInformationFromCLR(assemblyName.getValue(), actualRelated.toArray(new String[0]));
 			}
-			IConstructor result = (IConstructor)file.make(VF, VF.sourceLocation(assemblyName.getValue()));
+			
+			InformationResponse actualResult = getInformationFromCLR(actualAssemblies.toArray(new String[0]));
+			
+			IConstructor result = (IConstructor)file.make(VF, locs.done());
 			result = result.setAnnotation("types", generateEntitySet(actualResult.getTypesList()));
 			result = result.setAnnotation("extends", generateEntityRel(actualResult.getTypesInheritanceList()));
 			result = result.setAnnotation("implements", generateEntityRel(actualResult.getTypesImplementingList()));
@@ -220,22 +218,19 @@ public class CLRInfoRascalBridge {
 	
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		//ISet result = getTypes(VF.string("../../../TestProject/bin/Debug/TestProject.exe"), VF.list());
-		IValue result = readCLRInfo(VF.string("/usr/lib/mono/2.0/System.dll"), VF.list());
+		IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
 		
 		System.out.print(((IConstructor)result).getAnnotation("implements"));
 	} 
 	
-	private static InformationResponse getInformationFromCLR(String assemblyName, String... relatedAssemblies)
+	private static InformationResponse getInformationFromCLR(String... assemblies)
 			throws UnknownHostException, IOException,
 			InvalidProtocolBufferException {
 		 Socket clientSocket = new Socket("localhost", 5555);
 		 DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		 DataInputStream inFromServer = new DataInputStream(clientSocket.getInputStream());
 		 Builder req = InformationRequest.newBuilder();
-		 req.setAssembly(assemblyName);
-		 if (relatedAssemblies.length > 0) {
-			 req.addAllRelatedAssemblies(Arrays.asList(relatedAssemblies));
-		 }
+		 req.addAllAssemblies(Arrays.asList(assemblies));
 		 InformationRequest actualRequest = req.build();
 		 byte[] data = actualRequest.toByteArray();
 		 outToServer.writeInt(data.length);

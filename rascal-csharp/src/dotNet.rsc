@@ -11,9 +11,10 @@ public alias EntitySet = set[Entity];
 @doc{maps an entity to its modifiers}
 public alias ModifierRel = rel[Entity entity, Modifier modifier];
 
-data Resource = file(loc id);
+data Resource = file(list[loc] id);
 
 anno EntitySet Resource@types;
+anno EntitySet Resource@methods;
 anno EntityRel Resource@implements;
 anno EntityRel Resource@extends;  
 anno EntityRel Resource@calls; 
