@@ -53,20 +53,21 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 		{
 			var result = new InformationResponse();
 			
-			var assembly = ModuleDefinition.ReadModule(request.Assemblies[0]);
 			var allTypes = request.Assemblies.Select(a => ModuleDefinition.ReadModule(a))
-				.Select(a => a.GetAllTypes().Where(t => t.IsClass || t.IsEnum || t.IsInterface)
-									  .Where(t => !t.Name.StartsWith("<>c__DisplayClass")) // remove delegate compiler hack classes
-									  .Where(t => t.Name != "<Module>"))
-				.SelectMany(t => t).ToList();
+				.SelectMany(a => a.GetAllTypes()).Where(t => t.IsClass || t.IsEnum || t.IsInterface)
+					.Where(t => !t.Name.StartsWith("<>c__DisplayClass")) // remove delegate compiler hack classes
+					.Where(t => t.Name != "<Module>").ToList();
 			result.Types.AddRange(allTypes.Select(t => GenerateEntity(t)));
 			result.TypesInheritance.AddRange(allTypes.Where(t => t.BaseType != null).Select(t => GenerateEntityRel(t)));
 			result.TypesImplementing.AddRange(allTypes.Where(t => t.Interfaces.Any())
-			                                  .Select(t => t.Interfaces.Select(i => 
-			                                             new EntityRel { 
-															From = GenerateEntity(t),
-															To = GenerateEntity(i.Resolve())
-														})).SelectMany(e => e));
+				.SelectMany(t => t.Interfaces.Select(i => 
+					new EntityRel { 
+						From = GenerateEntity(t),
+						To = GenerateEntity(i.Resolve())
+					}))
+				);
+			result.Methods.AddRange(allTypes.SelectMany(t => t.Methods).Select(m => GenerateEntity(m)));
+			                        
 			result.MethodCalls.AddRange(allTypes.Where(t => t.Methods.Any()).SelectMany(t => t.Methods)
 			                            .Where(m => m.HasBody)
 			                            .Select(m => GenerateMethodCalls(m)).SelectMany(c => c));
