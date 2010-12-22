@@ -25,7 +25,7 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 
 		static void Main(string[] args)
 		{
-			var server = new TcpListener(IPAddress.Any, 5555);
+			var server = new TcpListener(IPAddress.Loopback, 5555);
 			server.Start();
 			while (true)
 			{
