@@ -266,16 +266,6 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			return result;
 		}
 		
-		private static int HexToInt(String hex){
-			const string hexLookup = "0123456789ABCDEF";
-			int result = 0;
-			int mult = 1;
-			foreach (var c in hex.ToUpper().ToCharArray().Reverse()) {
-				result += mult * hexLookup.IndexOf(c);
-				mult *= 16;
-			}
-			return result;
-		}
 		private static Id GetEntityType(TypeDefinition currentType)
 		{
 			Id entityId = new Id { Name = currentType.Name };
@@ -289,12 +279,12 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 				if (entityId.Name.StartsWith("<>c__DisplayClass"))
 				{
 					entityId.Kind = Id.IdKind.DisplayClass;
-					entityId._Id = HexToInt(entityId.Name.Substring("<>c__DisplayClass".Length));
+					entityId._Id = Int32.Parse(entityId.Name.Substring("<>c__DisplayClass".Length), System.Globalization.NumberStyles.HexNumber);
 				}
 				else if (entityId.Name.StartsWith("<>__AnonType"))
 				{
 					entityId.Kind = Id.IdKind.AnonymousClass;
-					entityId._Id = HexToInt(entityId.Name.Substring("<>__AnonType".Length));
+					entityId._Id = Int32.Parse(entityId.Name.Substring("<>__AnonType".Length), System.Globalization.NumberStyles.HexNumber);
 				}
 				else{
 					entityId.Kind = currentType.HasGenericParameters ? Id.IdKind.GenericClass : Id.IdKind.Class;
