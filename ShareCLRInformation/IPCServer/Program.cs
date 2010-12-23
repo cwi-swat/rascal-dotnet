@@ -1,4 +1,4 @@
-﻿//#define ignorefailures
+﻿#define ignorefailures
 using System;
 using System.Collections.Generic;
 using System.Linq;
