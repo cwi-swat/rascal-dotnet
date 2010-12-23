@@ -121,7 +121,8 @@ public str readable(Id id) {
 	} catch : ;
 	
 	switch (id) {
-		//case anonymousClass(nr): return "anonymousClass$" + "<nr>";		
+		case anonymousClass(nr): return "\<\>__anonClass" + "<nr>";		
+		case displayClass(nr): return "\<\>c__displayClass" + "<nr>";
 		case constr(params): return "constructor(" + readable(params) + ")";		
 		case initializer: return "initializer";
 		case initializer(nr): return "initializer$" + "<nr>";		

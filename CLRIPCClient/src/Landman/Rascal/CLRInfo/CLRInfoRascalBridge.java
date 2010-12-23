@@ -193,7 +193,7 @@ public class CLRInfoRascalBridge {
 				currentEntity.add(createMethodType(currentId));
 				break;
 			case Constructor:
-				currentEntity.add(createTypeWithNameAndParameters(constructor, currentId));
+				currentEntity.add(constructor.make(VF, generateEntityList(currentId.getParamsList())));
 				break;
 			default:
 				break;
