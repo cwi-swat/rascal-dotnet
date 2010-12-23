@@ -1,4 +1,4 @@
-﻿#define ignorefailures
+﻿//#define ignorefailures
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,21 +59,19 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			var allTypes = request.Assemblies.Select(a => ModuleDefinition.ReadModule(a))
 				.SelectMany(a => a.GetAllTypes()).Where(t => t.IsClass || t.IsEnum || t.IsInterface)
 					.Where(t => t.Name != "<Module>").ToList();
+#if ignorefailures
 			try {
+#endif
 			result.Types.AddRange(allTypes.Select(t => GenerateEntity(t)));
-			} catch {
-#if !ignorefailures
-				throw;
-#endif
-			}
+#if ignorefailures
+			} catch { }
 			try {
+#endif
 			result.TypesInheritance.AddRange(allTypes.Where(t => t.BaseType != null).Select(t => GenerateEntityRel(t)));
-			} catch {
-#if !ignorefailures
-				throw;
-#endif
-			}
+#if ignorefailures
+			} catch { }
 			try {
+#endif
 			result.TypesImplementing.AddRange(allTypes.Where(t => t.Interfaces.Any())
 				.SelectMany(t => t.Interfaces.Select(i => 
 					new EntityRel { 
@@ -81,27 +79,21 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 						To = GenerateEntity(i.Resolve())
 					}))
 				);
-			} catch {
-#if !ignorefailures
-				throw;
-#endif
-			}
+#if ignorefailures
+			} catch { }
 			try {
-			result.Methods.AddRange(allTypes.SelectMany(t => t.Methods).Select(m => GenerateEntity(m)));
-			} catch {
-#if !ignorefailures
-				throw;
 #endif
-			}
-			try {               
+			result.Methods.AddRange(allTypes.SelectMany(t => t.Methods).Select(m => GenerateEntity(m)));
+#if ignorefailures
+			} catch { }
+			try {
+#endif
 			result.MethodCalls.AddRange(allTypes.Where(t => t.Methods.Any()).SelectMany(t => t.Methods)
 				.Where(m => m.HasBody)
 				.SelectMany(m => GenerateMethodCalls(m)));
-			} catch {
-#if !ignorefailures
-				throw;
+#if ignorefailures
+			} catch { }
 #endif
-			}
 			return result;
 		}
 	
@@ -109,14 +101,13 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 		{
 			var currentMethod = GenerateEntity(m);
 			var result = new List<EntityRel>();
+#if ignorefailures
 			try {
+#endif
 				ILParser.Parse(m, new MethodExtractor(result, currentMethod));
-			}
-			catch {
-#if !ignorefailures
-				throw;
+#if ignorefailures
+			} catch { }
 #endif				
-			}
 			return result;
 		}
 		
@@ -238,6 +229,19 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 				param.Kind = Id.IdKind.TypeParameter;
 				AddConstrainsToParam(param, (GenericParameter)paramType);
 			}
+			else if (paramType.IsArray) {
+				param.Kind = Id.IdKind.Array;
+				if (((TypeSpecification)paramType).ElementType.IsGenericParameter)
+				{
+					param.ElementType = new Entity ();
+					param.ElementType.Ids.Add(new Id { Kind = Id.IdKind.TypeParameter, Name = ((TypeSpecification)paramType).ElementType.Name });
+					AddConstrainsToParam(param.ElementType.Ids[0], (GenericParameter)(((TypeSpecification)paramType).ElementType));
+				}
+				else
+				{
+					param.ElementType = GenerateEntity(((TypeSpecification)paramType).ElementType.Resolve());
+				}
+			}
 			else
 			{
 				param.Kind = Id.IdKind.Parameter;
@@ -261,6 +265,17 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			result.Ids.AddRange(entityList);
 			return result;
 		}
+		
+		private static int HexToInt(String hex){
+			const string hexLookup = "0123456789ABCDEF";
+			int result = 0;
+			int mult = 1;
+			foreach (var c in hex.ToUpper().ToCharArray().Reverse()) {
+				result += mult * hexLookup.IndexOf(c);
+				mult *= 16;
+			}
+			return result;
+		}
 		private static Id GetEntityType(TypeDefinition currentType)
 		{
 			Id entityId = new Id { Name = currentType.Name };
@@ -274,12 +289,12 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 				if (entityId.Name.StartsWith("<>c__DisplayClass"))
 				{
 					entityId.Kind = Id.IdKind.DisplayClass;
-					entityId._Id = Int32.Parse(entityId.Name.Substring("<>c__DisplayClass".Length));
+					entityId._Id = HexToInt(entityId.Name.Substring("<>c__DisplayClass".Length));
 				}
 				else if (entityId.Name.StartsWith("<>__AnonType"))
 				{
 					entityId.Kind = Id.IdKind.AnonymousClass;
-					entityId._Id = Int32.Parse(entityId.Name.Substring("<>__AnonType".Length));
+					entityId._Id = HexToInt(entityId.Name.Substring("<>__AnonType".Length));
 				}
 				else{
 					entityId.Kind = currentType.HasGenericParameters ? Id.IdKind.GenericClass : Id.IdKind.Class;
