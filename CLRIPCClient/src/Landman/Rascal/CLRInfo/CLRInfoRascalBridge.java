@@ -62,6 +62,8 @@ public class CLRInfoRascalBridge {
 	private static final Type entityRel;
 	private static final Type method;
 	private static final Type constructor;
+	private static final Type displayClass;
+	private static final Type anonymousClass;
 
 	static {
 		 entityDataType =TF.abstractDataType(store, "Entity");
@@ -76,6 +78,8 @@ public class CLRInfoRascalBridge {
 		 genericClazz = TF.constructor(store, idDataType, "class", TF.stringType(), "name", TF.listType(entity), "params");
 		 interfaze = TF.constructor(store, idDataType, "interface", TF.stringType(), "name");
 		 genericInterfaze = TF.constructor(store, idDataType, "interface", TF.stringType(), "name", TF.listType(entity), "params");
+		 anonymousClass = TF.constructor(store, idDataType, "anonymousClass", TF.integerType(),"nr");
+		 displayClass = TF.constructor(store, idDataType, "displayClass", TF.integerType(),"nr");
 		 
 		 typeParameter = TF.constructor(store, idDataType, "typeParameter", TF.stringType(), "name", TF.listType(constrainDataType), "constrains");
 		 enumz = TF.constructor(store, idDataType, "enum", TF.stringType(), "name");
@@ -120,6 +124,7 @@ public class CLRInfoRascalBridge {
 			result = result.setAnnotation("methods", generateEntitySet(actualResult.getMethodsList()));
 			result = result.setAnnotation("extends", generateEntityRel(actualResult.getTypesInheritanceList()));
 			result = result.setAnnotation("implements", generateEntityRel(actualResult.getTypesImplementingList()));
+			result = result.setAnnotation("calls", generateEntityRel(actualResult.getMethodCallsList()));
 			return result;
 		}
 		catch (Exception ex)
@@ -172,15 +177,24 @@ public class CLRInfoRascalBridge {
 			case GenericInterface:
 				currentEntity.add(createTypeWithNameAndParameters(genericInterfaze, currentId));
 				break;
+			case AnonymousClass:
+				currentEntity.add(anonymousClass.make(VF, currentId.getId()));
+				break;
+			case DisplayClass:
+				currentEntity.add(displayClass.make(VF, currentId.getId()));
+				break;
 			case Enumeration:
 				currentEntity.add(createTypeWithName(enumz, currentId));
+				break;
 			case TypeParameter:
 				currentEntity.add(createTypeParameter(currentId));
 				break;
 			case Method:
 				currentEntity.add(createMethodType(currentId));
+				break;
 			case Constructor:
 				currentEntity.add(createTypeWithNameAndParameters(constructor, currentId));
+				break;
 			default:
 				break;
 			}
@@ -234,7 +248,8 @@ public class CLRInfoRascalBridge {
 	
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		//ISet result = getTypes(VF.string("../../../TestProject/bin/Debug/TestProject.exe"), VF.list());
-		IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
+		//IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
+		IValue result = readCLRInfo(VF.list(VF.string("/home/davy/MiscUtil.dll")));
 		
 		System.out.print(((IConstructor)result).getAnnotation("methods"));
 	} 

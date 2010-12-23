@@ -58,7 +58,6 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			
 			var allTypes = request.Assemblies.Select(a => ModuleDefinition.ReadModule(a))
 				.SelectMany(a => a.GetAllTypes()).Where(t => t.IsClass || t.IsEnum || t.IsInterface)
-					.Where(t => !t.Name.StartsWith("<>c__DisplayClass")) // remove delegate compiler hack classes
 					.Where(t => t.Name != "<Module>").ToList();
 			try {
 			result.Types.AddRange(allTypes.Select(t => GenerateEntity(t)));
@@ -272,7 +271,19 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			}
 			if (currentType.IsClass)
 			{
-				entityId.Kind = currentType.HasGenericParameters ? Id.IdKind.GenericClass : Id.IdKind.Class;
+				if (currentType.Name.StartsWith("<>c__DisplayClass"))
+				{
+					entityId.Kind = Id.IdKind.DisplayClass;
+					entityId._Id = Int32.Parse(currentType.Name.Substring("<>c__DisplayClass".Length));
+				}
+				else if (currentType.Name.Contains("c__AnonymousClass"))
+				{
+					entityId.Kind = Id.IdKind.AnonymousClass;
+					entityId._Id = Int32.Parse(currentType.Name.Substring("c__AnonymousClass".Length));
+				}
+				else{
+					entityId.Kind = currentType.HasGenericParameters ? Id.IdKind.GenericClass : Id.IdKind.Class;
+				}
 			}
 			else if (currentType.IsInterface)
 			{
