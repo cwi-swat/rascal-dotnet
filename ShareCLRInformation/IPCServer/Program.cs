@@ -271,15 +271,15 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			}
 			if (currentType.IsClass)
 			{
-				if (currentType.Name.StartsWith("<>c__DisplayClass"))
+				if (entityId.Name.StartsWith("<>c__DisplayClass"))
 				{
 					entityId.Kind = Id.IdKind.DisplayClass;
-					entityId._Id = Int32.Parse(currentType.Name.Substring("<>c__DisplayClass".Length));
+					entityId._Id = Int32.Parse(entityId.Name.Substring("<>c__DisplayClass".Length));
 				}
-				else if (currentType.Name.Contains("<>__AnonType"))
+				else if (entityId.Name.StartsWith("<>__AnonType"))
 				{
 					entityId.Kind = Id.IdKind.AnonymousClass;
-					entityId._Id = Int32.Parse(currentType.Name.Substring("<>__AnonType".Length));
+					entityId._Id = Int32.Parse(entityId.Name.Substring("<>__AnonType".Length));
 				}
 				else{
 					entityId.Kind = currentType.HasGenericParameters ? Id.IdKind.GenericClass : Id.IdKind.Class;
