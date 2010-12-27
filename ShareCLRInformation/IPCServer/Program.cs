@@ -1,4 +1,4 @@
-﻿#define ignorefailures
+﻿//#define ignorefailures
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +59,7 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			var allTypes = request.Assemblies.Select(a => ModuleDefinition.ReadModule(a))
 				.SelectMany(a => a.GetAllTypes()).Where(t => t.IsClass || t.IsEnum || t.IsInterface)
 					.Where(t => t.Name != "<Module>").ToList();
+			var allMethods = allTypes.SelectMany(t => t.Methods).ToList();
 #if ignorefailures
 			try {
 #endif
@@ -83,13 +84,12 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			} catch { }
 			try {
 #endif
-			result.Methods.AddRange(allTypes.SelectMany(t => t.Methods).Select(m => GenerateEntity(m)));
+			result.Methods.AddRange(allMethods.Select(m => GenerateEntity(m)));
 #if ignorefailures
 			} catch { }
 			try {
 #endif
-			result.MethodCalls.AddRange(allTypes.Where(t => t.Methods.Any()).SelectMany(t => t.Methods)
-				.Where(m => m.HasBody)
+			result.MethodCalls.AddRange(allMethods.Where(m => m.HasBody)
 				.SelectMany(m => GenerateMethodCalls(m)));
 #if ignorefailures
 			} catch { }
@@ -101,13 +101,13 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 		{
 			var currentMethod = GenerateEntity(m);
 			var result = new List<EntityRel>();
-#if ignorefailures
+//#if ignorefailures
 			try {
-#endif
+//#endif
 				ILParser.Parse(m, new MethodExtractor(result, currentMethod));
-#if ignorefailures
+//#if ignorefailures
 			} catch { }
-#endif				
+//#endif				
 			return result;
 		}
 		
@@ -208,10 +208,7 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 				methodId = new Id { Kind = Id.IdKind.Constructor };
 			else 
 				methodId = new Id { Kind = Id.IdKind.Method, Name = m.Name };
-			if (m.ReturnType.IsGenericParameter)
-				methodId.ReturnType = GenerateEntity((GenericParameter)(m.ReturnType));
-			else 
-				methodId.ReturnType = GenerateEntity(m.ReturnType.Resolve());
+			methodId.ReturnType = GenerateEntity(m.ReturnType);
 			methodId.Params.AddRange(m.Parameters.Select(p => GenerateParameter(p)));
 			result.Ids.Add(methodId);
 			return result;
@@ -244,13 +241,31 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			}
 			else
 			{
-				param.Kind = Id.IdKind.Parameter;
-				param.ElementType = GenerateEntity(paramType.Resolve());
+				return GenerateEntity(paramType.Resolve());
 			}
 			result.Ids.Add(param);
 			return result;
 		}
 		
+		private static Landman.Rascal.CLRInfo.Protobuf.Entity GenerateEntity (TypeReference t)
+		{
+			if (t.IsGenericParameter)
+			{
+				return GenerateEntity((GenericParameter)t);
+			}
+			if (t.IsArray)
+			{
+				var result = new Entity();
+				result.Ids.Add(new Id { Kind = Id.IdKind.Array, ElementType = GenerateEntity(((TypeSpecification)t).ElementType)});
+				return result;
+			}
+			if (t.IsByReference)
+			{
+				return GenerateEntity(((ByReferenceType)t).ElementType);
+			}
+			return GenerateEntity(t.Resolve());
+		}
+
 		private static Entity GenerateEntity(TypeDefinition t){
 			var result = new Entity();
 			var currentNamespace = t.IsNested ? t.DeclaringType.Namespace : t.Namespace;

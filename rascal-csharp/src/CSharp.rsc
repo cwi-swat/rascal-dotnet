@@ -115,11 +115,11 @@ public str readable(Id id) {
 			return name + "(<readable(params)>)"; 	
         	
 	}
-
+/* removed because of error in rascal
 	try {
 		return id.name;
 	} catch : ;
-	
+	*/
 	switch (id) {
 		case anonymousClass(nr): return "\<\>__anonClass" + "<nr>";		
 		case displayClass(nr): return "\<\>c__displayClass" + "<nr>";
@@ -131,6 +131,6 @@ public str readable(Id id) {
 		case wildcard: return "?";
 		case wildcard(extends(bound)): return "? extends " + readable(bound);
 		case wildcard(super(bound)): return "? super " + readable(bound);
-		default : throw IllegalArgument(id);
+		default : return id.name;
 	}
 }

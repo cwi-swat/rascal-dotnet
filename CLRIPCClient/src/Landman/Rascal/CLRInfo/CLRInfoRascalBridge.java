@@ -64,6 +64,7 @@ public class CLRInfoRascalBridge {
 	private static final Type constructor;
 	private static final Type displayClass;
 	private static final Type anonymousClass;
+	private static final Type arrayz;
 
 	static {
 		entityDataType = TF.abstractDataType(store, "Entity");
@@ -86,6 +87,7 @@ public class CLRInfoRascalBridge {
 		typeParameter = TF.constructor(store, idDataType, "typeParameter", TF.stringType(), "name",
 				TF.listType(constrainDataType), "constrains");
 		enumz = TF.constructor(store, idDataType, "enum", TF.stringType(), "name");
+		arrayz = TF.constructor(store, idDataType, "array", entity, "elementType");
 
 		method = TF.constructor(store, idDataType, "method", TF.stringType(), "name", 
 				TF.listType(entity), "params", entity, "returnType");
@@ -197,8 +199,11 @@ public class CLRInfoRascalBridge {
 				case Constructor:
 					currentEntity.add(constructor.make(VF, generateEntityList(currentId.getParamsList())));
 					break;
-				default:
+				case Array:
+					currentEntity.add(arrayz.make(VF, generateSingleEntityArray(currentId.getElementType())));
 					break;
+				default:
+					throw new RuntimeException("You forgot to detect the id: " + currentId.getKind().toString());
 			}
 		}
 		return entity.make(VF, VF.list(currentEntity.toArray(new IValue[0])));
@@ -250,9 +255,8 @@ public class CLRInfoRascalBridge {
 		// ISet result =
 		// getTypes(VF.string("../../../TestProject/bin/Debug/TestProject.exe"),
 		// VF.list());
-		// IValue result =
-		// readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
-		IValue result = readCLRInfo(VF.list(VF.string("/home/davy/MiscUtil.dll")));
+		IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
+		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/MiscUtil.dll")));
 
 		System.out.print(((IConstructor) result).getAnnotation("methods"));
 	}
