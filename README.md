@@ -1,4 +1,6 @@
-===== rascal-dotnet ====
+rascal-dotnet
+=============
+
 Like that little language called [Rascal-MPL](http://www.rascal-mpl.org/)? 
 But want to use it to inspect .NET applications?
 Well, this library aims to provide a reasonable insight into .NET assemblies.
@@ -6,7 +8,9 @@ It is however limited to analysis on compiled assemblies, a more powerful one
 would work on a source based fact extractor, but this is much more work than the
 current solution.
 
-==== Deployment ====
+Deployment
+-----------
+
   - Make sure you have an up-to-date working version of Rascal
   - Download deploy package
   - Extract the files
@@ -17,8 +21,9 @@ current solution.
 	folder.
   - Copy the files from `run_server` to a place where you can find them again :)
  
+Using the library
+-----------------
 
-==== Using the libary ====
 Example source:
 
      import CLRInfo;
