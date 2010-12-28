@@ -33,8 +33,24 @@ Example source:
 
 	 public void PrintAllTypes() {
 		Resource res = readCLRInfo(["/usr/lib/mono/2.0/System.dll"]);
-		[print(readable(tp)) | tp <- res@types]; 
+		for (tp <- res@types) {
+			print(readable(tp));
+		}
 	 }
 
 Just make sure you start the `Landman.Rascal.CLRInfo.IPCServer.exe` (using
 `mono` on linux/mac).
+
+TODO
+----
+
+  - More error prone on the server side
+  - Use LOC types in `readCLRInfo` function
+  - Make deployment easier (especially the copying of the rascal files should be
+	simpeler).
+  - Start the `IPCServer.exe` automatically from the java side. (and randomize
+	the port)
+  - Create some sample projects to test the fact extraction better than just it
+	doesn't crash-testing.
+  - Write about 'architecture'.
+
