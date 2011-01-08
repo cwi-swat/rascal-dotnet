@@ -100,106 +100,23 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 		public static List<EntityRel> GenerateMethodCalls(MethodDefinition m)
 		{
 			var currentMethod = GenerateEntity(m);
-			var result = new List<EntityRel>();
-//#if ignorefailures
-			try {
-//#endif
-				ILParser.Parse(m, new MethodExtractor(result, currentMethod));
-//#if ignorefailures
-			} catch { }
-//#endif				
-			return result;
-		}
-		
-		private class MethodExtractor : IILVisitor {
-			private List<EntityRel> destination;
-			private Entity callingMethod;
-			public MethodExtractor(List<EntityRel> destination, Entity callingMethod)
-			{
-				this.destination = destination;
-				this.callingMethod = callingMethod;
-			}	
-		
-			public void OnInlineMethod (Mono.Cecil.Cil.OpCode opcode, MethodReference method)
-			{
-				destination.Add(new EntityRel { From = callingMethod, To = GenerateEntity(method.Resolve()) });
-			}
-
-
-			#region IILVisitor implementation
-			public  void OnInlineNone (Mono.Cecil.Cil.OpCode opcode)
-			{
-				
-			}
-
-			public  void OnInlineSByte (Mono.Cecil.Cil.OpCode opcode, sbyte value)
-			{
-				
-			}
-
-			public  void OnInlineByte (Mono.Cecil.Cil.OpCode opcode, byte value)
-			{
-			}
-
-			public  void OnInlineInt32 (Mono.Cecil.Cil.OpCode opcode, int value)
-			{
-			}
-
-			public  void OnInlineInt64 (Mono.Cecil.Cil.OpCode opcode, long value)
-			{
-			}
-
-			public  void OnInlineSingle (Mono.Cecil.Cil.OpCode opcode, float value)
-			{
-			}
-
-			public  void OnInlineDouble (Mono.Cecil.Cil.OpCode opcode, double value)
-			{
-			}
-
-			public  void OnInlineString (Mono.Cecil.Cil.OpCode opcode, string value)
-			{
-			}
-
-			public  void OnInlineBranch (Mono.Cecil.Cil.OpCode opcode, int offset)
-			{
-			}
-
-			public  void OnInlineSwitch (Mono.Cecil.Cil.OpCode opcode, int[] offsets)
-			{
-			}
-
-			public  void OnInlineVariable (Mono.Cecil.Cil.OpCode opcode, VariableDefinition variable)
-			{
-				
-			}
-
-			public  void OnInlineArgument (Mono.Cecil.Cil.OpCode opcode, ParameterDefinition parameter)
-			{
-				
-			}
-
-			public  void OnInlineSignature (Mono.Cecil.Cil.OpCode opcode, CallSite callSite)
-			{
-				
-			}
-
-			public  void OnInlineType (Mono.Cecil.Cil.OpCode opcode, TypeReference type)
-			{
-				
-			}
-
-			public  void OnInlineField (Mono.Cecil.Cil.OpCode opcode, FieldReference field)
-			{
-				
-			}
-			#endregion
+			return m.Body.Instructions.Where(i => i.OpCode == OpCodes.Call || i.OpCode == OpCodes.Newobj || i.OpCode == OpCodes.Callvirt)
+				.Select(i => i.Operand as MethodReference)
+				.Where(mr => mr != null)
+				.Select(mr => new EntityRel { From = currentMethod, To = GenerateEntity(mr) })
+				.ToList();
 		}
 		
 		private static EntityRel GenerateEntityRel(TypeDefinition t){
 			return new EntityRel { From = GenerateEntity(t), To = GenerateEntity(t.BaseType.Resolve()) };	
 		}
-		
+
+		private static Entity GenerateEntity(MethodReference m)
+		{
+			return GenerateEntity(m.Resolve());
+		}
+
+
 		private static Entity GenerateEntity(MethodDefinition m){
 			var result = new Entity();
 			result.Ids.AddRange(GenerateEntity(m.DeclaringType).Ids); // class ref
