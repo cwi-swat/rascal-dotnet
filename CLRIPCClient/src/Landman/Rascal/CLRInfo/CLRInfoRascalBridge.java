@@ -255,6 +255,8 @@ public class CLRInfoRascalBridge {
 		//IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
 		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/MiscUtil.dll")));
 		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
+//		IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
+		
 		System.out.print(((IConstructor) result).getAnnotation("methods"));
 	}
 

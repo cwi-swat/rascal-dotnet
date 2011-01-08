@@ -113,6 +113,18 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 
 		private static Entity GenerateEntity(MethodReference m)
 		{
+			if (m.DeclaringType.IsArray)
+			{
+				var result = new Entity();
+				var resultArray = new Id { Kind = Id.IdKind.Array };
+				resultArray.ElementType = GenerateEntity(m.DeclaringType);
+				var methodId = new Id { Kind = Id.IdKind.Constructor };
+				methodId.ReturnType = new Entity();
+				methodId.ReturnType.Ids.Add(resultArray);
+				methodId.Params.AddRange(m.Parameters.Select(p => GenerateParameter(p)));
+				result.Ids.Add(methodId);
+				return result;
+			}
 			return GenerateEntity(m.Resolve());
 		}
 
