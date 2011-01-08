@@ -252,12 +252,9 @@ public class CLRInfoRascalBridge {
 	}
 
 	public static void main(String[] args) throws UnknownHostException, IOException {
-		// ISet result =
-		// getTypes(VF.string("../../../TestProject/bin/Debug/TestProject.exe"),
-		// VF.list());
-		IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
+		//IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
 		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/MiscUtil.dll")));
-
+		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
 		System.out.print(((IConstructor) result).getAnnotation("methods"));
 	}
 
