@@ -12,6 +12,7 @@
     <AssemblyName>Landman.Rascal.CLRInfo.IPCServer</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -42,8 +43,9 @@
     <Reference Include="Mono.Cecil.Rocks">
       <HintPath>..\lib\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
-    <Reference Include="protobuf-net">
-      <HintPath>..\lib\protobuf-net.dll</HintPath>
+    <Reference Include="Google.ProtocolBuffers">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Google.ProtocolBuffers.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,12 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\ipc\clrinfo.cs">
-      <Link>clrinfo.cs</Link>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>clrinfo.proto</DependentUpon>
+    <Compile Include="..\..\ipc\CLRInfoProtos.cs">
+      <Link>CLRInfoProtos.cs</Link>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,9 +64,8 @@
   <ItemGroup>
     <None Include="..\..\ipc\clrinfo.proto">
       <Link>clrinfo.proto</Link>
-      <Generator>ProtoBufTool</Generator>
-      <LastGenOutput>clrinfo.cs</LastGenOutput>
     </None>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
