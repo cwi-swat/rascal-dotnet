@@ -255,7 +255,7 @@ public class CLRInfoRascalBridge {
 		//IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
 		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/MiscUtil.dll")));
 		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
-//		IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
+	//	IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
 		
 		System.out.print(((IConstructor) result).getAnnotation("methods"));
 	}
@@ -268,16 +268,7 @@ public class CLRInfoRascalBridge {
 		Builder req = InformationRequest.newBuilder();
 		req.addAllAssemblies(Arrays.asList(assemblies));
 		InformationRequest actualRequest = req.build();
-		byte[] data = actualRequest.toByteArray();
-		outToServer.writeInt(data.length);
-		outToServer.write(data);
-		int resultSize = inFromServer.readInt();
-		byte[] result = new byte[resultSize];
-		int bytesRead = 0;
-		while (bytesRead < resultSize) {
-			bytesRead += inFromServer.read(result, bytesRead, resultSize - bytesRead);
-		}
-		InformationResponse actualResult = InformationResponse.parseFrom(result);
-		return actualResult;
+		actualRequest.writeDelimitedTo(outToServer);
+		return InformationResponse.parseDelimitedFrom(inFromServer);
 	}
 }

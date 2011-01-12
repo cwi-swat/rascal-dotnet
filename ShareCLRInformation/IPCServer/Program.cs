@@ -40,19 +40,9 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 				Console.WriteLine("Got new client: " + newClient.Client.ToString());
 				using (var clientStream = newClient.GetStream())
 				{
-					var streamReader = new EndianBinaryReader(new BigEndianBitConverter(), clientStream);
-					var size = streamReader.ReadInt32();
-					if (size == 0)
-						return;
-					var message = streamReader.ReadBytes(size);
-					
-					var request = InformationRequest.ParseFrom(message);
+					var request = InformationRequest.ParseDelimitedFrom(clientStream);
 					var result = HandleRequest(request);
-					var resultStream = new MemoryStream();
-					result.WriteTo(resultStream);
-					var streamWriter = new EndianBinaryWriter(new BigEndianBitConverter(), clientStream);
-					streamWriter.Write((int)resultStream.Length);
-					resultStream.WriteTo(clientStream);
+					result.WriteDelimitedTo(clientStream);
 				}
 
 			}
