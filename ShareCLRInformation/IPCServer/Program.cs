@@ -6,22 +6,29 @@ using System.Text;
 using System.Net.Sockets;
 using System.Net;
 using System.IO;
-using ProtoBuf;
 using Landman.Rascal.CLRInfo.Protobuf;
 using MiscUtil.IO;
 using MiscUtil.Conversion;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
+using Google.ProtocolBuffers;
 
 
 
 namespace Landman.Rascal.CLRInfo.IPCServer
 {
+	static class IListExtension{
+		public static void AddRange<T>(this IList<T> dst, IEnumerable<T> range){
+			foreach (T item in range) {
+				dst.Add(item);
+			}	
+		}
+	}
 	public class Program
 	{
 
-
+	
 
 		static void Main(string[] args)
 		{
@@ -38,10 +45,11 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 					if (size == 0)
 						return;
 					var message = streamReader.ReadBytes(size);
-					var request = Serializer.Deserialize<InformationRequest>(new MemoryStream(message));
+					
+					var request = InformationRequest.ParseFrom(message);
 					var result = HandleRequest(request);
 					var resultStream = new MemoryStream();
-					Serializer.Serialize(resultStream, result);
+					result.WriteTo(resultStream);
 					var streamWriter = new EndianBinaryWriter(new BigEndianBitConverter(), clientStream);
 					streamWriter.Write((int)resultStream.Length);
 					resultStream.WriteTo(clientStream);
@@ -56,40 +64,35 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 		{
 			var result = new InformationResponse();
 			
-			var allTypes = request.Assemblies.Select(a => ModuleDefinition.ReadModule(a))
+			var allTypes = request.AssembliesList.Select(a => ModuleDefinition.ReadModule(a))
 				.SelectMany(a => a.GetAllTypes()).Where(t => t.IsClass || t.IsEnum || t.IsInterface)
 					.Where(t => t.Name != "<Module>").ToList();
 			var allMethods = allTypes.SelectMany(t => t.Methods).ToList();
 #if ignorefailures
 			try {
 #endif
-			result.Types.AddRange(allTypes.Select(t => GenerateEntity(t)));
+			result.TypesList.AddRange(allTypes.Select(t => GenerateEntity(t)));
 #if ignorefailures
 			} catch { }
 			try {
 #endif
-			result.TypesInheritance.AddRange(allTypes.Where(t => t.BaseType != null).Select(t => GenerateEntityRel(t)));
+			result.TypesInheritanceList.AddRange(allTypes.Where(t => t.BaseType != null).Select(t => GenerateEntityRel(t, t.BaseType)));
 #if ignorefailures
 			} catch { }
 			try {
 #endif
-			result.TypesImplementing.AddRange(allTypes.Where(t => t.Interfaces.Any())
-				.SelectMany(t => t.Interfaces.Select(i => 
-					new EntityRel { 
-						From = GenerateEntity(t),
-						To = GenerateEntity(i.Resolve())
-					}))
-				);
+			result.TypesImplementingList.AddRange(allTypes.Where(t => t.Interfaces.Any())
+				.SelectMany(t => t.Interfaces.Select(i => GenerateEntityRel(t, i))));
 #if ignorefailures
 			} catch { }
 			try {
 #endif
-			result.Methods.AddRange(allMethods.Select(m => GenerateEntity(m)));
+			result.MethodsList.AddRange(allMethods.Select(m => GenerateEntity(m)));
 #if ignorefailures
 			} catch { }
 			try {
 #endif
-			result.MethodCalls.AddRange(allMethods.Where(m => m.HasBody)
+			result.MethodCallsList.AddRange(allMethods.Where(m => m.HasBody)
 				.SelectMany(m => GenerateMethodCalls(m)));
 #if ignorefailures
 			} catch { }
@@ -97,71 +100,94 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			return result;
 		}
 	
+		private static EntityRel GenerateEntityRel(TypeDefinition @from, TypeReference to)
+		{
+			return GenerateEntityRel(GenerateEntity(@from), GenerateEntity(to));
+		}
+
+		private static EntityRel GenerateEntityRel(Entity @from, Entity to)
+		{
+			return EntityRel.CreateBuilder()
+				.SetFrom(@from)
+				.SetTo(to)
+				.Build();
+		}
 		public static List<EntityRel> GenerateMethodCalls(MethodDefinition m)
 		{
 			var currentMethod = GenerateEntity(m);
 			return m.Body.Instructions.Where(i => i.OpCode == OpCodes.Call || i.OpCode == OpCodes.Newobj || i.OpCode == OpCodes.Callvirt)
 				.Select(i => i.Operand as MethodReference)
 				.Where(mr => mr != null)
-				.Select(mr => new EntityRel { From = currentMethod, To = GenerateEntity(mr) })
+				.Select(mr => GenerateEntityRel(currentMethod, GenerateEntity(mr)))
 				.ToList();
-		}
-		
-		private static EntityRel GenerateEntityRel(TypeDefinition t){
-			return new EntityRel { From = GenerateEntity(t), To = GenerateEntity(t.BaseType.Resolve()) };	
 		}
 
 		private static Entity GenerateEntity(MethodReference m)
 		{
 			if (m.DeclaringType.IsArray)
 			{
-				var result = new Entity();
-				var resultArray = new Id { Kind = Id.IdKind.Array };
+				var result = Entity.CreateBuilder();
+				
+				var resultArray = Id.CreateBuilder();
+				resultArray.Kind = Id.Types.IdKind.Array;
 				resultArray.ElementType = GenerateEntity(m.DeclaringType);
-				var methodId = new Id { Kind = Id.IdKind.Constructor };
-				methodId.ReturnType = new Entity();
-				methodId.ReturnType.Ids.Add(resultArray);
-				methodId.Params.AddRange(m.Parameters.Select(p => GenerateParameter(p)));
-				result.Ids.Add(methodId);
-				return result;
+				
+				var returnType = Entity.CreateBuilder();
+				returnType.IdsList.Add(resultArray.Build());
+				
+				var methodId = Id.CreateBuilder();
+				methodId.Kind = Id.Types.IdKind.Constructor;
+				methodId.ReturnType = returnType.Build();
+				methodId.ParamsList.AddRange(m.Parameters.Select(p => GenerateParameter(p)));
+				
+				result.IdsList.Add(methodId.Build());
+				return result.Build();
 			}
 			return GenerateEntity(m.Resolve());
 		}
 
 
 		private static Entity GenerateEntity(MethodDefinition m){
-			var result = new Entity();
-			result.Ids.AddRange(GenerateEntity(m.DeclaringType).Ids); // class ref
-			Id methodId = null;
-			if (m.IsConstructor)
-				methodId = new Id { Kind = Id.IdKind.Constructor };
-			else 
-				methodId = new Id { Kind = Id.IdKind.Method, Name = m.Name };
+			var result = Entity.CreateBuilder();
+			result.IdsList.AddRange(GenerateEntity(m.DeclaringType).IdsList); // class ref
+			var methodId = Id.CreateBuilder();
+			if (m.IsConstructor) {
+				methodId.Kind = Id.Types.IdKind.Constructor;
+			} else {
+				methodId.Kind = Id.Types.IdKind.Method;
+				methodId.Name = m.Name;
+			}
+
 			methodId.ReturnType = GenerateEntity(m.ReturnType);
-			methodId.Params.AddRange(m.Parameters.Select(p => GenerateParameter(p)));
-			result.Ids.Add(methodId);
-			return result;
+			methodId.ParamsList.AddRange(m.Parameters.Select(p => GenerateParameter(p)));
+			result.IdsList.Add(methodId.Build());
+			return result.Build();
 		}
 		
 		private static Entity GenerateParameter(ParameterDefinition p) {
-			var result = new Entity();
-			var param = new Id { Name = p.Name };
+			var result = Entity.CreateBuilder();
+			var param = Id.CreateBuilder();
+			param.Name = p.Name;
 			var paramType = p.ParameterType;
 			if (p.ParameterType.IsByReference)
 			{
 				paramType = ((ByReferenceType)p.ParameterType).ElementType;
 			}
 			if (paramType.IsGenericParameter) {
-				param.Kind = Id.IdKind.TypeParameter;
+				param.Kind = Id.Types.IdKind.TypeParameter;
 				AddConstrainsToParam(param, (GenericParameter)paramType);
 			}
 			else if (paramType.IsArray) {
-				param.Kind = Id.IdKind.Array;
+				param.Kind = Id.Types.IdKind.Array;
 				if (((TypeSpecification)paramType).ElementType.IsGenericParameter)
 				{
-					param.ElementType = new Entity ();
-					param.ElementType.Ids.Add(new Id { Kind = Id.IdKind.TypeParameter, Name = ((TypeSpecification)paramType).ElementType.Name });
-					AddConstrainsToParam(param.ElementType.Ids[0], (GenericParameter)(((TypeSpecification)paramType).ElementType));
+					var elementType = Entity.CreateBuilder();
+					var typeParamId = Id.CreateBuilder();
+					typeParamId.Kind = Id.Types.IdKind.TypeParameter;
+					typeParamId.Name = ((TypeSpecification)paramType).ElementType.Name;
+					AddConstrainsToParam(typeParamId, (GenericParameter)(((TypeSpecification)paramType).ElementType));
+					elementType.IdsList.Add(typeParamId.Build());					
+					param.ElementType = elementType.Build();
 				}
 				else
 				{
@@ -170,10 +196,10 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			}
 			else
 			{
-				return GenerateEntity(paramType.Resolve());
+				return GenerateEntity(paramType);
 			}
-			result.Ids.Add(param);
-			return result;
+			result.IdsList.Add(param.Build());
+			return result.Build();
 		}
 		
 		private static Landman.Rascal.CLRInfo.Protobuf.Entity GenerateEntity (TypeReference t)
@@ -184,9 +210,12 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			}
 			if (t.IsArray)
 			{
-				var result = new Entity();
-				result.Ids.Add(new Id { Kind = Id.IdKind.Array, ElementType = GenerateEntity(((TypeSpecification)t).ElementType)});
-				return result;
+				var result = Entity.CreateBuilder();
+				var arrayId = Id.CreateBuilder();
+				arrayId.Kind = Id.Types.IdKind.Array;
+				arrayId.ElementType = GenerateEntity(((TypeSpecification)t).ElementType);
+				result.IdsList.Add(arrayId.Build());
+				return result.Build();
 			}
 			if (t.IsByReference)
 			{
@@ -198,7 +227,8 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 		private static Entity GenerateEntity(TypeDefinition t){
 			var result = new Entity();
 			var currentNamespace = t.IsNested ? t.DeclaringType.Namespace : t.Namespace;
-			result.Ids.AddRange(currentNamespace.Split('.').Select(n => new Id { Kind = Id.IdKind.Namespace, Name = n }));
+			result.IdsList.AddRange(currentNamespace.Split('.').Select(n => Id.CreateBuilder()
+			                                                       .SetKind(Id.Types.IdKind.Namespace).SetName(n).Build()));
 			var entityList = new List<Id>();
 			var currentType = t;
 			while (currentType.IsNested) {
@@ -206,13 +236,14 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 				currentType = currentType.DeclaringType;
 			}
 			entityList.Insert(0, GetEntityType(currentType));
-			result.Ids.AddRange(entityList);
+			result.IdsList.AddRange(entityList);
 			return result;
 		}
 		
 		private static Id GetEntityType(TypeDefinition currentType)
 		{
-			Id entityId = new Id { Name = currentType.Name };
+			var entityId = Id.CreateBuilder();
+			entityId.Name = currentType.Name;
 			int genericNameTickIndex = entityId.Name.IndexOf('`');
 			if (genericNameTickIndex != -1)
 			{
@@ -222,84 +253,86 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			{
 				if (entityId.Name.StartsWith("<>c__DisplayClass"))
 				{
-					entityId.Kind = Id.IdKind.DisplayClass;
-					entityId._Id = Int32.Parse(entityId.Name.Substring("<>c__DisplayClass".Length), System.Globalization.NumberStyles.HexNumber);
+					entityId.Kind = Id.Types.IdKind.DisplayClass;
+					entityId.Id_ = Int32.Parse(entityId.Name.Substring("<>c__DisplayClass".Length), System.Globalization.NumberStyles.HexNumber);
 				}
 				else if (entityId.Name.StartsWith("<>__AnonType"))
 				{
-					entityId.Kind = Id.IdKind.AnonymousClass;
-					entityId._Id = Int32.Parse(entityId.Name.Substring("<>__AnonType".Length), System.Globalization.NumberStyles.HexNumber);
+					entityId.Kind = Id.Types.IdKind.AnonymousClass;
+					entityId.Id_ = Int32.Parse(entityId.Name.Substring("<>__AnonType".Length), System.Globalization.NumberStyles.HexNumber);
 				}
 				else{
-					entityId.Kind = currentType.HasGenericParameters ? Id.IdKind.GenericClass : Id.IdKind.Class;
+					entityId.Kind = currentType.HasGenericParameters ? Id.Types.IdKind.GenericClass : Id.Types.IdKind.Class;
 				}
 			}
 			else if (currentType.IsInterface)
 			{
-				entityId.Kind = currentType.HasGenericParameters ? Id.IdKind.GenericInterface : Id.IdKind.Interface;
+				entityId.Kind = currentType.HasGenericParameters ? Id.Types.IdKind.GenericInterface : Id.Types.IdKind.Interface;
 			}
 			else if (currentType.IsEnum)
 			{
-				entityId.Kind = Id.IdKind.Enumeration;
+				entityId.Kind = Id.Types.IdKind.Enumeration;
 			}
 			else
 			{
-				entityId.Kind = Id.IdKind.Unkown;	
+				entityId.Kind = Id.Types.IdKind.Unkown;	
 			}
 
 			if (currentType.HasGenericParameters)
 			{
-				entityId.Params.AddRange(currentType.GenericParameters.Select(p => GenerateEntity(p)));
+				entityId.ParamsList.AddRange(currentType.GenericParameters.Select(p => GenerateEntity(p)));
 			}
-			return entityId;
+			return entityId.Build();
 		}
 
 		private static Entity GenerateEntity(GenericParameter p)
 		{
-			var result = new Entity();
+			var result = Entity.CreateBuilder();
 			if (p.IsGenericParameter)
 			{
-				var param = new Id { Kind = Id.IdKind.TypeParameter };
+				var param = Id.CreateBuilder();
+				param.Kind = Id.Types.IdKind.TypeParameter;
 				param.Name = p.Name;
 				AddConstrainsToParam(param, p);
-				result.Ids.Add(param);
+				result.IdsList.Add(param.Build());
 			}
-			else
-			{
-				result = result;
-			}
-			return result;
+			return result.Build();
 		}
 		       
-		private static void AddConstrainsToParam(Id param, GenericParameter p)
+		private static void AddConstrainsToParam(Id.Builder param, GenericParameter p)
 		{
-		foreach (var con in p.Constraints)
+			foreach (var con in p.Constraints)
 				{
 					if (con.GetElementType().FullName == typeof(ValueType).FullName)
 					{
-						param.Constrains.Add(new Constrain { Kind = Constrain.ConstrainKind.IsStruct });
+						param.ConstrainsList.Add(Constrain.CreateBuilder().SetKind(Constrain.Types.ConstrainKind.IsStruct).Build());
 					}
 					else {
-						var entity = GenerateEntity(con.GetElementType().Resolve());
+						var entity = GenerateEntity(con.GetElementType()).ToBuilder();
 						if (con.IsGenericInstance)
 						{
 							var actualRef = (GenericInstanceType)con;
+							var actualType = entity.IdsList.Last().ToBuilder();
+							entity.IdsList.RemoveAt(entity.IdsList.Count - 1);
 							for (int paramIndex = 0; paramIndex < actualRef.GenericArguments.Count; paramIndex++)
 							{
-								entity.Ids.Last().Params[paramIndex] = GenerateEntity(actualRef.GenericArguments[paramIndex].GetElementType().Resolve());
+								actualType.ParamsList[paramIndex] = GenerateEntity(actualRef.GenericArguments[paramIndex].GetElementType().Resolve());
 							}
+							entity.IdsList.Add(actualType.Build());
 						}
-						param.Constrains.Add(new Constrain { Kind = Constrain.ConstrainKind.Entity, ConstrainEntity = entity });
+						param.ConstrainsList.Add(Constrain.CreateBuilder()
+					    	.SetKind(Constrain.Types.ConstrainKind.Entity)
+					        .SetConstrainEntity(entity.Build()).Build());
 						
 					}
 				}
 				if (p.HasDefaultConstructorConstraint)
 				{
-					param.Constrains.Add(new Constrain { Kind = Constrain.ConstrainKind.HasConstructor });
+					param.ConstrainsList.Add(Constrain.CreateBuilder().SetKind(Constrain.Types.ConstrainKind.HasConstructor).Build());
 				}
-				if (param.Constrains.Count == 0)
+				if (param.ConstrainsList.Count == 0)
 				{
-					param.Constrains.Add(new Constrain { Kind = Constrain.ConstrainKind.IsClass });
+					param.ConstrainsList.Add(Constrain.CreateBuilder().SetKind(Constrain.Types.ConstrainKind.IsClass).Build());
 				}
 	
 		}

@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Reflection;
-using ProtoBuf;
 using Landman.Rascal.CLRInfo.Protobuf;
 
 namespace TestProject
@@ -44,9 +43,9 @@ namespace TestProject
 	{
 		static void Main(string[] args)
 		{
-			var req = new InformationRequest();
-			req.Assemblies.Add(Assembly.GetExecutingAssembly().Location);
-			var result = Landman.Rascal.CLRInfo.IPCServer.Program.HandleRequest(req);
+			var req = InformationRequest.CreateBuilder();
+			req.AssembliesList.Add(Assembly.GetExecutingAssembly().Location);
+			var result = Landman.Rascal.CLRInfo.IPCServer.Program.HandleRequest(req.Build());
 			Console.WriteLine(result.ToString());
 		}
 	}
