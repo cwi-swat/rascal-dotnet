@@ -225,19 +225,26 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 		}
 
 		private static Entity GenerateEntity(TypeDefinition t){
-			var result = new Entity();
-			var currentNamespace = t.IsNested ? t.DeclaringType.Namespace : t.Namespace;
-			result.IdsList.AddRange(currentNamespace.Split('.').Select(n => Id.CreateBuilder()
-			                                                       .SetKind(Id.Types.IdKind.Namespace).SetName(n).Build()));
+			var result = Entity.CreateBuilder();
+			AddNamespacesToEntity(t, result);
 			var entityList = new List<Id>();
 			var currentType = t;
-			while (currentType.IsNested) {
+			while (currentType.IsNested)
+			{
 				entityList.Insert(0, GetEntityType(currentType));
 				currentType = currentType.DeclaringType;
 			}
 			entityList.Insert(0, GetEntityType(currentType));
 			result.IdsList.AddRange(entityList);
-			return result;
+
+			return result.Build();
+		}
+
+		private static void AddNamespacesToEntity(TypeDefinition t, Entity.Builder result)
+		{
+			var currentNamespace = t.IsNested ? t.DeclaringType.Namespace : t.Namespace;
+			result.IdsList.AddRange(currentNamespace.Split('.').Select(n => Id.CreateBuilder()
+																   .SetKind(Id.Types.IdKind.Namespace).SetName(n).Build()));
 		}
 		
 		private static Id GetEntityType(TypeDefinition currentType)
@@ -300,7 +307,11 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 		}
 		       
 		private static void AddConstrainsToParam(Id.Builder param, GenericParameter p)
-		{
+		{/* we can't do constrains connected to params, because it can create ifinite loops for types such as:
+		  * class A<T>
+		  *    where T: B<T>
+		  * class B<T>
+		  *    where T: A<T>
 			foreach (var con in p.Constraints)
 				{
 					if (con.GetElementType().FullName == typeof(ValueType).FullName)
@@ -308,7 +319,9 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 						param.ConstrainsList.Add(Constrain.CreateBuilder().SetKind(Constrain.Types.ConstrainKind.IsStruct).Build());
 					}
 					else {
-						var entity = GenerateEntity(con.GetElementType()).ToBuilder();
+						//var entity = Entity.CreateBuilder();
+						//AddNamespacesAndTypesToEntity(con.GetElementType().Resolve(), entity);
+						var entity = GenerateEntity(con.GetElementType().Resolve()).ToBuilder();
 						if (con.IsGenericInstance)
 						{
 							var actualRef = (GenericInstanceType)con;
@@ -333,7 +346,7 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 				if (param.ConstrainsList.Count == 0)
 				{
 					param.ConstrainsList.Add(Constrain.CreateBuilder().SetKind(Constrain.Types.ConstrainKind.IsClass).Build());
-				}
+				}*/
 	
 		}
 				                 
