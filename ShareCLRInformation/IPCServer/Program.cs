@@ -41,22 +41,42 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 				using (var clientStream = newClient.GetStream())
 				{
 					var request = InformationRequest.ParseDelimitedFrom(clientStream);
-					var result = HandleRequest(request);
-					result.WriteDelimitedTo(clientStream);
+					var typesPartitioned = PartitionTypes(request.AssembliesList, 25);
+					SendAmountOfPartitionMessage((uint)typesPartitioned.Count, clientStream);
+					foreach (var typedGroup in typesPartitioned)
+					{
+						var groupResponse = GenerateResponseFor(typedGroup);
+						groupResponse.WriteDelimitedTo(clientStream);
+					}
 				}
 
 			}
 		}
 
+		private static void SendAmountOfPartitionMessage(uint sizeToSend, NetworkStream clientStream)
+		{
+			var outputStream = CodedOutputStream.CreateInstance(clientStream);
+			outputStream.WriteRawVarint32(sizeToSend);
+			outputStream.Flush();
+		}
+
+		public static List<List<TypeDefinition>> PartitionTypes(IEnumerable<String> assemblies, int partitionSize)
+		{
+			// create groups of partitionSize large
+			return assemblies.Select(a => ModuleDefinition.ReadModule(a))
+				.SelectMany(a => a.GetAllTypes())
+				.Where(t => t.IsClass || t.IsEnum || t.IsInterface)
+				.Where(t => t.Name != "<Module>")
+				.Select((t, i) => new { Group = i / partitionSize, Type = t })
+				.GroupBy(g => g.Group)
+				.Select(grouped => grouped.Select(g => g.Type).ToList()).ToList();
+		}
 	
 
-		public static InformationResponse HandleRequest(InformationRequest request)
+		public static InformationResponse GenerateResponseFor(IEnumerable<TypeDefinition> allTypes)
 		{
 			var result = new InformationResponse();
 			
-			var allTypes = request.AssembliesList.Select(a => ModuleDefinition.ReadModule(a))
-				.SelectMany(a => a.GetAllTypes()).Where(t => t.IsClass || t.IsEnum || t.IsInterface)
-					.Where(t => t.Name != "<Module>").ToList();
 			var allMethods = allTypes.SelectMany(t => t.Methods).ToList();
 #if ignorefailures
 			try {

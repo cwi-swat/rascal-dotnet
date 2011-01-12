@@ -12,19 +12,17 @@ import java.util.List;
 import org.eclipse.imp.pdb.facts.IConstructor;
 import org.eclipse.imp.pdb.facts.IList;
 import org.eclipse.imp.pdb.facts.IListWriter;
-import org.eclipse.imp.pdb.facts.IRelation;
 import org.eclipse.imp.pdb.facts.IRelationWriter;
-import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.ISetWriter;
 import org.eclipse.imp.pdb.facts.IString;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
-import org.eclipse.imp.pdb.facts.impl.fast.ListWriter;
 import org.eclipse.imp.pdb.facts.type.Type;
 import org.eclipse.imp.pdb.facts.type.TypeFactory;
 import org.eclipse.imp.pdb.facts.type.TypeStore;
 import org.rascalmpl.values.ValueFactoryFactory;
 
+import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Constrain;
@@ -123,14 +121,36 @@ public class CLRInfoRascalBridge {
 				}
 			}
 
-			InformationResponse actualResult = getInformationFromCLR(actualAssemblies.toArray(new String[0]));
+//			InformationResponse actualResult = getInformationFromCLR(actualAssemblies.toArray(new String[0]));
+			Socket clientSocket = new Socket("localhost", 5555);
+			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+			DataInputStream inFromServer = new DataInputStream(clientSocket.getInputStream());
+			Builder req = InformationRequest.newBuilder();
+			req.addAllAssemblies(actualAssemblies);
+			InformationRequest actualRequest = req.build();
+			actualRequest.writeDelimitedTo(outToServer);
+			int amountOfGroups = CodedInputStream.newInstance(inFromServer).readRawVarint32();
+			ISetWriter types = VF.setWriter(entityDataType);
+			ISetWriter methods = VF.setWriter(entityDataType);
+			IRelationWriter extendz = VF.relationWriter(entityRel);
+			IRelationWriter implementz = VF.relationWriter(entityRel);
+			IRelationWriter calls = VF.relationWriter(entityRel);
+			for (int groupIndex = 0; groupIndex < amountOfGroups; groupIndex++) {
+				InformationResponse currentInformation = InformationResponse.parseDelimitedFrom(inFromServer);
+				addToEntitySet(types, currentInformation.getTypesList());
+				addToEntitySet(methods, currentInformation.getMethodsList());
+				addToEntityRels(extendz, currentInformation.getTypesInheritanceList());
+				addToEntityRels(implementz, currentInformation.getTypesImplementingList());
+				addToEntityRels(calls, currentInformation.getMethodCallsList());
+			}
+			
 
 			IConstructor result = (IConstructor) file.make(VF, locs.done());
-			result = result.setAnnotation("types", generateEntitySet(actualResult.getTypesList()));
-			result = result.setAnnotation("methods", generateEntitySet(actualResult.getMethodsList()));
-			result = result.setAnnotation("extends", generateEntityRel(actualResult.getTypesInheritanceList()));
-			result = result.setAnnotation("implements", generateEntityRel(actualResult.getTypesImplementingList()));
-			result = result.setAnnotation("calls", generateEntityRel(actualResult.getMethodCallsList()));
+			result = result.setAnnotation("types", types.done());
+			result = result.setAnnotation("methods", methods.done());
+			result = result.setAnnotation("extends", extendz.done());
+			result = result.setAnnotation("implements", implementz.done());
+			result = result.setAnnotation("calls", calls.done());
 			return result;
 		} catch (Exception ex) {
 			System.err.print(ex.toString());
@@ -138,20 +158,16 @@ public class CLRInfoRascalBridge {
 		}
 	}
 
-	private static IRelation generateEntityRel(List<EntityRel> typesInheritanceList) {
-		IRelationWriter result = VF.relationWriter(entityRel);
-		for (EntityRel rel : typesInheritanceList) {
-			result.insert(VF.tuple(generateSingleEntityArray(rel.getFrom()), generateSingleEntityArray(rel.getTo())));
+	private static void addToEntityRels(IRelationWriter destination, List<EntityRel> source) {
+		for (EntityRel rel : source) {
+			destination.insert(VF.tuple(generateSingleEntityArray(rel.getFrom()), generateSingleEntityArray(rel.getTo())));
 		}
-		return result.done();
 	}
 
-	private static ISet generateEntitySet(List<Entity> typesList) {
-		ISetWriter result = VF.setWriter(entityDataType);
-		for (Entity clrEntity : typesList) {
-			result.insert(generateSingleEntityArray(clrEntity));
+	private static void addToEntitySet(ISetWriter destination, List<Entity> source) {
+		for (Entity clrEntity : source) {
+			destination.insert(generateSingleEntityArray(clrEntity));
 		}
-		return result.done();
 	}
 
 	private static IList generateEntityList(List<Entity> typesList) {
@@ -254,12 +270,12 @@ public class CLRInfoRascalBridge {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		//IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
 		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/MiscUtil.dll")));
-		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
-	//	IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
+//		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
+	IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
 		
 		System.out.print(((IConstructor) result).getAnnotation("methods"));
 	}
-
+/*
 	private static InformationResponse getInformationFromCLR(String... assemblies) throws UnknownHostException,
 			IOException, InvalidProtocolBufferException {
 		Socket clientSocket = new Socket("localhost", 5555);
@@ -269,6 +285,7 @@ public class CLRInfoRascalBridge {
 		req.addAllAssemblies(Arrays.asList(assemblies));
 		InformationRequest actualRequest = req.build();
 		actualRequest.writeDelimitedTo(outToServer);
+		int amountOfGroups = CodedInputStream.newInstance(inFromServer).readRawVarint32();
 		return InformationResponse.parseDelimitedFrom(inFromServer);
-	}
+	}*/
 }

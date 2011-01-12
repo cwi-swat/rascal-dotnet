@@ -43,9 +43,8 @@ namespace TestProject
 	{
 		static void Main(string[] args)
 		{
-			var req = InformationRequest.CreateBuilder();
-			req.AssembliesList.Add(Assembly.GetExecutingAssembly().Location);
-			var result = Landman.Rascal.CLRInfo.IPCServer.Program.HandleRequest(req.Build());
+			var types = Landman.Rascal.CLRInfo.IPCServer.Program.PartitionTypes(new String[] { Assembly.GetExecutingAssembly().Location }, 100);
+			var result = Landman.Rascal.CLRInfo.IPCServer.Program.GenerateResponseFor(types.First());
 			Console.WriteLine(result.ToString());
 		}
 	}
