@@ -82,8 +82,7 @@ public class CLRInfoRascalBridge {
 		anonymousClass = TF.constructor(store, idDataType, "anonymousClass", TF.integerType(), "nr");
 		displayClass = TF.constructor(store, idDataType, "displayClass", TF.integerType(), "nr");
 
-		typeParameter = TF.constructor(store, idDataType, "typeParameter", TF.stringType(), "name",
-				TF.listType(constrainDataType), "constrains");
+		typeParameter = TF.constructor(store, idDataType, "typeParameter", TF.stringType(), "name");
 		enumz = TF.constructor(store, idDataType, "enum", TF.stringType(), "name");
 		arrayz = TF.constructor(store, idDataType, "array", entity, "elementType");
 
@@ -234,29 +233,24 @@ public class CLRInfoRascalBridge {
 
 	private static IValue createTypeParameter(Id currentId) {
 		assert currentId.getKind() == IdKind.TypeParameter;
-		IListWriter constrains = VF.listWriter();
-		for (Constrain con : currentId.getConstrainsList()) {
-			switch (con.getKind()) {
-				case Entity:
-					constrains.append(implementz.make(VF, generateSingleEntityArray(con.getConstrainEntity())));
-					break;
-				case HasConstructor:
-					constrains.append(hasDefaultConstructor.make(VF));
-					break;
-				case IsClass:
-					constrains.append(isClass.make(VF));
-					break;
-				case IsStruct:
-					constrains.append(isStruct.make(VF));
-					break;
-				default:
-					break;
-			}
+		return typeParameter.make(VF, VF.string(currentId.getName()));
+	}
+
+	private static IValue createConstrain(Constrain constrain) {
+		switch (constrain.getKind()) {
+			case Entity:
+				return implementz.make(VF, generateSingleEntityArray(constrain.getConstrainEntity()));
+			case HasConstructor:
+				return hasDefaultConstructor.make(VF);
+			case IsClass:
+				return isClass.make(VF);
+			case IsStruct:
+				return isStruct.make(VF);
+			case None:
+				return none.make(VF);
+			default:
+				throw new RuntimeException("Unkown constrain type");
 		}
-		if (currentId.getConstrainsCount() == 0) {
-			constrains.append(none.make(VF));
-		}
-		return typeParameter.make(VF, VF.string(currentId.getName()), constrains.done());
 	}
 
 	private static IValue createTypeWithName(Type targetType, Id currentId) {
@@ -270,8 +264,8 @@ public class CLRInfoRascalBridge {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		//IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
 		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/MiscUtil.dll")));
-//		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
-	IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
+		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
+	//IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
 		
 		System.out.print(((IConstructor) result).getAnnotation("methods"));
 	}

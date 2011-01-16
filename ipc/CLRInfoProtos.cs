@@ -17,6 +17,8 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
     internal static pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.EntityRel, global::Landman.Rascal.CLRInfo.Protobuf.EntityRel.Builder> internal__static_Landman_Rascal_CLRInfo_Protobuf_EntityRel__FieldAccessorTable;
     internal static pbd::MessageDescriptor internal__static_Landman_Rascal_CLRInfo_Protobuf_ModifierRel__Descriptor;
     internal static pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.ModifierRel, global::Landman.Rascal.CLRInfo.Protobuf.ModifierRel.Builder> internal__static_Landman_Rascal_CLRInfo_Protobuf_ModifierRel__FieldAccessorTable;
+    internal static pbd::MessageDescriptor internal__static_Landman_Rascal_CLRInfo_Protobuf_ConstrainRel__Descriptor;
+    internal static pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel, global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel.Builder> internal__static_Landman_Rascal_CLRInfo_Protobuf_ConstrainRel__FieldAccessorTable;
     internal static pbd::MessageDescriptor internal__static_Landman_Rascal_CLRInfo_Protobuf_Entity__Descriptor;
     internal static pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.Entity, global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder> internal__static_Landman_Rascal_CLRInfo_Protobuf_Entity__FieldAccessorTable;
     internal static pbd::MessageDescriptor internal__static_Landman_Rascal_CLRInfo_Protobuf_Id__Descriptor;
@@ -43,51 +45,54 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
           "Y2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5IoMBCgtNb2RpZmllclJlbBI3" + 
           "CgZFbnRpdHkYASACKAsyJy5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3Rv" + 
           "YnVmLkVudGl0eRI7CghNb2RpZmllchgCIAIoDjIpLkxhbmRtYW4uUmFzY2Fs" + 
-          "LkNMUkluZm8uUHJvdG9idWYuTW9kaWZpZXIiOgoGRW50aXR5EjAKA0lkcxgB" + 
-          "IAMoCzIjLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuSWQitAgK" + 
-          "AklkEjgKBEtpbmQYASACKA4yKi5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlBy" + 
-          "b3RvYnVmLklkLklkS2luZBIMCgROYW1lGAIgASgJEjcKBlBhcmFtcxgDIAMo" + 
-          "CzInLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5EjsK" + 
-          "ClJldHVyblR5cGUYBCABKAsyJy5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlBy" + 
-          "b3RvYnVmLkVudGl0eRI3CgZTZXR0ZXIYBSABKAsyJy5MYW5kbWFuLlJhc2Nh" + 
-          "bC5DTFJJbmZvLlByb3RvYnVmLkVudGl0eRI3CgZHZXR0ZXIYBiABKAsyJy5M" + 
-          "YW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVmLkVudGl0eRILCgNfSWQY" + 
-          "ByABKAUSSQoOX1ByaW1pdGl2ZVR5cGUYCCABKA4yMS5MYW5kbWFuLlJhc2Nh" + 
-          "bC5DTFJJbmZvLlByb3RvYnVmLklkLlByaW1pdGl2ZVR5cGUSPAoLRWxlbWVu" + 
-          "dFR5cGUYCSABKAsyJy5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVm" + 
-          "LkVudGl0eRI+CgpDb25zdHJhaW5zGAogAygLMiouTGFuZG1hbi5SYXNjYWwu" + 
-          "Q0xSSW5mby5Qcm90b2J1Zi5Db25zdHJhaW4i5wIKBklkS2luZBINCglOYW1l" + 
-          "c3BhY2UQABIJCgVDbGFzcxABEhAKDEdlbmVyaWNDbGFzcxACEg0KCUludGVy" + 
-          "ZmFjZRADEhQKEEdlbmVyaWNJbnRlcmZhY2UQBBIPCgtFbnVtZXJhdGlvbhAF" + 
-          "EhIKDkFub255bW91c0NsYXNzEAYSEAoMRGlzcGxheUNsYXNzEAcSCgoGTWV0" + 
-          "aG9kEAoSDwoLQ29uc3RydWN0b3IQCxINCglGaW5hbGl6ZXIQDBIPCgtJbml0" + 
-          "aWFsaXplchANEgkKBUZpZWxkEBQSDAoIUHJvcGVydHkQFRIJCgVFdmVudBAW" + 
-          "Eg0KCVBhcmFtZXRlchAXEgwKCFZhcmlhYmxlEBgSEAoMRW51bUNvbnN0YW50" + 
-          "EBkSDQoJUHJpbWl0aXZlEB4SCQoFQXJyYXkQHxIRCg1UeXBlUGFyYW1ldGVy" + 
-          "ECgSCgoGVW5rb3duECkSDAoIV2lsZGNhcmQQKiK9AQoNUHJpbWl0aXZlVHlw" + 
-          "ZRIICgRCb29sEAASCAoEQnl0ZRABEgkKBVNieXRlEAISCAoEQ2hhchADEgsK" + 
-          "B0RlY2ltYWwQBBIKCgZEb3VibGUQBRIJCgVGbG9hdBAGEgcKA0ludBAHEggK" + 
-          "BFVpbnQQCBIICgRMb25nEAkSCQoFVWxvbmcQChIKCgZPYmplY3QQCxIJCgVT" + 
-          "aG9ydBAMEgoKBlVzaG9ydBANEgoKBlN0cmluZxAOEggKBFZvaWQQDyLrAQoJ" + 
-          "Q29uc3RyYWluEkYKBEtpbmQYASACKA4yOC5MYW5kbWFuLlJhc2NhbC5DTFJJ" + 
-          "bmZvLlByb3RvYnVmLkNvbnN0cmFpbi5Db25zdHJhaW5LaW5kEkAKD0NvbnN0" + 
-          "cmFpbkVudGl0eRgCIAEoCzInLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJv" + 
-          "dG9idWYuRW50aXR5IlQKDUNvbnN0cmFpbktpbmQSCAoETm9uZRAAEgoKBkVu" + 
-          "dGl0eRABEgsKB0lzQ2xhc3MQAhIMCghJc1N0cnVjdBADEhIKDkhhc0NvbnN0" + 
-          "cnVjdG9yEAQiKAoSSW5mb3JtYXRpb25SZXF1ZXN0EhIKCkFzc2VtYmxpZXMY" + 
-          "ASADKAkilgMKE0luZm9ybWF0aW9uUmVzcG9uc2USNgoFVHlwZXMYASADKAsy" + 
-          "Jy5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVmLkVudGl0eRI4CgdN" + 
-          "ZXRob2RzGAIgAygLMicuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1" + 
-          "Zi5FbnRpdHkSRAoQVHlwZXNJbmhlcml0YW5jZRgKIAMoCzIqLkxhbmRtYW4u" + 
-          "UmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5UmVsEkUKEVR5cGVzSW1w" + 
-          "bGVtZW50aW5nGAsgAygLMiouTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90" + 
-          "b2J1Zi5FbnRpdHlSZWwSPwoLTWV0aG9kQ2FsbHMYFCADKAsyKi5MYW5kbWFu" + 
-          "LlJhc2NhbC5DTFJJbmZvLlByb3RvYnVmLkVudGl0eVJlbBI/CglNb2RpZmll" + 
-          "cnMYHiADKAsyLC5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVmLk1v" + 
-          "ZGlmaWVyUmVsKloKCE1vZGlmaWVyEgoKBlB1YmxpYxAAEg0KCVByb3RlY3Rl" + 
-          "ZBABEgwKCEludGVybmFsEAISCwoHUHJpdmF0ZRADEgoKBlN0YXRpYxAEEgwK" + 
-          "CEFic3RyYWN0EAVCNUgBwj4wCh9MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlBy" + 
-          "b3RvYnVmEg1DTFJJbmZvUHJvdG9z");
+          "LkNMUkluZm8uUHJvdG9idWYuTW9kaWZpZXIihgEKDENvbnN0cmFpblJlbBI3" + 
+          "CgZFbnRpdHkYASACKAsyJy5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3Rv" + 
+          "YnVmLkVudGl0eRI9CglDb25zdHJhaW4YAiACKAsyKi5MYW5kbWFuLlJhc2Nh" + 
+          "bC5DTFJJbmZvLlByb3RvYnVmLkNvbnN0cmFpbiI6CgZFbnRpdHkSMAoDSWRz" + 
+          "GAEgAygLMiMuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5JZCL0" + 
+          "BwoCSWQSOAoES2luZBgBIAIoDjIqLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8u" + 
+          "UHJvdG9idWYuSWQuSWRLaW5kEgwKBE5hbWUYAiABKAkSNwoGUGFyYW1zGAMg" + 
+          "AygLMicuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5FbnRpdHkS" + 
+          "OwoKUmV0dXJuVHlwZRgEIAEoCzInLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8u" + 
+          "UHJvdG9idWYuRW50aXR5EjcKBlNldHRlchgFIAEoCzInLkxhbmRtYW4uUmFz" + 
+          "Y2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5EjcKBkdldHRlchgGIAEoCzIn" + 
+          "LkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5EgsKA19J" + 
+          "ZBgHIAEoBRJJCg5fUHJpbWl0aXZlVHlwZRgIIAEoDjIxLkxhbmRtYW4uUmFz" + 
+          "Y2FsLkNMUkluZm8uUHJvdG9idWYuSWQuUHJpbWl0aXZlVHlwZRI8CgtFbGVt" + 
+          "ZW50VHlwZRgJIAEoCzInLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9i" + 
+          "dWYuRW50aXR5IucCCgZJZEtpbmQSDQoJTmFtZXNwYWNlEAASCQoFQ2xhc3MQ" + 
+          "ARIQCgxHZW5lcmljQ2xhc3MQAhINCglJbnRlcmZhY2UQAxIUChBHZW5lcmlj" + 
+          "SW50ZXJmYWNlEAQSDwoLRW51bWVyYXRpb24QBRISCg5Bbm9ueW1vdXNDbGFz" + 
+          "cxAGEhAKDERpc3BsYXlDbGFzcxAHEgoKBk1ldGhvZBAKEg8KC0NvbnN0cnVj" + 
+          "dG9yEAsSDQoJRmluYWxpemVyEAwSDwoLSW5pdGlhbGl6ZXIQDRIJCgVGaWVs" + 
+          "ZBAUEgwKCFByb3BlcnR5EBUSCQoFRXZlbnQQFhINCglQYXJhbWV0ZXIQFxIM" + 
+          "CghWYXJpYWJsZRAYEhAKDEVudW1Db25zdGFudBAZEg0KCVByaW1pdGl2ZRAe" + 
+          "EgkKBUFycmF5EB8SEQoNVHlwZVBhcmFtZXRlchAoEgoKBlVua293bhApEgwK" + 
+          "CFdpbGRjYXJkECoivQEKDVByaW1pdGl2ZVR5cGUSCAoEQm9vbBAAEggKBEJ5" + 
+          "dGUQARIJCgVTYnl0ZRACEggKBENoYXIQAxILCgdEZWNpbWFsEAQSCgoGRG91" + 
+          "YmxlEAUSCQoFRmxvYXQQBhIHCgNJbnQQBxIICgRVaW50EAgSCAoETG9uZxAJ" + 
+          "EgkKBVVsb25nEAoSCgoGT2JqZWN0EAsSCQoFU2hvcnQQDBIKCgZVc2hvcnQQ" + 
+          "DRIKCgZTdHJpbmcQDhIICgRWb2lkEA8i6wEKCUNvbnN0cmFpbhJGCgRLaW5k" + 
+          "GAEgAigOMjguTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5Db25z" + 
+          "dHJhaW4uQ29uc3RyYWluS2luZBJACg9Db25zdHJhaW5FbnRpdHkYAiABKAsy" + 
+          "Jy5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVmLkVudGl0eSJUCg1D" + 
+          "b25zdHJhaW5LaW5kEggKBE5vbmUQABIKCgZFbnRpdHkQARILCgdJc0NsYXNz" + 
+          "EAISDAoISXNTdHJ1Y3QQAxISCg5IYXNDb25zdHJ1Y3RvchAEIigKEkluZm9y" + 
+          "bWF0aW9uUmVxdWVzdBISCgpBc3NlbWJsaWVzGAEgAygJIuADChNJbmZvcm1h" + 
+          "dGlvblJlc3BvbnNlEjYKBVR5cGVzGAEgAygLMicuTGFuZG1hbi5SYXNjYWwu" + 
+          "Q0xSSW5mby5Qcm90b2J1Zi5FbnRpdHkSOAoHTWV0aG9kcxgCIAMoCzInLkxh" + 
+          "bmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5EkQKEFR5cGVz" + 
+          "SW5oZXJpdGFuY2UYCiADKAsyKi5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlBy" + 
+          "b3RvYnVmLkVudGl0eVJlbBJFChFUeXBlc0ltcGxlbWVudGluZxgLIAMoCzIq" + 
+          "LkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5UmVsEj8K" + 
+          "C01ldGhvZENhbGxzGBQgAygLMiouTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Q" + 
+          "cm90b2J1Zi5FbnRpdHlSZWwSPwoJTW9kaWZpZXJzGB4gAygLMiwuTGFuZG1h" + 
+          "bi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5Nb2RpZmllclJlbBJIChFHZW5l" + 
+          "cmljQ29uc3RyYWlucxgfIAMoCzItLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8u" + 
+          "UHJvdG9idWYuQ29uc3RyYWluUmVsKloKCE1vZGlmaWVyEgoKBlB1YmxpYxAA" + 
+          "Eg0KCVByb3RlY3RlZBABEgwKCEludGVybmFsEAISCwoHUHJpdmF0ZRADEgoK" + 
+          "BlN0YXRpYxAEEgwKCEFic3RyYWN0EAVCNUgBwj4wCh9MYW5kbWFuLlJhc2Nh" + 
+          "bC5DTFJJbmZvLlByb3RvYnVmEg1DTFJJbmZvUHJvdG9z");
       pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
         descriptor = root;
         internal__static_Landman_Rascal_CLRInfo_Protobuf_EntityRel__Descriptor = Descriptor.MessageTypes[0];
@@ -98,26 +103,30 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         internal__static_Landman_Rascal_CLRInfo_Protobuf_ModifierRel__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.ModifierRel, global::Landman.Rascal.CLRInfo.Protobuf.ModifierRel.Builder>(internal__static_Landman_Rascal_CLRInfo_Protobuf_ModifierRel__Descriptor,
                 new string[] { "Entity", "Modifier", });
-        internal__static_Landman_Rascal_CLRInfo_Protobuf_Entity__Descriptor = Descriptor.MessageTypes[2];
+        internal__static_Landman_Rascal_CLRInfo_Protobuf_ConstrainRel__Descriptor = Descriptor.MessageTypes[2];
+        internal__static_Landman_Rascal_CLRInfo_Protobuf_ConstrainRel__FieldAccessorTable = 
+            new pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel, global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel.Builder>(internal__static_Landman_Rascal_CLRInfo_Protobuf_ConstrainRel__Descriptor,
+                new string[] { "Entity", "Constrain", });
+        internal__static_Landman_Rascal_CLRInfo_Protobuf_Entity__Descriptor = Descriptor.MessageTypes[3];
         internal__static_Landman_Rascal_CLRInfo_Protobuf_Entity__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.Entity, global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder>(internal__static_Landman_Rascal_CLRInfo_Protobuf_Entity__Descriptor,
                 new string[] { "Ids", });
-        internal__static_Landman_Rascal_CLRInfo_Protobuf_Id__Descriptor = Descriptor.MessageTypes[3];
+        internal__static_Landman_Rascal_CLRInfo_Protobuf_Id__Descriptor = Descriptor.MessageTypes[4];
         internal__static_Landman_Rascal_CLRInfo_Protobuf_Id__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.Id, global::Landman.Rascal.CLRInfo.Protobuf.Id.Builder>(internal__static_Landman_Rascal_CLRInfo_Protobuf_Id__Descriptor,
-                new string[] { "Kind", "Name", "Params", "ReturnType", "Setter", "Getter", "Id_", "PrimitiveType", "ElementType", "Constrains", });
-        internal__static_Landman_Rascal_CLRInfo_Protobuf_Constrain__Descriptor = Descriptor.MessageTypes[4];
+                new string[] { "Kind", "Name", "Params", "ReturnType", "Setter", "Getter", "Id_", "PrimitiveType", "ElementType", });
+        internal__static_Landman_Rascal_CLRInfo_Protobuf_Constrain__Descriptor = Descriptor.MessageTypes[5];
         internal__static_Landman_Rascal_CLRInfo_Protobuf_Constrain__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.Constrain, global::Landman.Rascal.CLRInfo.Protobuf.Constrain.Builder>(internal__static_Landman_Rascal_CLRInfo_Protobuf_Constrain__Descriptor,
                 new string[] { "Kind", "ConstrainEntity", });
-        internal__static_Landman_Rascal_CLRInfo_Protobuf_InformationRequest__Descriptor = Descriptor.MessageTypes[5];
+        internal__static_Landman_Rascal_CLRInfo_Protobuf_InformationRequest__Descriptor = Descriptor.MessageTypes[6];
         internal__static_Landman_Rascal_CLRInfo_Protobuf_InformationRequest__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.InformationRequest, global::Landman.Rascal.CLRInfo.Protobuf.InformationRequest.Builder>(internal__static_Landman_Rascal_CLRInfo_Protobuf_InformationRequest__Descriptor,
                 new string[] { "Assemblies", });
-        internal__static_Landman_Rascal_CLRInfo_Protobuf_InformationResponse__Descriptor = Descriptor.MessageTypes[6];
+        internal__static_Landman_Rascal_CLRInfo_Protobuf_InformationResponse__Descriptor = Descriptor.MessageTypes[7];
         internal__static_Landman_Rascal_CLRInfo_Protobuf_InformationResponse__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.InformationResponse, global::Landman.Rascal.CLRInfo.Protobuf.InformationResponse.Builder>(internal__static_Landman_Rascal_CLRInfo_Protobuf_InformationResponse__Descriptor,
-                new string[] { "Types", "Methods", "TypesInheritance", "TypesImplementing", "MethodCalls", "Modifiers", });
+                new string[] { "Types", "Methods", "TypesInheritance", "TypesImplementing", "MethodCalls", "Modifiers", "GenericConstrains", });
         pb::ExtensionRegistry registry = pb::ExtensionRegistry.CreateInstance();
         RegisterAllExtensions(registry);
         global::Google.ProtocolBuffers.DescriptorProtos.CSharpOptions.RegisterAllExtensions(registry);
@@ -740,6 +749,312 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
     }
   }
   
+  public sealed partial class ConstrainRel : pb::GeneratedMessage<ConstrainRel, ConstrainRel.Builder> {
+    private static readonly ConstrainRel defaultInstance = new Builder().BuildPartial();
+    public static ConstrainRel DefaultInstance {
+      get { return defaultInstance; }
+    }
+    
+    public override ConstrainRel DefaultInstanceForType {
+      get { return defaultInstance; }
+    }
+    
+    protected override ConstrainRel ThisMessage {
+      get { return this; }
+    }
+    
+    public static pbd::MessageDescriptor Descriptor {
+      get { return global::Landman.Rascal.CLRInfo.Protobuf.CLRInfoProtos.internal__static_Landman_Rascal_CLRInfo_Protobuf_ConstrainRel__Descriptor; }
+    }
+    
+    protected override pb::FieldAccess.FieldAccessorTable<ConstrainRel, ConstrainRel.Builder> InternalFieldAccessors {
+      get { return global::Landman.Rascal.CLRInfo.Protobuf.CLRInfoProtos.internal__static_Landman_Rascal_CLRInfo_Protobuf_ConstrainRel__FieldAccessorTable; }
+    }
+    
+    public const int EntityFieldNumber = 1;
+    private bool hasEntity;
+    private global::Landman.Rascal.CLRInfo.Protobuf.Entity entity_ = global::Landman.Rascal.CLRInfo.Protobuf.Entity.DefaultInstance;
+    public bool HasEntity {
+      get { return hasEntity; }
+    }
+    public global::Landman.Rascal.CLRInfo.Protobuf.Entity Entity {
+      get { return entity_; }
+    }
+    
+    public const int ConstrainFieldNumber = 2;
+    private bool hasConstrain;
+    private global::Landman.Rascal.CLRInfo.Protobuf.Constrain constrain_ = global::Landman.Rascal.CLRInfo.Protobuf.Constrain.DefaultInstance;
+    public bool HasConstrain {
+      get { return hasConstrain; }
+    }
+    public global::Landman.Rascal.CLRInfo.Protobuf.Constrain Constrain {
+      get { return constrain_; }
+    }
+    
+    public override bool IsInitialized {
+      get {
+        if (!hasEntity) return false;
+        if (!hasConstrain) return false;
+        if (!Entity.IsInitialized) return false;
+        if (!Constrain.IsInitialized) return false;
+        return true;
+      }
+    }
+    
+    public override void WriteTo(pb::CodedOutputStream output) {
+      int size = SerializedSize;
+      if (HasEntity) {
+        output.WriteMessage(1, Entity);
+      }
+      if (HasConstrain) {
+        output.WriteMessage(2, Constrain);
+      }
+      UnknownFields.WriteTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public override int SerializedSize {
+      get {
+        int size = memoizedSerializedSize;
+        if (size != -1) return size;
+        
+        size = 0;
+        if (HasEntity) {
+          size += pb::CodedOutputStream.ComputeMessageSize(1, Entity);
+        }
+        if (HasConstrain) {
+          size += pb::CodedOutputStream.ComputeMessageSize(2, Constrain);
+        }
+        size += UnknownFields.SerializedSize;
+        memoizedSerializedSize = size;
+        return size;
+      }
+    }
+    
+    public static ConstrainRel ParseFrom(pb::ByteString data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static ConstrainRel ParseFrom(pb::ByteString data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static ConstrainRel ParseFrom(byte[] data) {
+      return ((Builder) CreateBuilder().MergeFrom(data)).BuildParsed();
+    }
+    public static ConstrainRel ParseFrom(byte[] data, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(data, extensionRegistry)).BuildParsed();
+    }
+    public static ConstrainRel ParseFrom(global::System.IO.Stream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static ConstrainRel ParseFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    public static ConstrainRel ParseDelimitedFrom(global::System.IO.Stream input) {
+      return CreateBuilder().MergeDelimitedFrom(input).BuildParsed();
+    }
+    public static ConstrainRel ParseDelimitedFrom(global::System.IO.Stream input, pb::ExtensionRegistry extensionRegistry) {
+      return CreateBuilder().MergeDelimitedFrom(input, extensionRegistry).BuildParsed();
+    }
+    public static ConstrainRel ParseFrom(pb::CodedInputStream input) {
+      return ((Builder) CreateBuilder().MergeFrom(input)).BuildParsed();
+    }
+    public static ConstrainRel ParseFrom(pb::CodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+      return ((Builder) CreateBuilder().MergeFrom(input, extensionRegistry)).BuildParsed();
+    }
+    public static Builder CreateBuilder() { return new Builder(); }
+    public override Builder ToBuilder() { return CreateBuilder(this); }
+    public override Builder CreateBuilderForType() { return new Builder(); }
+    public static Builder CreateBuilder(ConstrainRel prototype) {
+      return (Builder) new Builder().MergeFrom(prototype);
+    }
+    
+    public sealed partial class Builder : pb::GeneratedBuilder<ConstrainRel, Builder> {
+      protected override Builder ThisBuilder {
+        get { return this; }
+      }
+      public Builder() {}
+      
+      ConstrainRel result = new ConstrainRel();
+      
+      protected override ConstrainRel MessageBeingBuilt {
+        get { return result; }
+      }
+      
+      public override Builder Clear() {
+        result = new ConstrainRel();
+        return this;
+      }
+      
+      public override Builder Clone() {
+        return new Builder().MergeFrom(result);
+      }
+      
+      public override pbd::MessageDescriptor DescriptorForType {
+        get { return global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel.Descriptor; }
+      }
+      
+      public override ConstrainRel DefaultInstanceForType {
+        get { return global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel.DefaultInstance; }
+      }
+      
+      public override ConstrainRel BuildPartial() {
+        if (result == null) {
+          throw new global::System.InvalidOperationException("build() has already been called on this Builder");
+        }
+        ConstrainRel returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public override Builder MergeFrom(pb::IMessage other) {
+        if (other is ConstrainRel) {
+          return MergeFrom((ConstrainRel) other);
+        } else {
+          base.MergeFrom(other);
+          return this;
+        }
+      }
+      
+      public override Builder MergeFrom(ConstrainRel other) {
+        if (other == global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel.DefaultInstance) return this;
+        if (other.HasEntity) {
+          MergeEntity(other.Entity);
+        }
+        if (other.HasConstrain) {
+          MergeConstrain(other.Constrain);
+        }
+        this.MergeUnknownFields(other.UnknownFields);
+        return this;
+      }
+      
+      public override Builder MergeFrom(pb::CodedInputStream input) {
+        return MergeFrom(input, pb::ExtensionRegistry.Empty);
+      }
+      
+      public override Builder MergeFrom(pb::CodedInputStream input, pb::ExtensionRegistry extensionRegistry) {
+        pb::UnknownFieldSet.Builder unknownFields = null;
+        while (true) {
+          uint tag = input.ReadTag();
+          switch (tag) {
+            case 0: {
+              if (unknownFields != null) {
+                this.UnknownFields = unknownFields.Build();
+              }
+              return this;
+            }
+            default: {
+              if (pb::WireFormat.IsEndGroupTag(tag)) {
+                if (unknownFields != null) {
+                  this.UnknownFields = unknownFields.Build();
+                }
+                return this;
+              }
+              if (unknownFields == null) {
+                unknownFields = pb::UnknownFieldSet.CreateBuilder(this.UnknownFields);
+              }
+              ParseUnknownField(input, unknownFields, extensionRegistry, tag);
+              break;
+            }
+            case 10: {
+              global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder subBuilder = global::Landman.Rascal.CLRInfo.Protobuf.Entity.CreateBuilder();
+              if (HasEntity) {
+                subBuilder.MergeFrom(Entity);
+              }
+              input.ReadMessage(subBuilder, extensionRegistry);
+              Entity = subBuilder.BuildPartial();
+              break;
+            }
+            case 18: {
+              global::Landman.Rascal.CLRInfo.Protobuf.Constrain.Builder subBuilder = global::Landman.Rascal.CLRInfo.Protobuf.Constrain.CreateBuilder();
+              if (HasConstrain) {
+                subBuilder.MergeFrom(Constrain);
+              }
+              input.ReadMessage(subBuilder, extensionRegistry);
+              Constrain = subBuilder.BuildPartial();
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      public bool HasEntity {
+       get { return result.HasEntity; }
+      }
+      public global::Landman.Rascal.CLRInfo.Protobuf.Entity Entity {
+        get { return result.Entity; }
+        set { SetEntity(value); }
+      }
+      public Builder SetEntity(global::Landman.Rascal.CLRInfo.Protobuf.Entity value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        result.hasEntity = true;
+        result.entity_ = value;
+        return this;
+      }
+      public Builder SetEntity(global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        result.hasEntity = true;
+        result.entity_ = builderForValue.Build();
+        return this;
+      }
+      public Builder MergeEntity(global::Landman.Rascal.CLRInfo.Protobuf.Entity value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        if (result.HasEntity &&
+            result.entity_ != global::Landman.Rascal.CLRInfo.Protobuf.Entity.DefaultInstance) {
+            result.entity_ = global::Landman.Rascal.CLRInfo.Protobuf.Entity.CreateBuilder(result.entity_).MergeFrom(value).BuildPartial();
+        } else {
+          result.entity_ = value;
+        }
+        result.hasEntity = true;
+        return this;
+      }
+      public Builder ClearEntity() {
+        result.hasEntity = false;
+        result.entity_ = global::Landman.Rascal.CLRInfo.Protobuf.Entity.DefaultInstance;
+        return this;
+      }
+      
+      public bool HasConstrain {
+       get { return result.HasConstrain; }
+      }
+      public global::Landman.Rascal.CLRInfo.Protobuf.Constrain Constrain {
+        get { return result.Constrain; }
+        set { SetConstrain(value); }
+      }
+      public Builder SetConstrain(global::Landman.Rascal.CLRInfo.Protobuf.Constrain value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        result.hasConstrain = true;
+        result.constrain_ = value;
+        return this;
+      }
+      public Builder SetConstrain(global::Landman.Rascal.CLRInfo.Protobuf.Constrain.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        result.hasConstrain = true;
+        result.constrain_ = builderForValue.Build();
+        return this;
+      }
+      public Builder MergeConstrain(global::Landman.Rascal.CLRInfo.Protobuf.Constrain value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        if (result.HasConstrain &&
+            result.constrain_ != global::Landman.Rascal.CLRInfo.Protobuf.Constrain.DefaultInstance) {
+            result.constrain_ = global::Landman.Rascal.CLRInfo.Protobuf.Constrain.CreateBuilder(result.constrain_).MergeFrom(value).BuildPartial();
+        } else {
+          result.constrain_ = value;
+        }
+        result.hasConstrain = true;
+        return this;
+      }
+      public Builder ClearConstrain() {
+        result.hasConstrain = false;
+        result.constrain_ = global::Landman.Rascal.CLRInfo.Protobuf.Constrain.DefaultInstance;
+        return this;
+      }
+    }
+    static ConstrainRel() {
+      object.ReferenceEquals(global::Landman.Rascal.CLRInfo.Protobuf.CLRInfoProtos.Descriptor, null);
+    }
+  }
+  
   public sealed partial class Entity : pb::GeneratedMessage<Entity, Entity.Builder> {
     private static readonly Entity defaultInstance = new Builder().BuildPartial();
     public static Entity DefaultInstance {
@@ -1147,18 +1462,6 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       get { return elementType_; }
     }
     
-    public const int ConstrainsFieldNumber = 10;
-    private pbc::PopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.Constrain> constrains_ = new pbc::PopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.Constrain>();
-    public scg::IList<global::Landman.Rascal.CLRInfo.Protobuf.Constrain> ConstrainsList {
-      get { return constrains_; }
-    }
-    public int ConstrainsCount {
-      get { return constrains_.Count; }
-    }
-    public global::Landman.Rascal.CLRInfo.Protobuf.Constrain GetConstrains(int index) {
-      return constrains_[index];
-    }
-    
     public override bool IsInitialized {
       get {
         if (!hasKind) return false;
@@ -1176,9 +1479,6 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         }
         if (HasElementType) {
           if (!ElementType.IsInitialized) return false;
-        }
-        foreach (global::Landman.Rascal.CLRInfo.Protobuf.Constrain element in ConstrainsList) {
-          if (!element.IsInitialized) return false;
         }
         return true;
       }
@@ -1212,9 +1512,6 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       }
       if (HasElementType) {
         output.WriteMessage(9, ElementType);
-      }
-      foreach (global::Landman.Rascal.CLRInfo.Protobuf.Constrain element in ConstrainsList) {
-        output.WriteMessage(10, element);
       }
       UnknownFields.WriteTo(output);
     }
@@ -1252,9 +1549,6 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         }
         if (HasElementType) {
           size += pb::CodedOutputStream.ComputeMessageSize(9, ElementType);
-        }
-        foreach (global::Landman.Rascal.CLRInfo.Protobuf.Constrain element in ConstrainsList) {
-          size += pb::CodedOutputStream.ComputeMessageSize(10, element);
         }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
@@ -1333,7 +1627,6 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
           throw new global::System.InvalidOperationException("build() has already been called on this Builder");
         }
         result.params_.MakeReadOnly();
-        result.constrains_.MakeReadOnly();
         Id returnMe = result;
         result = null;
         return returnMe;
@@ -1376,9 +1669,6 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         }
         if (other.HasElementType) {
           MergeElementType(other.ElementType);
-        }
-        if (other.constrains_.Count != 0) {
-          base.AddRange(other.constrains_, result.constrains_);
         }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
@@ -1484,12 +1774,6 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
               }
               input.ReadMessage(subBuilder, extensionRegistry);
               ElementType = subBuilder.BuildPartial();
-              break;
-            }
-            case 82: {
-              global::Landman.Rascal.CLRInfo.Protobuf.Constrain.Builder subBuilder = global::Landman.Rascal.CLRInfo.Protobuf.Constrain.CreateBuilder();
-              input.ReadMessage(subBuilder, extensionRegistry);
-              AddConstrains(subBuilder.BuildPartial());
               break;
             }
           }
@@ -1749,44 +2033,6 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       public Builder ClearElementType() {
         result.hasElementType = false;
         result.elementType_ = global::Landman.Rascal.CLRInfo.Protobuf.Entity.DefaultInstance;
-        return this;
-      }
-      
-      public pbc::IPopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.Constrain> ConstrainsList {
-        get { return result.constrains_; }
-      }
-      public int ConstrainsCount {
-        get { return result.ConstrainsCount; }
-      }
-      public global::Landman.Rascal.CLRInfo.Protobuf.Constrain GetConstrains(int index) {
-        return result.GetConstrains(index);
-      }
-      public Builder SetConstrains(int index, global::Landman.Rascal.CLRInfo.Protobuf.Constrain value) {
-        pb::ThrowHelper.ThrowIfNull(value, "value");
-        result.constrains_[index] = value;
-        return this;
-      }
-      public Builder SetConstrains(int index, global::Landman.Rascal.CLRInfo.Protobuf.Constrain.Builder builderForValue) {
-        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
-        result.constrains_[index] = builderForValue.Build();
-        return this;
-      }
-      public Builder AddConstrains(global::Landman.Rascal.CLRInfo.Protobuf.Constrain value) {
-        pb::ThrowHelper.ThrowIfNull(value, "value");
-        result.constrains_.Add(value);
-        return this;
-      }
-      public Builder AddConstrains(global::Landman.Rascal.CLRInfo.Protobuf.Constrain.Builder builderForValue) {
-        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
-        result.constrains_.Add(builderForValue.Build());
-        return this;
-      }
-      public Builder AddRangeConstrains(scg::IEnumerable<global::Landman.Rascal.CLRInfo.Protobuf.Constrain> values) {
-        base.AddRange(values, result.constrains_);
-        return this;
-      }
-      public Builder ClearConstrains() {
-        result.constrains_.Clear();
         return this;
       }
     }
@@ -2428,6 +2674,18 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       return modifiers_[index];
     }
     
+    public const int GenericConstrainsFieldNumber = 31;
+    private pbc::PopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel> genericConstrains_ = new pbc::PopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel>();
+    public scg::IList<global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel> GenericConstrainsList {
+      get { return genericConstrains_; }
+    }
+    public int GenericConstrainsCount {
+      get { return genericConstrains_.Count; }
+    }
+    public global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel GetGenericConstrains(int index) {
+      return genericConstrains_[index];
+    }
+    
     public override bool IsInitialized {
       get {
         foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in TypesList) {
@@ -2446,6 +2704,9 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
           if (!element.IsInitialized) return false;
         }
         foreach (global::Landman.Rascal.CLRInfo.Protobuf.ModifierRel element in ModifiersList) {
+          if (!element.IsInitialized) return false;
+        }
+        foreach (global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel element in GenericConstrainsList) {
           if (!element.IsInitialized) return false;
         }
         return true;
@@ -2471,6 +2732,9 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       }
       foreach (global::Landman.Rascal.CLRInfo.Protobuf.ModifierRel element in ModifiersList) {
         output.WriteMessage(30, element);
+      }
+      foreach (global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel element in GenericConstrainsList) {
+        output.WriteMessage(31, element);
       }
       UnknownFields.WriteTo(output);
     }
@@ -2499,6 +2763,9 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         }
         foreach (global::Landman.Rascal.CLRInfo.Protobuf.ModifierRel element in ModifiersList) {
           size += pb::CodedOutputStream.ComputeMessageSize(30, element);
+        }
+        foreach (global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel element in GenericConstrainsList) {
+          size += pb::CodedOutputStream.ComputeMessageSize(31, element);
         }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
@@ -2582,6 +2849,7 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         result.typesImplementing_.MakeReadOnly();
         result.methodCalls_.MakeReadOnly();
         result.modifiers_.MakeReadOnly();
+        result.genericConstrains_.MakeReadOnly();
         InformationResponse returnMe = result;
         result = null;
         return returnMe;
@@ -2615,6 +2883,9 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         }
         if (other.modifiers_.Count != 0) {
           base.AddRange(other.modifiers_, result.modifiers_);
+        }
+        if (other.genericConstrains_.Count != 0) {
+          base.AddRange(other.genericConstrains_, result.genericConstrains_);
         }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
@@ -2682,6 +2953,12 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
               global::Landman.Rascal.CLRInfo.Protobuf.ModifierRel.Builder subBuilder = global::Landman.Rascal.CLRInfo.Protobuf.ModifierRel.CreateBuilder();
               input.ReadMessage(subBuilder, extensionRegistry);
               AddModifiers(subBuilder.BuildPartial());
+              break;
+            }
+            case 250: {
+              global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel.Builder subBuilder = global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel.CreateBuilder();
+              input.ReadMessage(subBuilder, extensionRegistry);
+              AddGenericConstrains(subBuilder.BuildPartial());
               break;
             }
           }
@@ -2914,6 +3191,44 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       }
       public Builder ClearModifiers() {
         result.modifiers_.Clear();
+        return this;
+      }
+      
+      public pbc::IPopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel> GenericConstrainsList {
+        get { return result.genericConstrains_; }
+      }
+      public int GenericConstrainsCount {
+        get { return result.GenericConstrainsCount; }
+      }
+      public global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel GetGenericConstrains(int index) {
+        return result.GetGenericConstrains(index);
+      }
+      public Builder SetGenericConstrains(int index, global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        result.genericConstrains_[index] = value;
+        return this;
+      }
+      public Builder SetGenericConstrains(int index, global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        result.genericConstrains_[index] = builderForValue.Build();
+        return this;
+      }
+      public Builder AddGenericConstrains(global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        result.genericConstrains_.Add(value);
+        return this;
+      }
+      public Builder AddGenericConstrains(global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        result.genericConstrains_.Add(builderForValue.Build());
+        return this;
+      }
+      public Builder AddRangeGenericConstrains(scg::IEnumerable<global::Landman.Rascal.CLRInfo.Protobuf.ConstrainRel> values) {
+        base.AddRange(values, result.genericConstrains_);
+        return this;
+      }
+      public Builder ClearGenericConstrains() {
+        result.genericConstrains_.Clear();
         return this;
       }
     }

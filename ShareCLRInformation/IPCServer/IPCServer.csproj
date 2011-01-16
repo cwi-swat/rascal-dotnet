@@ -34,9 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MiscUtil">
-      <HintPath>..\lib\MiscUtil.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>..\lib\Mono.Cecil.dll</HintPath>
     </Reference>

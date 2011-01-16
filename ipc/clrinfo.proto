@@ -1,10 +1,10 @@
 package Landman.Rascal.CLRInfo.Protobuf;
 
 
-import "google/protobuf/csharp_options.proto";
+//import "google/protobuf/csharp_options.proto";
 
-option (google.protobuf.csharp_file_options).namespace = "Landman.Rascal.CLRInfo.Protobuf";
-option (google.protobuf.csharp_file_options).umbrella_classname = "CLRInfoProtos";
+//option (google.protobuf.csharp_file_options).namespace = "Landman.Rascal.CLRInfo.Protobuf";
+//option (google.protobuf.csharp_file_options).umbrella_classname = "CLRInfoProtos";
 
 option optimize_for = SPEED;
 
@@ -17,6 +17,11 @@ message EntityRel {
 message ModifierRel {
 	required Entity Entity = 1;
 	required Modifier Modifier = 2;
+}
+
+message ConstrainRel {
+	required Entity Entity = 1;
+	required Constrain Constrain = 2;
 }
 
 message Entity {
@@ -86,7 +91,6 @@ message Id {
 	optional int32 _Id = 7;
 	optional PrimitiveType _PrimitiveType = 8;
 	optional Entity ElementType = 9;
-	repeated Constrain Constrains = 10;
 }
 
 message Constrain {
@@ -125,4 +129,5 @@ message InformationResponse {
 	repeated EntityRel MethodCalls = 20;
 
 	repeated ModifierRel Modifiers = 30;
+	repeated ConstrainRel GenericConstrains = 31;
 }

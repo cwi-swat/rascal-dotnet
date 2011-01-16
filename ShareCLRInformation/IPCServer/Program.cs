@@ -7,8 +7,6 @@ using System.Net.Sockets;
 using System.Net;
 using System.IO;
 using Landman.Rascal.CLRInfo.Protobuf;
-using MiscUtil.IO;
-using MiscUtil.Conversion;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
@@ -106,10 +104,54 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 				.SelectMany(m => GenerateMethodCalls(m)));
 #if ignorefailures
 			} catch { }
+			try {
 #endif
+			result.GenericConstrainsList.AddRange(allTypes.Where(t => t.HasGenericParameters)
+				.SelectMany(t => t.GenericParameters.SelectMany(p => GenerateConstrainsRels(t, p))));
+			result.GenericConstrainsList.AddRange(allMethods.Where(m => m.HasParameters)
+				.SelectMany(m => m.Parameters.SelectMany(p => GenerateConstrainsRels(m, p))));
+#if ignorefailures
+			} catch { }
+#endif
+
 			return result;
 		}
-	
+
+
+		private static IEnumerable<ConstrainRel> GenerateConstrainsRels(TypeReference entity, GenericParameter param)
+		{
+			return GenerateConstrainsRels(GenerateEntity(entity), GenerateConstrains(param));
+		}
+		private static IEnumerable<ConstrainRel> GenerateConstrainsRels(MethodDefinition method, ParameterDefinition param)
+		{
+			var currentEntity = GenerateEntity(method);
+			var actualType = GetActualType(param);
+			IEnumerable<Constrain> constrains = null;
+			if (actualType.IsGenericParameter)
+				constrains = GenerateConstrains((GenericParameter)actualType);
+			else if (actualType.IsArray && ((TypeSpecification)actualType).ElementType.IsGenericParameter)
+				constrains = GenerateConstrains((GenericParameter)(((TypeSpecification)actualType).ElementType));
+			else
+				return new List<ConstrainRel>();
+			// create a new method entity with only one parameter
+			var newEntity = currentEntity.ToBuilder();
+			var newMethodId = newEntity.IdsList.Last().ToBuilder();
+			newEntity.IdsList.Remove(newEntity.IdsList.Last());
+			newMethodId.ClearParams();
+			newMethodId.AddParams(GenerateParameter(param));
+			newEntity.AddIds(newMethodId.Build());
+			return GenerateConstrainsRels(newEntity.Build(), constrains);
+		}
+
+		private static IEnumerable<ConstrainRel> GenerateConstrainsRels(Entity entity, IEnumerable<Constrain> constrains)
+		{
+			return constrains.Select(c =>
+				ConstrainRel.CreateBuilder()
+					.SetEntity(entity)
+					.SetConstrain(c)
+					.Build());
+		}
+
 		private static EntityRel GenerateEntityRel(TypeDefinition @from, TypeReference to)
 		{
 			return GenerateEntityRel(GenerateEntity(@from), GenerateEntity(to));
@@ -178,14 +220,9 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			var result = Entity.CreateBuilder();
 			var param = Id.CreateBuilder();
 			param.Name = p.Name;
-			var paramType = p.ParameterType;
-			if (p.ParameterType.IsByReference)
-			{
-				paramType = ((ByReferenceType)p.ParameterType).ElementType;
-			}
+			var paramType = GetActualType(p);
 			if (paramType.IsGenericParameter) {
 				param.Kind = Id.Types.IdKind.TypeParameter;
-				AddConstrainsToParam(param, (GenericParameter)paramType);
 			}
 			else if (paramType.IsArray) {
 				param.Kind = Id.Types.IdKind.Array;
@@ -195,7 +232,6 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 					var typeParamId = Id.CreateBuilder();
 					typeParamId.Kind = Id.Types.IdKind.TypeParameter;
 					typeParamId.Name = ((TypeSpecification)paramType).ElementType.Name;
-					AddConstrainsToParam(typeParamId, (GenericParameter)(((TypeSpecification)paramType).ElementType));
 					elementType.IdsList.Add(typeParamId.Build());					
 					param.ElementType = elementType.Build();
 				}
@@ -210,6 +246,16 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			}
 			result.IdsList.Add(param.Build());
 			return result.Build();
+		}
+
+		private static TypeReference GetActualType(ParameterDefinition p)
+		{
+			var paramType = p.ParameterType;
+			if (p.ParameterType.IsByReference)
+			{
+				paramType = ((ByReferenceType)p.ParameterType).ElementType;
+			}
+			return paramType;
 		}
 		
 		private static Landman.Rascal.CLRInfo.Protobuf.Entity GenerateEntity (TypeReference t)
@@ -310,54 +356,48 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 				var param = Id.CreateBuilder();
 				param.Kind = Id.Types.IdKind.TypeParameter;
 				param.Name = p.Name;
-				AddConstrainsToParam(param, p);
 				result.IdsList.Add(param.Build());
 			}
 			return result.Build();
 		}
 		       
-		private static void AddConstrainsToParam(Id.Builder param, GenericParameter p)
-		{/* we can't do constrains connected to params, because it can create ifinite loops for types such as:
-		  * class A<T>
-		  *    where T: B<T>
-		  * class B<T>
-		  *    where T: A<T>
+		private static IEnumerable<Constrain> GenerateConstrains(GenericParameter p)
+		{
+			var result = new List<Constrain>();
 			foreach (var con in p.Constraints)
+			{
+				if (con.GetElementType().FullName == typeof(ValueType).FullName)
 				{
-					if (con.GetElementType().FullName == typeof(ValueType).FullName)
+					result.Add(Constrain.CreateBuilder().SetKind(Constrain.Types.ConstrainKind.IsStruct).Build());
+				}
+				else {
+					var entity = GenerateEntity(con.GetElementType().Resolve()).ToBuilder();
+					if (con.IsGenericInstance)
 					{
-						param.ConstrainsList.Add(Constrain.CreateBuilder().SetKind(Constrain.Types.ConstrainKind.IsStruct).Build());
-					}
-					else {
-						//var entity = Entity.CreateBuilder();
-						//AddNamespacesAndTypesToEntity(con.GetElementType().Resolve(), entity);
-						var entity = GenerateEntity(con.GetElementType().Resolve()).ToBuilder();
-						if (con.IsGenericInstance)
+						var actualRef = (GenericInstanceType)con;
+						var actualType = entity.IdsList.Last().ToBuilder();
+						entity.IdsList.RemoveAt(entity.IdsList.Count - 1);
+						for (int paramIndex = 0; paramIndex < actualRef.GenericArguments.Count; paramIndex++)
 						{
-							var actualRef = (GenericInstanceType)con;
-							var actualType = entity.IdsList.Last().ToBuilder();
-							entity.IdsList.RemoveAt(entity.IdsList.Count - 1);
-							for (int paramIndex = 0; paramIndex < actualRef.GenericArguments.Count; paramIndex++)
-							{
-								actualType.ParamsList[paramIndex] = GenerateEntity(actualRef.GenericArguments[paramIndex].GetElementType().Resolve());
-							}
-							entity.IdsList.Add(actualType.Build());
+							actualType.ParamsList[paramIndex] = GenerateEntity(actualRef.GenericArguments[paramIndex].GetElementType().Resolve());
 						}
-						param.ConstrainsList.Add(Constrain.CreateBuilder()
-					    	.SetKind(Constrain.Types.ConstrainKind.Entity)
-					        .SetConstrainEntity(entity.Build()).Build());
-						
+						entity.IdsList.Add(actualType.Build());
 					}
+					result.Add(Constrain.CreateBuilder()
+					    .SetKind(Constrain.Types.ConstrainKind.Entity)
+					    .SetConstrainEntity(entity.Build()).Build());
+						
 				}
-				if (p.HasDefaultConstructorConstraint)
-				{
-					param.ConstrainsList.Add(Constrain.CreateBuilder().SetKind(Constrain.Types.ConstrainKind.HasConstructor).Build());
-				}
-				if (param.ConstrainsList.Count == 0)
-				{
-					param.ConstrainsList.Add(Constrain.CreateBuilder().SetKind(Constrain.Types.ConstrainKind.IsClass).Build());
-				}*/
-	
+			}
+			if (p.HasDefaultConstructorConstraint)
+			{
+				result.Add(Constrain.CreateBuilder().SetKind(Constrain.Types.ConstrainKind.HasConstructor).Build());
+			}
+			if (result.Count == 0)
+			{
+				result.Add(Constrain.CreateBuilder().SetKind(Constrain.Types.ConstrainKind.IsClass).Build());
+			}
+			return result;
 		}
 				                 
 	}

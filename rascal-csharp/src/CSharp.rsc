@@ -29,7 +29,7 @@ data Id = namespace(str name)
         | primitive(PrimitiveType primType)
         | array(Entity elementType)
         
-        | typeParameter(str name, list[Constrain] constrains)
+        | typeParameter(str name)
         | unkown(str name)
         | wildcard() // ?
         | wildcard(Bound bound) // ?
