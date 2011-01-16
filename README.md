@@ -8,6 +8,16 @@ It is however limited to analysis on compiled assemblies, a more powerful one
 would work on a source based fact extractor, but this is much more work than the
 current solution.
 
+Currently the following facts are extracted:
+
+  - All types (classes, enumerations and interfaces)
+  - Inheritance relation between classes
+  - Implements relation between interfaces & classes
+  - All methods declarations
+  - Complete call-graph for every method declared
+  - Generic constrains for all types and methods
+  - Accessibility modifiers for all declared types and methods
+
 Deployment
 -----------
 
@@ -20,6 +30,17 @@ Deployment
   - Copy the files from the `copy_to_project` directory to you project `src`
 	folder.
   - Copy the files from `run_server` to a place where you can find them again :)
+
+Alternative deployment
+------------
+
+  - Open the rascal.jar with an archiver
+  - Copy the dirs inside `in_src_dir` into this jar
+  - Copy the file from `copy_to_project` into this jar
+  
+This is more destructive, and I don't know what will happen when rascal gets an update. 
+But the plus side is that you don't have to copy the `copy_to_project` files to
+every project using this library.
  
 Using the library
 -----------------
@@ -45,6 +66,17 @@ TODO
 ----
 
   - More error prone on the server side
+  - Rethink the way the facts are represented on the rascal side, now based on
+	JDT, but there are some flaws with that model.
+  - Improve performance & memory usage on java side by caching the generation of
+	`IValue`'s I don't want to know how many rascal instances of `System.Object`
+	& `System.String` are generated.
+	Should be fairly simple (due to imutable objects) as soon as I think how to 
+	derive a key from the incoming `Entity`.
+  - Improve performance & memory usage on the c# side by chaching generated
+	`Entity`'s, this too should be fairly simple due to imutable objects, but
+	deriving a key from a `TypeDefinition` is not as straightforward as it might
+	seem.
   - Use LOC types in `readCLRInfo` function
   - Make deployment easier (especially the copying of the rascal files should be
 	simpeler).
