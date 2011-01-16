@@ -92,4 +92,6 @@ TODO
   - Create some sample projects to test the fact extraction better than just it
 	doesn't crash-testing.
   - Write about 'architecture'.
+  - Refactor the .NET & Java part to be more OO and less 'everything in one
+	file'
 
