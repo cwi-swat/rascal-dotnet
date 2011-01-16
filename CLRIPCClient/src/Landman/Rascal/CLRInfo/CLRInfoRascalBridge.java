@@ -26,6 +26,7 @@ import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Constrain;
+import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.ConstrainRel;
 import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity;
 import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.EntityRel;
 import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Id;
@@ -33,6 +34,8 @@ import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.InformationRequest;
 import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.InformationResponse;
 import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Id.IdKind;
 import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.InformationRequest.Builder;
+import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Modifier;
+import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.ModifierRel;
 
 public class CLRInfoRascalBridge {
 	private static final TypeFactory TF = TypeFactory.getInstance();
@@ -63,11 +66,21 @@ public class CLRInfoRascalBridge {
 	private static final Type displayClass;
 	private static final Type anonymousClass;
 	private static final Type arrayz;
+	private static final Type constrainRel;
+	private static final Type modifierDataType;
+	private static final Type publicModifier;
+	private static final Type protectedModifier;
+	private static final Type internalModifier;
+	private static final Type privateModifier;
+	private static final Type staticModifier;
+	private static final Type abstractModifier;
+	private static final Type modifierRel;
 
 	static {
 		entityDataType = TF.abstractDataType(store, "Entity");
 		idDataType = TF.abstractDataType(store, "Id");
 		constrainDataType = TF.abstractDataType(store, "Constrain");
+		modifierDataType = TF.abstractDataType(store, "Modifier");
 		resourceDataType = TF.abstractDataType(store, "Resource");
 
 		entity = TF.constructor(store, entityDataType, "entity", TF.listType(idDataType), "id");
@@ -96,14 +109,27 @@ public class CLRInfoRascalBridge {
 		hasDefaultConstructor = TF.constructor(store, constrainDataType, "hasDefaultConstructor");
 		implementz = TF.constructor(store, constrainDataType, "implements", entityDataType, "entity");
 
+		publicModifier = TF.constructor(store, modifierDataType, "public");
+		protectedModifier = TF.constructor(store, modifierDataType, "protected");
+		internalModifier = TF.constructor(store, modifierDataType, "internal");
+		privateModifier = TF.constructor(store, modifierDataType, "private");
+		staticModifier = TF.constructor(store, modifierDataType, "static");
+		abstractModifier = TF.constructor(store, modifierDataType, "abstract");
+		
+		
 		entityRel = TF.aliasType(store, "EntityRel", TF.tupleType(entityDataType, "from", entityDataType, "to"));
+		constrainRel = TF.aliasType(store, "ConstrainRel", TF.tupleType(entityDataType, "entity", constrainDataType, "constrain"));
+		modifierRel = TF.aliasType(store, "ModifierRel", TF.tupleType(entityDataType, "entity", modifierDataType, "modifier"));
+		
 
 		file = TF.constructor(store, resourceDataType, "file", TF.sourceLocationType(), "id");
 		store.declareAnnotation(resourceDataType, "types", TF.setType(entity));
-		store.declareAnnotation(resourceDataType, "implements", TF.relType(entity, entity));
-		store.declareAnnotation(resourceDataType, "extends", TF.relType(entity, entity));
-		store.declareAnnotation(resourceDataType, "calls", TF.relType(entity, entity));
+		store.declareAnnotation(resourceDataType, "implements", entityRel);
+		store.declareAnnotation(resourceDataType, "extends", entityRel);
+		store.declareAnnotation(resourceDataType, "calls", entityRel);		
 		store.declareAnnotation(resourceDataType, "methods", TF.setType(entity));
+		store.declareAnnotation(resourceDataType, "genericConstrains", constrainRel);
+		store.declareAnnotation(resourceDataType, "modifiers", modifierRel);		
 	}
 
 	public CLRInfoRascalBridge(IValueFactory vf) {
@@ -134,6 +160,8 @@ public class CLRInfoRascalBridge {
 			IRelationWriter extendz = VF.relationWriter(entityRel);
 			IRelationWriter implementz = VF.relationWriter(entityRel);
 			IRelationWriter calls = VF.relationWriter(entityRel);
+			IRelationWriter contrains = VF.relationWriter(constrainRel);
+			IRelationWriter modifiers = VF.relationWriter(modifierRel);
 			for (int groupIndex = 0; groupIndex < amountOfGroups; groupIndex++) {
 				InformationResponse currentInformation = InformationResponse.parseDelimitedFrom(inFromServer);
 				addToEntitySet(types, currentInformation.getTypesList());
@@ -141,6 +169,8 @@ public class CLRInfoRascalBridge {
 				addToEntityRels(extendz, currentInformation.getTypesInheritanceList());
 				addToEntityRels(implementz, currentInformation.getTypesImplementingList());
 				addToEntityRels(calls, currentInformation.getMethodCallsList());
+				addToConstrainRels(contrains, currentInformation.getGenericConstrainsList());
+				addToModifierRels(modifiers, currentInformation.getModifiersList());
 			}
 			
 
@@ -150,6 +180,8 @@ public class CLRInfoRascalBridge {
 			result = result.setAnnotation("extends", extendz.done());
 			result = result.setAnnotation("implements", implementz.done());
 			result = result.setAnnotation("calls", calls.done());
+			result = result.setAnnotation("genericConstrains", contrains.done());
+			result = result.setAnnotation("modifiers", modifiers.done());
 			return result;
 		} catch (Exception ex) {
 			System.err.print(ex.toString());
@@ -157,6 +189,19 @@ public class CLRInfoRascalBridge {
 		}
 	}
 
+	private static void addToModifierRels(IRelationWriter destination, List<ModifierRel> source) {
+		for (ModifierRel rel : source) {
+			destination.insert(VF.tuple(generateSingleEntityArray(rel.getEntity()), generateModifier(rel.getModifier())));
+		}
+	}
+
+
+	private static void addToConstrainRels(IRelationWriter destination, List<ConstrainRel> source) {
+		for (ConstrainRel rel : source) {
+			destination.insert(VF.tuple(generateSingleEntityArray(rel.getEntity()), generateConstrain(rel.getConstrain())));
+		}
+	}
+	
 	private static void addToEntityRels(IRelationWriter destination, List<EntityRel> source) {
 		for (EntityRel rel : source) {
 			destination.insert(VF.tuple(generateSingleEntityArray(rel.getFrom()), generateSingleEntityArray(rel.getTo())));
@@ -236,7 +281,7 @@ public class CLRInfoRascalBridge {
 		return typeParameter.make(VF, VF.string(currentId.getName()));
 	}
 
-	private static IValue createConstrain(Constrain constrain) {
+	private static IValue generateConstrain(Constrain constrain) {
 		switch (constrain.getKind()) {
 			case Entity:
 				return implementz.make(VF, generateSingleEntityArray(constrain.getConstrainEntity()));
@@ -252,6 +297,26 @@ public class CLRInfoRascalBridge {
 				throw new RuntimeException("Unkown constrain type");
 		}
 	}
+	private static IValue generateModifier(Modifier modifier) {
+		switch (modifier) {
+		case Abstract:
+			return abstractModifier.make(VF);
+		case Internal:
+			return internalModifier.make(VF);
+		case Private:
+			return privateModifier.make(VF);
+		case Protected:
+			return protectedModifier.make(VF);
+		case Public:
+			return publicModifier.make(VF);
+		case Static:
+			return staticModifier.make(VF);
+		default:
+			throw new RuntimeException("Unkown modifier type");
+		}
+	}
+
+	
 
 	private static IValue createTypeWithName(Type targetType, Id currentId) {
 		return targetType.make(VF, VF.string(currentId.getName()));
@@ -267,7 +332,7 @@ public class CLRInfoRascalBridge {
 		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
 	//IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
 		
-		System.out.print(((IConstructor) result).getAnnotation("methods"));
+		System.out.print(((IConstructor) result).getAnnotation("modifiers"));
 	}
 /*
 	private static InformationResponse getInformationFromCLR(String... assemblies) throws UnknownHostException,
