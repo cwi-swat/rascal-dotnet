@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.imp.pdb.facts.IConstructor;
@@ -23,7 +22,6 @@ import org.eclipse.imp.pdb.facts.type.TypeStore;
 import org.rascalmpl.values.ValueFactoryFactory;
 
 import com.google.protobuf.CodedInputStream;
-import com.google.protobuf.InvalidProtocolBufferException;
 
 import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Constrain;
 import Landman.Rascal.CLRInfo.Protobuf.Clrinfo.ConstrainRel;
@@ -146,7 +144,6 @@ public class CLRInfoRascalBridge {
 				}
 			}
 
-//			InformationResponse actualResult = getInformationFromCLR(actualAssemblies.toArray(new String[0]));
 			Socket clientSocket = new Socket("localhost", 5555);
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			DataInputStream inFromServer = new DataInputStream(clientSocket.getInputStream());
@@ -330,21 +327,9 @@ public class CLRInfoRascalBridge {
 		//IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
 		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/MiscUtil.dll")));
 		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
-	//IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
+		//IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
 		
 		System.out.print(((IConstructor) result).getAnnotation("modifiers"));
 	}
-/*
-	private static InformationResponse getInformationFromCLR(String... assemblies) throws UnknownHostException,
-			IOException, InvalidProtocolBufferException {
-		Socket clientSocket = new Socket("localhost", 5555);
-		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-		DataInputStream inFromServer = new DataInputStream(clientSocket.getInputStream());
-		Builder req = InformationRequest.newBuilder();
-		req.addAllAssemblies(Arrays.asList(assemblies));
-		InformationRequest actualRequest = req.build();
-		actualRequest.writeDelimitedTo(outToServer);
-		int amountOfGroups = CodedInputStream.newInstance(inFromServer).readRawVarint32();
-		return InformationResponse.parseDelimitedFrom(inFromServer);
-	}*/
+
 }
