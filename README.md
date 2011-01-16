@@ -62,6 +62,13 @@ Example source:
 Just make sure you start the `Landman.Rascal.CLRInfo.IPCServer.exe` (using
 `mono` on linux/mac).
 
+Architecture
+-------------
+<a href="http://i.imgur.com/nbpMM.png">
+<img src="http://i.imgur.com/nbpMM.png" width="50%" height="50%"
+alt="architecture" />
+</a>
+
 TODO
 ----
 
