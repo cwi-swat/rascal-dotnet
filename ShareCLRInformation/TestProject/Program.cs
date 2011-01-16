@@ -20,17 +20,25 @@ namespace TestProject
 	}
 	public class COMP<T> where T : StringComparer
 	{
+		internal string TestInternal()
+		{
+			return "TestInternal";
+		}
+		protected virtual string TestProtected()
+		{
+			return "Test protected";
+		}
 	}
 
-	public class CON<T> where T : StringComparer, new()
+	internal class CON<T> where T : StringComparer, new()
 	{
-		public string TestCall(COMP<T> firstParam, CL<List<String>> secondParam)
+		protected string TestCall(COMP<T> firstParam, CL<List<String>> secondParam)
 		{
 			return secondParam.Equals(null).ToString();	
 		}
 	}
 	
-	public static class ListExt{
+	internal static class ListExt{
 		public static T Average<T>(this CON<T> source) where T: StringComparer, new()
 		{
 			return default(T);
