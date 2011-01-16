@@ -18,6 +18,8 @@ Currently the following facts are extracted:
   - Generic constrains for all types and methods
   - Accessibility modifiers for all declared types and methods
 
+Note: this is not the limit, more information can be gathered from the compiled assemblies.
+
 Deployment
 -----------
 
@@ -34,7 +36,8 @@ Deployment
 Alternative deployment
 ------------
 
-  - Open the rascal.jar with an archiver
+  - The first 3 steps are equal
+  - Open the rascal.jar with an archiver (located in the `eclipse/plugins/rascal_*` dir)
   - Copy the dirs inside `in_src_dir` into this jar
   - Copy the file from `copy_to_project` into this jar
   
@@ -57,6 +60,7 @@ Example source:
 		for (tp <- res@types) {
 			print(readable(tp));
 		}
+                // This will print all the Types found in System.dll
 	 }
 
 Just make sure you start the `Landman.Rascal.CLRInfo.IPCServer.exe` (using
@@ -72,7 +76,9 @@ alt="architecture" />
 TODO
 ----
 
-  - More error prone on the server side
+  - Fix names (make a choice: dotnet/csharp)
+  - Refactor the .NET & Java part to be more OO and less 'everything in one
+	file'
   - Rethink the way the facts are represented on the rascal side, now based on
 	JDT, but there are some flaws with that model.
   - Improve performance & memory usage on java side by caching the generation of
@@ -89,9 +95,8 @@ TODO
 	simpeler).
   - Start the `IPCServer.exe` automatically from the java side. (and randomize
 	the port)
+  - More error prone on the server side
   - Create some sample projects to test the fact extraction better than just it
 	doesn't crash-testing.
   - Write about 'architecture'.
-  - Refactor the .NET & Java part to be more OO and less 'everything in one
-	file'
 
