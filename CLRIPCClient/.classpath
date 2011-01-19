@@ -7,5 +7,5 @@
 	<classpathentry kind="lib" path="../../eclipse/plugins/rascal_0.1.20/rascal.jar"/>
 	<classpathentry kind="lib" path="../../eclipse/plugins/org.eclipse.imp.pdb_0.2.2.201011021357.jar"/>
 	<classpathentry kind="lib" path="../../eclipse/plugins/org.eclipse.imp.runtime_0.1.108.v201008201835.jar"/>
-	<classpathentry kind="output" path="bin/src-rascal-plugin"/>
+	<classpathentry kind="output" path="bin/"/>
 </classpath>
