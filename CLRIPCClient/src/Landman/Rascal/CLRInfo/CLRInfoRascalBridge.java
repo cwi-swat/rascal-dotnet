@@ -68,12 +68,12 @@ public class CLRInfoRascalBridge {
 	private static final Type arrayz;
 	private static final Type constrainRel;
 	private static final Type modifierDataType;
-	private static final Type publicModifier;
-	private static final Type protectedModifier;
-	private static final Type internalModifier;
-	private static final Type privateModifier;
-	private static final Type staticModifier;
-	private static final Type abstractModifier;
+	private static final IValue publicModifier;
+	private static final IValue protectedModifier;
+	private static final IValue internalModifier;
+	private static final IValue privateModifier;
+	private static final IValue staticModifier;
+	private static final IValue abstractModifier;
 	private static final Type modifierRel;
 	private static Map<Entity, IValue> valueStore = new HashMap<Entity, IValue>();
 
@@ -110,12 +110,12 @@ public class CLRInfoRascalBridge {
 		hasDefaultConstructor = TF.constructor(store, constrainDataType, "hasDefaultConstructor");
 		implementz = TF.constructor(store, constrainDataType, "implements", entityDataType, "entity");
 
-		publicModifier = TF.constructor(store, modifierDataType, "public");
-		protectedModifier = TF.constructor(store, modifierDataType, "protected");
-		internalModifier = TF.constructor(store, modifierDataType, "internal");
-		privateModifier = TF.constructor(store, modifierDataType, "private");
-		staticModifier = TF.constructor(store, modifierDataType, "static");
-		abstractModifier = TF.constructor(store, modifierDataType, "abstract");
+		publicModifier = TF.constructor(store, modifierDataType, "public").make(VF);
+		protectedModifier = TF.constructor(store, modifierDataType, "protected").make(VF);
+		internalModifier = TF.constructor(store, modifierDataType, "internal").make(VF);
+		privateModifier = TF.constructor(store, modifierDataType, "private").make(VF);
+		staticModifier = TF.constructor(store, modifierDataType, "static").make(VF);
+		abstractModifier = TF.constructor(store, modifierDataType, "abstract").make(VF);
 		
 		
 		entityRel = TF.aliasType(store, "EntityRel", TF.tupleType(entityDataType, "from", entityDataType, "to"));
@@ -308,17 +308,17 @@ public class CLRInfoRascalBridge {
 	private static IValue generateModifier(Modifier modifier) {
 		switch (modifier) {
 		case Abstract:
-			return abstractModifier.make(VF);
+			return abstractModifier;
 		case Internal:
-			return internalModifier.make(VF);
+			return internalModifier;
 		case Private:
-			return privateModifier.make(VF);
+			return privateModifier;
 		case Protected:
-			return protectedModifier.make(VF);
+			return protectedModifier;
 		case Public:
-			return publicModifier.make(VF);
+			return publicModifier;
 		case Static:
-			return staticModifier.make(VF);
+			return staticModifier;
 		default:
 			throw new RuntimeException("Unkown modifier type");
 		}
@@ -340,7 +340,7 @@ public class CLRInfoRascalBridge {
 		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
 		//IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
 		
-		System.out.print(((IConstructor) result).getAnnotation("modifiers"));
+		//System.out.print(((IConstructor) result).getAnnotation("modifiers"));
 	}
 
 }
