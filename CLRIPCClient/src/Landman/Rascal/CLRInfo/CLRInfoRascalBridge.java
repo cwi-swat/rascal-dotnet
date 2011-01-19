@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.imp.pdb.facts.IConstructor;
 import org.eclipse.imp.pdb.facts.IList;
@@ -73,6 +75,7 @@ public class CLRInfoRascalBridge {
 	private static final Type staticModifier;
 	private static final Type abstractModifier;
 	private static final Type modifierRel;
+	private static Map<Entity, IValue> valueStore = new HashMap<Entity, IValue>();
 
 	static {
 		entityDataType = TF.abstractDataType(store, "Entity");
@@ -129,7 +132,7 @@ public class CLRInfoRascalBridge {
 		store.declareAnnotation(resourceDataType, "genericConstrains", constrainRel);
 		store.declareAnnotation(resourceDataType, "modifiers", modifierRel);		
 	}
-
+	
 	public CLRInfoRascalBridge(IValueFactory vf) {
 	}
 
@@ -184,6 +187,9 @@ public class CLRInfoRascalBridge {
 			System.err.print(ex.toString());
 			return null;
 		}
+		finally {
+			valueStore.clear();
+		}
 	}
 
 	private static void addToModifierRels(IRelationWriter destination, List<ModifierRel> source) {
@@ -220,6 +226,9 @@ public class CLRInfoRascalBridge {
 	}
 
 	private static IValue generateSingleEntityArray(Entity clrEntity) {
+		IValue result = valueStore.get(clrEntity);
+		if (result != null)
+			return result;
 		List<IValue> currentEntity = new ArrayList<IValue>();
 		for (Id currentId : clrEntity.getIdsList()) {
 			switch (currentId.getKind()) {
@@ -263,7 +272,9 @@ public class CLRInfoRascalBridge {
 					throw new RuntimeException("You forgot to detect the id: " + currentId.getKind().toString());
 			}
 		}
-		return entity.make(VF, VF.list(currentEntity.toArray(new IValue[0])));
+		result = entity.make(VF, VF.list(currentEntity.toArray(new IValue[0])));
+		valueStore.put(clrEntity, result);
+		return result;
 	}
 
 	private static IValue createMethodType(Id currentId) {
