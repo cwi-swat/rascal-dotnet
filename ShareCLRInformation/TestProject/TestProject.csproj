@@ -40,6 +40,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Mono.Cecil.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>..\lib\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>..\lib\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

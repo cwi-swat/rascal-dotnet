@@ -61,8 +61,12 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 		public static List<List<TypeDefinition>> PartitionTypes(IEnumerable<String> assemblies, int partitionSize)
 		{
 			// create groups of partitionSize large
-			return assemblies.Select(a => ModuleDefinition.ReadModule(a))
-				.SelectMany(a => a.GetAllTypes())
+			var moduleList = assemblies.Select(a => ModuleDefinition.ReadModule(a)).ToList();
+			foreach (var mod in moduleList)
+			{
+				mod.ReadSymbols();
+			}
+			return moduleList.SelectMany(m => m.GetAllTypes())
 				.Where(t => t.IsClass || t.IsEnum || t.IsInterface)
 				.Where(t => t.Name != "<Module>")
 				.Select((t, i) => new { Group = i / partitionSize, Type = t })
