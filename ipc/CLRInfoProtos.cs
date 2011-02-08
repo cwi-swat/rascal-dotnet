@@ -78,21 +78,24 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
           "Jy5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVmLkVudGl0eSJUCg1D" + 
           "b25zdHJhaW5LaW5kEggKBE5vbmUQABIKCgZFbnRpdHkQARILCgdJc0NsYXNz" + 
           "EAISDAoISXNTdHJ1Y3QQAxISCg5IYXNDb25zdHJ1Y3RvchAEIigKEkluZm9y" + 
-          "bWF0aW9uUmVxdWVzdBISCgpBc3NlbWJsaWVzGAEgAygJIuADChNJbmZvcm1h" + 
+          "bWF0aW9uUmVxdWVzdBISCgpBc3NlbWJsaWVzGAEgAygJItYEChNJbmZvcm1h" + 
           "dGlvblJlc3BvbnNlEjYKBVR5cGVzGAEgAygLMicuTGFuZG1hbi5SYXNjYWwu" + 
           "Q0xSSW5mby5Qcm90b2J1Zi5FbnRpdHkSOAoHTWV0aG9kcxgCIAMoCzInLkxh" + 
-          "bmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5EkQKEFR5cGVz" + 
-          "SW5oZXJpdGFuY2UYCiADKAsyKi5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlBy" + 
-          "b3RvYnVmLkVudGl0eVJlbBJFChFUeXBlc0ltcGxlbWVudGluZxgLIAMoCzIq" + 
-          "LkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5UmVsEj8K" + 
-          "C01ldGhvZENhbGxzGBQgAygLMiouTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Q" + 
-          "cm90b2J1Zi5FbnRpdHlSZWwSPwoJTW9kaWZpZXJzGB4gAygLMiwuTGFuZG1h" + 
-          "bi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5Nb2RpZmllclJlbBJIChFHZW5l" + 
-          "cmljQ29uc3RyYWlucxgfIAMoCzItLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8u" + 
-          "UHJvdG9idWYuQ29uc3RyYWluUmVsKloKCE1vZGlmaWVyEgoKBlB1YmxpYxAA" + 
-          "Eg0KCVByb3RlY3RlZBABEgwKCEludGVybmFsEAISCwoHUHJpdmF0ZRADEgoK" + 
-          "BlN0YXRpYxAEEgwKCEFic3RyYWN0EAVCNUgBwj4wCh9MYW5kbWFuLlJhc2Nh" + 
-          "bC5DTFJJbmZvLlByb3RvYnVmEg1DTFJJbmZvUHJvdG9z");
+          "bmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5EjcKBkZpZWxk" + 
+          "cxgDIAMoCzInLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50" + 
+          "aXR5EjsKClByb3BlcnRpZXMYBCADKAsyJy5MYW5kbWFuLlJhc2NhbC5DTFJJ" + 
+          "bmZvLlByb3RvYnVmLkVudGl0eRJEChBUeXBlc0luaGVyaXRhbmNlGAogAygL" + 
+          "MiouTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5FbnRpdHlSZWwS" + 
+          "RQoRVHlwZXNJbXBsZW1lbnRpbmcYCyADKAsyKi5MYW5kbWFuLlJhc2NhbC5D" + 
+          "TFJJbmZvLlByb3RvYnVmLkVudGl0eVJlbBI/CgtNZXRob2RDYWxscxgUIAMo" + 
+          "CzIqLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5UmVs" + 
+          "Ej8KCU1vZGlmaWVycxgeIAMoCzIsLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8u" + 
+          "UHJvdG9idWYuTW9kaWZpZXJSZWwSSAoRR2VuZXJpY0NvbnN0cmFpbnMYHyAD" + 
+          "KAsyLS5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVmLkNvbnN0cmFp" + 
+          "blJlbCpaCghNb2RpZmllchIKCgZQdWJsaWMQABINCglQcm90ZWN0ZWQQARIM" + 
+          "CghJbnRlcm5hbBACEgsKB1ByaXZhdGUQAxIKCgZTdGF0aWMQBBIMCghBYnN0" + 
+          "cmFjdBAFQjVIAcI+MAofTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1" + 
+          "ZhINQ0xSSW5mb1Byb3Rvcw==");
       pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
         descriptor = root;
         internal__static_Landman_Rascal_CLRInfo_Protobuf_EntityRel__Descriptor = Descriptor.MessageTypes[0];
@@ -126,7 +129,7 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         internal__static_Landman_Rascal_CLRInfo_Protobuf_InformationResponse__Descriptor = Descriptor.MessageTypes[7];
         internal__static_Landman_Rascal_CLRInfo_Protobuf_InformationResponse__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.InformationResponse, global::Landman.Rascal.CLRInfo.Protobuf.InformationResponse.Builder>(internal__static_Landman_Rascal_CLRInfo_Protobuf_InformationResponse__Descriptor,
-                new string[] { "Types", "Methods", "TypesInheritance", "TypesImplementing", "MethodCalls", "Modifiers", "GenericConstrains", });
+                new string[] { "Types", "Methods", "Fields", "Properties", "TypesInheritance", "TypesImplementing", "MethodCalls", "Modifiers", "GenericConstrains", });
         pb::ExtensionRegistry registry = pb::ExtensionRegistry.CreateInstance();
         RegisterAllExtensions(registry);
         global::Google.ProtocolBuffers.DescriptorProtos.CSharpOptions.RegisterAllExtensions(registry);
@@ -1434,12 +1437,12 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
     
     public const int Id_FieldNumber = 7;
     private bool hasId_;
-    private int id_ = 0;
+    private int Id_ = 0;
     public bool HasId_ {
       get { return hasId_; }
     }
     public int Id_ {
-      get { return id_; }
+      get { return Id_; }
     }
     
     public const int PrimitiveTypeFieldNumber = 8;
@@ -1973,12 +1976,12 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       }
       public Builder SetId_(int value) {
         result.hasId_ = true;
-        result.id_ = value;
+        result.Id_ = value;
         return this;
       }
       public Builder ClearId_() {
         result.hasId_ = false;
-        result.id_ = 0;
+        result.Id_ = 0;
         return this;
       }
       
@@ -2626,6 +2629,30 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       return methods_[index];
     }
     
+    public const int FieldsFieldNumber = 3;
+    private pbc::PopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.Entity> fields_ = new pbc::PopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.Entity>();
+    public scg::IList<global::Landman.Rascal.CLRInfo.Protobuf.Entity> FieldsList {
+      get { return fields_; }
+    }
+    public int FieldsCount {
+      get { return fields_.Count; }
+    }
+    public global::Landman.Rascal.CLRInfo.Protobuf.Entity GetFields(int index) {
+      return fields_[index];
+    }
+    
+    public const int PropertiesFieldNumber = 4;
+    private pbc::PopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.Entity> properties_ = new pbc::PopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.Entity>();
+    public scg::IList<global::Landman.Rascal.CLRInfo.Protobuf.Entity> PropertiesList {
+      get { return properties_; }
+    }
+    public int PropertiesCount {
+      get { return properties_.Count; }
+    }
+    public global::Landman.Rascal.CLRInfo.Protobuf.Entity GetProperties(int index) {
+      return properties_[index];
+    }
+    
     public const int TypesInheritanceFieldNumber = 10;
     private pbc::PopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.EntityRel> typesInheritance_ = new pbc::PopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.EntityRel>();
     public scg::IList<global::Landman.Rascal.CLRInfo.Protobuf.EntityRel> TypesInheritanceList {
@@ -2694,6 +2721,12 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in MethodsList) {
           if (!element.IsInitialized) return false;
         }
+        foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in FieldsList) {
+          if (!element.IsInitialized) return false;
+        }
+        foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in PropertiesList) {
+          if (!element.IsInitialized) return false;
+        }
         foreach (global::Landman.Rascal.CLRInfo.Protobuf.EntityRel element in TypesInheritanceList) {
           if (!element.IsInitialized) return false;
         }
@@ -2720,6 +2753,12 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       }
       foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in MethodsList) {
         output.WriteMessage(2, element);
+      }
+      foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in FieldsList) {
+        output.WriteMessage(3, element);
+      }
+      foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in PropertiesList) {
+        output.WriteMessage(4, element);
       }
       foreach (global::Landman.Rascal.CLRInfo.Protobuf.EntityRel element in TypesInheritanceList) {
         output.WriteMessage(10, element);
@@ -2751,6 +2790,12 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         }
         foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in MethodsList) {
           size += pb::CodedOutputStream.ComputeMessageSize(2, element);
+        }
+        foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in FieldsList) {
+          size += pb::CodedOutputStream.ComputeMessageSize(3, element);
+        }
+        foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in PropertiesList) {
+          size += pb::CodedOutputStream.ComputeMessageSize(4, element);
         }
         foreach (global::Landman.Rascal.CLRInfo.Protobuf.EntityRel element in TypesInheritanceList) {
           size += pb::CodedOutputStream.ComputeMessageSize(10, element);
@@ -2845,6 +2890,8 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         }
         result.types_.MakeReadOnly();
         result.methods_.MakeReadOnly();
+        result.fields_.MakeReadOnly();
+        result.properties_.MakeReadOnly();
         result.typesInheritance_.MakeReadOnly();
         result.typesImplementing_.MakeReadOnly();
         result.methodCalls_.MakeReadOnly();
@@ -2871,6 +2918,12 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         }
         if (other.methods_.Count != 0) {
           base.AddRange(other.methods_, result.methods_);
+        }
+        if (other.fields_.Count != 0) {
+          base.AddRange(other.fields_, result.fields_);
+        }
+        if (other.properties_.Count != 0) {
+          base.AddRange(other.properties_, result.properties_);
         }
         if (other.typesInheritance_.Count != 0) {
           base.AddRange(other.typesInheritance_, result.typesInheritance_);
@@ -2929,6 +2982,18 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
               global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder subBuilder = global::Landman.Rascal.CLRInfo.Protobuf.Entity.CreateBuilder();
               input.ReadMessage(subBuilder, extensionRegistry);
               AddMethods(subBuilder.BuildPartial());
+              break;
+            }
+            case 26: {
+              global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder subBuilder = global::Landman.Rascal.CLRInfo.Protobuf.Entity.CreateBuilder();
+              input.ReadMessage(subBuilder, extensionRegistry);
+              AddFields(subBuilder.BuildPartial());
+              break;
+            }
+            case 34: {
+              global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder subBuilder = global::Landman.Rascal.CLRInfo.Protobuf.Entity.CreateBuilder();
+              input.ReadMessage(subBuilder, extensionRegistry);
+              AddProperties(subBuilder.BuildPartial());
               break;
             }
             case 82: {
@@ -3039,6 +3104,82 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       }
       public Builder ClearMethods() {
         result.methods_.Clear();
+        return this;
+      }
+      
+      public pbc::IPopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.Entity> FieldsList {
+        get { return result.fields_; }
+      }
+      public int FieldsCount {
+        get { return result.FieldsCount; }
+      }
+      public global::Landman.Rascal.CLRInfo.Protobuf.Entity GetFields(int index) {
+        return result.GetFields(index);
+      }
+      public Builder SetFields(int index, global::Landman.Rascal.CLRInfo.Protobuf.Entity value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        result.fields_[index] = value;
+        return this;
+      }
+      public Builder SetFields(int index, global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        result.fields_[index] = builderForValue.Build();
+        return this;
+      }
+      public Builder AddFields(global::Landman.Rascal.CLRInfo.Protobuf.Entity value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        result.fields_.Add(value);
+        return this;
+      }
+      public Builder AddFields(global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        result.fields_.Add(builderForValue.Build());
+        return this;
+      }
+      public Builder AddRangeFields(scg::IEnumerable<global::Landman.Rascal.CLRInfo.Protobuf.Entity> values) {
+        base.AddRange(values, result.fields_);
+        return this;
+      }
+      public Builder ClearFields() {
+        result.fields_.Clear();
+        return this;
+      }
+      
+      public pbc::IPopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.Entity> PropertiesList {
+        get { return result.properties_; }
+      }
+      public int PropertiesCount {
+        get { return result.PropertiesCount; }
+      }
+      public global::Landman.Rascal.CLRInfo.Protobuf.Entity GetProperties(int index) {
+        return result.GetProperties(index);
+      }
+      public Builder SetProperties(int index, global::Landman.Rascal.CLRInfo.Protobuf.Entity value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        result.properties_[index] = value;
+        return this;
+      }
+      public Builder SetProperties(int index, global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        result.properties_[index] = builderForValue.Build();
+        return this;
+      }
+      public Builder AddProperties(global::Landman.Rascal.CLRInfo.Protobuf.Entity value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        result.properties_.Add(value);
+        return this;
+      }
+      public Builder AddProperties(global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        result.properties_.Add(builderForValue.Build());
+        return this;
+      }
+      public Builder AddRangeProperties(scg::IEnumerable<global::Landman.Rascal.CLRInfo.Protobuf.Entity> values) {
+        base.AddRange(values, result.properties_);
+        return this;
+      }
+      public Builder ClearProperties() {
+        result.properties_.Clear();
         return this;
       }
       

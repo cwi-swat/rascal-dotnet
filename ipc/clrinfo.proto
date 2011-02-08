@@ -1,10 +1,10 @@
 package Landman.Rascal.CLRInfo.Protobuf;
 
 
-//import "google/protobuf/csharp_options.proto";
+import "google/protobuf/csharp_options.proto";
 
-//option (google.protobuf.csharp_file_options).namespace = "Landman.Rascal.CLRInfo.Protobuf";
-//option (google.protobuf.csharp_file_options).umbrella_classname = "CLRInfoProtos";
+option (google.protobuf.csharp_file_options).namespace = "Landman.Rascal.CLRInfo.Protobuf";
+option (google.protobuf.csharp_file_options).umbrella_classname = "CLRInfoProtos";
 
 option optimize_for = SPEED;
 
@@ -122,6 +122,8 @@ message InformationRequest {
 message InformationResponse {
 	repeated Entity Types = 1;
 	repeated Entity Methods = 2;
+	repeated Entity Fields = 3;
+	repeated Entity Properties = 4;
 
 	repeated EntityRel TypesInheritance = 10;
 	repeated EntityRel TypesImplementing = 11;

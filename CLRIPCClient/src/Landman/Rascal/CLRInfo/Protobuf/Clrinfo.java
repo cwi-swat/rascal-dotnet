@@ -3327,6 +3327,30 @@ public final class Clrinfo {
       return methods_.get(index);
     }
     
+    // repeated .Landman.Rascal.CLRInfo.Protobuf.Entity Fields = 3;
+    public static final int FIELDS_FIELD_NUMBER = 3;
+    private java.util.List<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity> fields_ =
+      java.util.Collections.emptyList();
+    public java.util.List<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity> getFieldsList() {
+      return fields_;
+    }
+    public int getFieldsCount() { return fields_.size(); }
+    public Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity getFields(int index) {
+      return fields_.get(index);
+    }
+    
+    // repeated .Landman.Rascal.CLRInfo.Protobuf.Entity Properties = 4;
+    public static final int PROPERTIES_FIELD_NUMBER = 4;
+    private java.util.List<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity> properties_ =
+      java.util.Collections.emptyList();
+    public java.util.List<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity> getPropertiesList() {
+      return properties_;
+    }
+    public int getPropertiesCount() { return properties_.size(); }
+    public Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity getProperties(int index) {
+      return properties_.get(index);
+    }
+    
     // repeated .Landman.Rascal.CLRInfo.Protobuf.EntityRel TypesInheritance = 10;
     public static final int TYPESINHERITANCE_FIELD_NUMBER = 10;
     private java.util.List<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.EntityRel> typesInheritance_ =
@@ -3396,6 +3420,12 @@ public final class Clrinfo {
       for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity element : getMethodsList()) {
         if (!element.isInitialized()) return false;
       }
+      for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity element : getFieldsList()) {
+        if (!element.isInitialized()) return false;
+      }
+      for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity element : getPropertiesList()) {
+        if (!element.isInitialized()) return false;
+      }
       for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.EntityRel element : getTypesInheritanceList()) {
         if (!element.isInitialized()) return false;
       }
@@ -3422,6 +3452,12 @@ public final class Clrinfo {
       }
       for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity element : getMethodsList()) {
         output.writeMessage(2, element);
+      }
+      for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity element : getFieldsList()) {
+        output.writeMessage(3, element);
+      }
+      for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity element : getPropertiesList()) {
+        output.writeMessage(4, element);
       }
       for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.EntityRel element : getTypesInheritanceList()) {
         output.writeMessage(10, element);
@@ -3454,6 +3490,14 @@ public final class Clrinfo {
       for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity element : getMethodsList()) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, element);
+      }
+      for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity element : getFieldsList()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, element);
+      }
+      for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity element : getPropertiesList()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, element);
       }
       for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.EntityRel element : getTypesInheritanceList()) {
         size += com.google.protobuf.CodedOutputStream
@@ -3625,6 +3669,14 @@ public final class Clrinfo {
           result.methods_ =
             java.util.Collections.unmodifiableList(result.methods_);
         }
+        if (result.fields_ != java.util.Collections.EMPTY_LIST) {
+          result.fields_ =
+            java.util.Collections.unmodifiableList(result.fields_);
+        }
+        if (result.properties_ != java.util.Collections.EMPTY_LIST) {
+          result.properties_ =
+            java.util.Collections.unmodifiableList(result.properties_);
+        }
         if (result.typesInheritance_ != java.util.Collections.EMPTY_LIST) {
           result.typesInheritance_ =
             java.util.Collections.unmodifiableList(result.typesInheritance_);
@@ -3672,6 +3724,18 @@ public final class Clrinfo {
             result.methods_ = new java.util.ArrayList<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity>();
           }
           result.methods_.addAll(other.methods_);
+        }
+        if (!other.fields_.isEmpty()) {
+          if (result.fields_.isEmpty()) {
+            result.fields_ = new java.util.ArrayList<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity>();
+          }
+          result.fields_.addAll(other.fields_);
+        }
+        if (!other.properties_.isEmpty()) {
+          if (result.properties_.isEmpty()) {
+            result.properties_ = new java.util.ArrayList<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity>();
+          }
+          result.properties_.addAll(other.properties_);
         }
         if (!other.typesInheritance_.isEmpty()) {
           if (result.typesInheritance_.isEmpty()) {
@@ -3738,6 +3802,18 @@ public final class Clrinfo {
               Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.Builder subBuilder = Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.newBuilder();
               input.readMessage(subBuilder, extensionRegistry);
               addMethods(subBuilder.buildPartial());
+              break;
+            }
+            case 26: {
+              Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.Builder subBuilder = Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addFields(subBuilder.buildPartial());
+              break;
+            }
+            case 34: {
+              Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.Builder subBuilder = Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addProperties(subBuilder.buildPartial());
               break;
             }
             case 82: {
@@ -3874,6 +3950,108 @@ public final class Clrinfo {
       }
       public Builder clearMethods() {
         result.methods_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // repeated .Landman.Rascal.CLRInfo.Protobuf.Entity Fields = 3;
+      public java.util.List<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity> getFieldsList() {
+        return java.util.Collections.unmodifiableList(result.fields_);
+      }
+      public int getFieldsCount() {
+        return result.getFieldsCount();
+      }
+      public Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity getFields(int index) {
+        return result.getFields(index);
+      }
+      public Builder setFields(int index, Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.fields_.set(index, value);
+        return this;
+      }
+      public Builder setFields(int index, Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.Builder builderForValue) {
+        result.fields_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addFields(Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        if (result.fields_.isEmpty()) {
+          result.fields_ = new java.util.ArrayList<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity>();
+        }
+        result.fields_.add(value);
+        return this;
+      }
+      public Builder addFields(Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.Builder builderForValue) {
+        if (result.fields_.isEmpty()) {
+          result.fields_ = new java.util.ArrayList<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity>();
+        }
+        result.fields_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllFields(
+          java.lang.Iterable<? extends Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity> values) {
+        if (result.fields_.isEmpty()) {
+          result.fields_ = new java.util.ArrayList<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity>();
+        }
+        super.addAll(values, result.fields_);
+        return this;
+      }
+      public Builder clearFields() {
+        result.fields_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // repeated .Landman.Rascal.CLRInfo.Protobuf.Entity Properties = 4;
+      public java.util.List<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity> getPropertiesList() {
+        return java.util.Collections.unmodifiableList(result.properties_);
+      }
+      public int getPropertiesCount() {
+        return result.getPropertiesCount();
+      }
+      public Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity getProperties(int index) {
+        return result.getProperties(index);
+      }
+      public Builder setProperties(int index, Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.properties_.set(index, value);
+        return this;
+      }
+      public Builder setProperties(int index, Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.Builder builderForValue) {
+        result.properties_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addProperties(Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        if (result.properties_.isEmpty()) {
+          result.properties_ = new java.util.ArrayList<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity>();
+        }
+        result.properties_.add(value);
+        return this;
+      }
+      public Builder addProperties(Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.Builder builderForValue) {
+        if (result.properties_.isEmpty()) {
+          result.properties_ = new java.util.ArrayList<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity>();
+        }
+        result.properties_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllProperties(
+          java.lang.Iterable<? extends Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity> values) {
+        if (result.properties_.isEmpty()) {
+          result.properties_ = new java.util.ArrayList<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity>();
+        }
+        super.addAll(values, result.properties_);
+        return this;
+      }
+      public Builder clearProperties() {
+        result.properties_ = java.util.Collections.emptyList();
         return this;
       }
       
@@ -4237,22 +4415,25 @@ public final class Clrinfo {
       "cal.CLRInfo.Protobuf.Entity\"T\n\rConstrain" +
       "Kind\022\010\n\004None\020\000\022\n\n\006Entity\020\001\022\013\n\007IsClass\020\002\022" +
       "\014\n\010IsStruct\020\003\022\022\n\016HasConstructor\020\004\"(\n\022Inf" +
-      "ormationRequest\022\022\n\nAssemblies\030\001 \003(\t\"\340\003\n\023" +
+      "ormationRequest\022\022\n\nAssemblies\030\001 \003(\t\"\326\004\n\023" +
       "InformationResponse\0226\n\005Types\030\001 \003(\0132\'.Lan" +
       "dman.Rascal.CLRInfo.Protobuf.Entity\0228\n\007M" +
       "ethods\030\002 \003(\0132\'.Landman.Rascal.CLRInfo.Pr" +
-      "otobuf.Entity\022D\n\020TypesInheritance\030\n \003(\0132" +
-      "*.Landman.Rascal.CLRInfo.Protobuf.Entity",
-      "Rel\022E\n\021TypesImplementing\030\013 \003(\0132*.Landman" +
-      ".Rascal.CLRInfo.Protobuf.EntityRel\022?\n\013Me" +
-      "thodCalls\030\024 \003(\0132*.Landman.Rascal.CLRInfo" +
-      ".Protobuf.EntityRel\022?\n\tModifiers\030\036 \003(\0132," +
-      ".Landman.Rascal.CLRInfo.Protobuf.Modifie" +
-      "rRel\022H\n\021GenericConstrains\030\037 \003(\0132-.Landma" +
-      "n.Rascal.CLRInfo.Protobuf.ConstrainRel*Z" +
-      "\n\010Modifier\022\n\n\006Public\020\000\022\r\n\tProtected\020\001\022\014\n" +
-      "\010Internal\020\002\022\013\n\007Private\020\003\022\n\n\006Static\020\004\022\014\n\010" +
-      "Abstract\020\005B\002H\001"
+      "otobuf.Entity\0227\n\006Fields\030\003 \003(\0132\'.Landman." +
+      "Rascal.CLRInfo.Protobuf.Entity\022;\n\nProper",
+      "ties\030\004 \003(\0132\'.Landman.Rascal.CLRInfo.Prot" +
+      "obuf.Entity\022D\n\020TypesInheritance\030\n \003(\0132*." +
+      "Landman.Rascal.CLRInfo.Protobuf.EntityRe" +
+      "l\022E\n\021TypesImplementing\030\013 \003(\0132*.Landman.R" +
+      "ascal.CLRInfo.Protobuf.EntityRel\022?\n\013Meth" +
+      "odCalls\030\024 \003(\0132*.Landman.Rascal.CLRInfo.P" +
+      "rotobuf.EntityRel\022?\n\tModifiers\030\036 \003(\0132,.L" +
+      "andman.Rascal.CLRInfo.Protobuf.ModifierR" +
+      "el\022H\n\021GenericConstrains\030\037 \003(\0132-.Landman." +
+      "Rascal.CLRInfo.Protobuf.ConstrainRel*Z\n\010",
+      "Modifier\022\n\n\006Public\020\000\022\r\n\tProtected\020\001\022\014\n\010I" +
+      "nternal\020\002\022\013\n\007Private\020\003\022\n\n\006Static\020\004\022\014\n\010Ab" +
+      "stract\020\005B\002H\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -4320,7 +4501,7 @@ public final class Clrinfo {
           internal_static_Landman_Rascal_CLRInfo_Protobuf_InformationResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Landman_Rascal_CLRInfo_Protobuf_InformationResponse_descriptor,
-              new java.lang.String[] { "Types", "Methods", "TypesInheritance", "TypesImplementing", "MethodCalls", "Modifiers", "GenericConstrains", },
+              new java.lang.String[] { "Types", "Methods", "Fields", "Properties", "TypesInheritance", "TypesImplementing", "MethodCalls", "Modifiers", "GenericConstrains", },
               Landman.Rascal.CLRInfo.Protobuf.Clrinfo.InformationResponse.class,
               Landman.Rascal.CLRInfo.Protobuf.Clrinfo.InformationResponse.Builder.class);
           return null;
