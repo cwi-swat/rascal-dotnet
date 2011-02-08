@@ -76,6 +76,8 @@ public class CLRInfoRascalBridge {
 	private static final IValue abstractModifier;
 	private static final Type modifierRel;
 	private static Map<Entity, IValue> valueStore = new HashMap<Entity, IValue>();
+	private static final Type field;
+	private static final Type property;
 
 	static {
 		entityDataType = TF.abstractDataType(store, "Entity");
@@ -99,6 +101,8 @@ public class CLRInfoRascalBridge {
 		typeParameter = TF.constructor(store, idDataType, "typeParameter", TF.stringType(), "name");
 		enumz = TF.constructor(store, idDataType, "enum", TF.stringType(), "name");
 		arrayz = TF.constructor(store, idDataType, "array", entity, "elementType");
+		property = TF.constructor(store, idDataType, "property", TF.stringType(), "name", entity, "setter", entity, "getter");
+		field = TF.constructor(store, idDataType, "field", TF.stringType(), "name");
 
 		method = TF.constructor(store, idDataType, "method", TF.stringType(), "name", 
 				TF.listType(entity), "params", entity, "returnType");
@@ -125,12 +129,16 @@ public class CLRInfoRascalBridge {
 
 		file = TF.constructor(store, resourceDataType, "file", TF.sourceLocationType(), "id");
 		store.declareAnnotation(resourceDataType, "types", TF.setType(entity));
+		store.declareAnnotation(resourceDataType, "properties", TF.setType(entity));
+		store.declareAnnotation(resourceDataType, "fields", TF.setType(entity));
 		store.declareAnnotation(resourceDataType, "implements", entityRel);
 		store.declareAnnotation(resourceDataType, "extends", entityRel);
 		store.declareAnnotation(resourceDataType, "calls", entityRel);		
 		store.declareAnnotation(resourceDataType, "methods", TF.setType(entity));
 		store.declareAnnotation(resourceDataType, "genericConstrains", constrainRel);
-		store.declareAnnotation(resourceDataType, "modifiers", modifierRel);		
+		store.declareAnnotation(resourceDataType, "modifiers", modifierRel);
+		
+		
 	}
 	
 	public CLRInfoRascalBridge(IValueFactory vf) {
@@ -157,6 +165,8 @@ public class CLRInfoRascalBridge {
 			int amountOfGroups = CodedInputStream.newInstance(inFromServer).readRawVarint32();
 			ISetWriter types = VF.setWriter(entityDataType);
 			ISetWriter methods = VF.setWriter(entityDataType);
+			ISetWriter properties = VF.setWriter(entityDataType);
+			ISetWriter fields = VF.setWriter(entityDataType);
 			IRelationWriter extendz = VF.relationWriter(entityRel);
 			IRelationWriter implementz = VF.relationWriter(entityRel);
 			IRelationWriter calls = VF.relationWriter(entityRel);
@@ -166,6 +176,8 @@ public class CLRInfoRascalBridge {
 				InformationResponse currentInformation = InformationResponse.parseDelimitedFrom(inFromServer);
 				addToEntitySet(types, currentInformation.getTypesList());
 				addToEntitySet(methods, currentInformation.getMethodsList());
+				addToEntitySet(properties, currentInformation.getPropertiesList());
+				addToEntitySet(fields, currentInformation.getFieldsList());
 				addToEntityRels(extendz, currentInformation.getTypesInheritanceList());
 				addToEntityRels(implementz, currentInformation.getTypesImplementingList());
 				addToEntityRels(calls, currentInformation.getMethodCallsList());
@@ -177,6 +189,8 @@ public class CLRInfoRascalBridge {
 			IConstructor result = (IConstructor) file.make(VF, locs.done());
 			result = result.setAnnotation("types", types.done());
 			result = result.setAnnotation("methods", methods.done());
+			result = result.setAnnotation("properties", properties.done());
+			result = result.setAnnotation("fields", fields.done());
 			result = result.setAnnotation("extends", extendz.done());
 			result = result.setAnnotation("implements", implementz.done());
 			result = result.setAnnotation("calls", calls.done());
@@ -268,6 +282,13 @@ public class CLRInfoRascalBridge {
 				case Array:
 					currentEntity.add(arrayz.make(VF, generateSingleEntityArray(currentId.getElementType())));
 					break;
+				case Property:
+					currentEntity.add(property.make(VF, VF.string(currentId.getName()),  
+							generateSingleEntityArray(currentId.getSetter()), generateSingleEntityArray(currentId.getGetter())));
+					break;
+				case Field:
+					currentEntity.add(createTypeWithName(field, currentId));
+					break;
 				default:
 					throw new RuntimeException("You forgot to detect the id: " + currentId.getKind().toString());
 			}
@@ -340,7 +361,7 @@ public class CLRInfoRascalBridge {
 		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
 		//IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
 		
-		//System.out.print(((IConstructor) result).getAnnotation("modifiers"));
+		System.out.print(((IConstructor) result).getAnnotation("properties"));
 	}
 
 }

@@ -17,6 +17,9 @@ data Resource = file(list[loc] id);
 
 anno EntitySet Resource@types;
 anno EntitySet Resource@methods;
+anno EntitySet Resource@properties;
+anno EntitySet Resource@fields;
+
 anno EntityRel Resource@implements;
 anno EntityRel Resource@extends;
   

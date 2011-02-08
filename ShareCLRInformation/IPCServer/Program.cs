@@ -126,7 +126,8 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			try {
 #endif
 			result.PropertiesList.AddRange(allTypes.SelectMany(t => t.Properties.Select(p => GenerateEntity(p))));
-			result.FieldsList.AddRange(allTypes.SelectMany(t => t.Fields.Select(f => GenerateEntity(f))));
+			result.FieldsList.AddRange(allTypes.SelectMany(t => t.Fields.Where(f => !f.Name.StartsWith("<"))
+				.Select(f => GenerateEntity(f))));
 #if ignorefailures
 			} catch { }
 #endif
