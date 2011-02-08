@@ -151,7 +151,7 @@ public class CLRInfoRascalBridge {
 			for (IValue val : assemblyNames) {
 				if (val instanceof IString) {
 					actualAssemblies.add(((IString) val).getValue());
-					locs.append(VF.sourceLocation(((IString) val).getValue()));
+					locs.append(VF.sourceLocation(((IString) val).getValue().replaceAll("\\s", "%20")));
 				}
 			}
 
@@ -358,8 +358,9 @@ public class CLRInfoRascalBridge {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		//IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
 		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/MiscUtil.dll")));
-		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
+		//IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
 		//IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
+		IValue result = readCLRInfo(VF.list(VF.string("/home/davy/Personal/Rascal CSharp/rascal-csharp/lib/ICSharpCode.NRefactory.dll")));
 		
 		System.out.print(((IConstructor) result).getAnnotation("properties"));
 	}

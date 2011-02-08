@@ -64,7 +64,10 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			var moduleList = assemblies.Select(a => ModuleDefinition.ReadModule(a)).ToList();
 			foreach (var mod in moduleList)
 			{
+				try {
 				mod.ReadSymbols();
+				}
+				catch {}
 			}
 			return moduleList.SelectMany(m => m.GetAllTypes())
 				.Where(t => t.IsClass || t.IsEnum || t.IsInterface)
@@ -253,7 +256,7 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 		}
 
 		private static Entity GenerateEntity (PropertyDefinition p)
-		{
+		{			
 			var result = Entity.CreateBuilder();
 			result.IdsList.AddRange(GenerateEntity(p.DeclaringType).IdsList); // class ref
 			var propertyId = Id.CreateBuilder()
@@ -305,6 +308,8 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 
 		private static Entity GenerateEntity(MethodDefinition m){
 			var result = Entity.CreateBuilder();
+			if (m == null )
+				return result.Build();
 			result.IdsList.AddRange(GenerateEntity(m.DeclaringType).IdsList); // class ref
 			var methodId = Id.CreateBuilder();
 			if (m.IsConstructor) {
