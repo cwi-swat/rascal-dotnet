@@ -1437,12 +1437,12 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
     
     public const int Id_FieldNumber = 7;
     private bool hasId_;
-    private int Id_ = 0;
+    private int id_ = 0;
     public bool HasId_ {
       get { return hasId_; }
     }
     public int Id_ {
-      get { return Id_; }
+      get { return id_; }
     }
     
     public const int PrimitiveTypeFieldNumber = 8;
@@ -1976,12 +1976,12 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       }
       public Builder SetId_(int value) {
         result.hasId_ = true;
-        result.Id_ = value;
+        result.id_ = value;
         return this;
       }
       public Builder ClearId_() {
         result.hasId_ = false;
-        result.Id_ = 0;
+        result.id_ = 0;
         return this;
       }
       

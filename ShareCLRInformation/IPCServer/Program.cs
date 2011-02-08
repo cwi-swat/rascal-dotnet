@@ -119,8 +119,14 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			try {
 #endif
 			result.ModifiersList.AddRange(allTypes.SelectMany(t => GenerateModifierRels(t)));
+			result.ModifiersList.AddRange(allTypes.SelectMany(t => t.Fields.SelectMany(f => GenerateModifierRels(f))));
 			result.ModifiersList.AddRange(allMethods.SelectMany(m => GenerateModifierRels(m)));
-
+#if ignorefailures
+			} catch { }
+			try {
+#endif
+			result.PropertiesList.AddRange(allTypes.SelectMany(t => t.Properties.Select(p => GenerateEntity(p))));
+			result.FieldsList.AddRange(allTypes.SelectMany(t => t.Fields.Select(f => GenerateEntity(f))));
 #if ignorefailures
 			} catch { }
 #endif
@@ -145,18 +151,38 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 
 		private static IEnumerable<ModifierRel> GenerateModifierRels(MethodDefinition m)
 		{
-			var methodEntity = GenerateEntity(m);
+			return GenerateModifierRels(m, GenerateEntity(m));
+		}
+	
+		private static IEnumerable<ModifierRel> GenerateModifierRels(FieldDefinition f)
+		{
+			return GenerateModifierRels(f, GenerateEntity(f));		
+		}
+
+		
+		private static Boolean GetPropertyValue<T>(T target, String fieldName)
+			where T : class
+		{
+			var prop = typeof(T).GetProperty(fieldName, typeof(Boolean));
+			return prop == null ? false : (Boolean)prop.GetValue(target, null);
+		}
+		
+
+		private static IEnumerable<ModifierRel> GenerateModifierRels(Object def, Entity targetEntity)
+		{
 			var result = new List<ModifierRel>();
-			if (m.IsAbstract)
-				result.Add(GenerateModifierRel(methodEntity, Modifier.Abstract));
-			if (m.IsPublic)
-				result.Add(GenerateModifierRel(methodEntity, Modifier.Public));
-			else if (m.IsPrivate)
-				result.Add(GenerateModifierRel(methodEntity, Modifier.Private));
-			if (m.IsFamily || m.IsFamilyAndAssembly || m.IsFamilyOrAssembly)
-				result.Add(GenerateModifierRel(methodEntity, Modifier.Protected));
+			if (GetPropertyValue(def, "IsAbstract"))
+				result.Add(GenerateModifierRel(targetEntity, Modifier.Abstract));
+			if (GetPropertyValue(def, "IsPublic"))
+				result.Add(GenerateModifierRel(targetEntity, Modifier.Public));
+			else if (GetPropertyValue(def, "IsPrivate"))
+				result.Add(GenerateModifierRel(targetEntity, Modifier.Private));
+			if (GetPropertyValue(def, "IsFamily") 
+			    || GetPropertyValue(def, "IsFamilyAndAssembly") 
+				|| GetPropertyValue(def, "IsFamilyOrAssembly"))
+				result.Add(GenerateModifierRel(targetEntity, Modifier.Protected));
 			if (result.Count == 0)
-				result.Add(GenerateModifierRel(methodEntity, Modifier.Internal));
+				result.Add(GenerateModifierRel(targetEntity, Modifier.Internal));
 			return result;
 		}
 
@@ -223,6 +249,32 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 				.Where(mr => mr != null)
 				.Select(mr => GenerateEntityRel(currentMethod, GenerateEntity(mr)))
 				.ToList();
+		}
+
+		private static Entity GenerateEntity (PropertyDefinition p)
+		{
+			var result = Entity.CreateBuilder();
+			result.IdsList.AddRange(GenerateEntity(p.DeclaringType).IdsList); // class ref
+			var propertyId = Id.CreateBuilder()
+				.SetKind(Id.Types.IdKind.Property)
+				.SetName(p.Name)
+				.SetSetter(GenerateEntity(p.SetMethod))
+				.SetGetter(GenerateEntity(p.GetMethod))
+				.SetElementType(GenerateEntity(p.PropertyType));
+			result.AddIds(propertyId);
+			return result.Build();
+		}
+
+		private static Entity GenerateEntity (FieldDefinition f)
+		{
+			var result = Entity.CreateBuilder();
+			result.IdsList.AddRange(GenerateEntity(f.DeclaringType).IdsList); // class ref
+			var propertyId = Id.CreateBuilder()
+				.SetKind(Id.Types.IdKind.Field)
+				.SetName(f.Name)
+				.SetElementType(GenerateEntity(f.FieldType));
+			result.AddIds(propertyId);
+			return result.Build();
 		}
 
 		private static Entity GenerateEntity(MethodReference m)

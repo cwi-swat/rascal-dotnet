@@ -28,6 +28,12 @@ namespace TestProject
 		{
 			return "Test protected";
 		}
+		private Int16 Result;
+		
+		public String Testing {
+			get;
+			private set;
+		}
 	}
 
 	internal class CON<T> where T : StringComparer, new()
