@@ -469,11 +469,27 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			result.IdsList.Add(Id.CreateBuilder()
 				.SetKind(Id.Types.IdKind.EnumConstant)
 				.SetName(enumItem.Name)
-				.SetId_((int)enumItem.Constant)
+				.SetId_(GetConstantValue(enumItem))
 				.Build());
 			return result.Build();
 		}
 		
+		static int GetConstantValue (FieldDefinition enumItem)
+		{
+			var constant = enumItem.Constant;
+			if (constant is Int32)
+				return (Int32)constant;
+			if (constant is Int16)
+				return (Int16)constant;
+			if (constant is Byte)
+				return (Byte)constant;
+			if (constant is UInt32)
+				return (int)((UInt32)constant);
+			if (constant is UInt16)
+				return (UInt16)constant;
+			return -1;
+		}
+
 		private static Entity GenerateEntity(GenericParameter p)
 		{
 			var result = Entity.CreateBuilder();
