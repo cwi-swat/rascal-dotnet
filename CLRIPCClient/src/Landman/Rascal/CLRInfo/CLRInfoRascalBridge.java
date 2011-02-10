@@ -76,6 +76,7 @@ public class CLRInfoRascalBridge {
 	private static final IValue abstractModifier;
 	private static final Type modifierRel;
 	private static Map<Entity, IValue> valueStore = new HashMap<Entity, IValue>();
+	private static final Type enumConstant;
 	private static final Type field;
 	private static final Type property;
 
@@ -99,10 +100,11 @@ public class CLRInfoRascalBridge {
 		displayClass = TF.constructor(store, idDataType, "displayClass", TF.integerType(), "nr");
 
 		typeParameter = TF.constructor(store, idDataType, "typeParameter", TF.stringType(), "name");
-		enumz = TF.constructor(store, idDataType, "enum", TF.stringType(), "name");
+		enumz = TF.constructor(store, idDataType, "enum", TF.stringType(), "name", TF.listType(entity), "items");
 		arrayz = TF.constructor(store, idDataType, "array", entity, "elementType");
-		property = TF.constructor(store, idDataType, "property", TF.stringType(), "name", entity, "setter", entity, "getter");
-		field = TF.constructor(store, idDataType, "field", TF.stringType(), "name");
+		enumConstant = TF.constructor(store, idDataType, "enumConstant", TF.stringType(), "name", TF.integerType(), "id");
+		property = TF.constructor(store, idDataType, "property", TF.stringType(), "name", entity, "propertyType", entity, "setter", entity, "getter");
+		field = TF.constructor(store, idDataType, "field", TF.stringType(), "name", entity, "fieldType");
 
 		method = TF.constructor(store, idDataType, "method", TF.stringType(), "name", 
 				TF.listType(entity), "params", entity, "returnType");
@@ -269,7 +271,7 @@ public class CLRInfoRascalBridge {
 					currentEntity.add(displayClass.make(VF, currentId.getId()));
 					break;
 				case Enumeration:
-					currentEntity.add(createTypeWithName(enumz, currentId));
+					currentEntity.add(enumz.make(VF, VF.string(currentId.getName()), generateEntityList(currentId.getItemsList())));
 					break;
 				case TypeParameter:
 					currentEntity.add(createTypeParameter(currentId));
@@ -284,11 +286,14 @@ public class CLRInfoRascalBridge {
 					currentEntity.add(arrayz.make(VF, generateSingleEntityArray(currentId.getElementType())));
 					break;
 				case Property:
-					currentEntity.add(property.make(VF, VF.string(currentId.getName()),  
+					currentEntity.add(property.make(VF, VF.string(currentId.getName()), generateSingleEntityArray(currentId.getElementType()), 
 							generateSingleEntityArray(currentId.getSetter()), generateSingleEntityArray(currentId.getGetter())));
 					break;
 				case Field:
-					currentEntity.add(createTypeWithName(field, currentId));
+					currentEntity.add(field.make(VF, VF.string(currentId.getName()), generateSingleEntityArray(currentId.getElementType())));
+					break;
+				case EnumConstant:
+					currentEntity.add(enumConstant.make(VF, VF.string(currentId.getName()), VF.integer(currentId.getId())));
 					break;
 				default:
 					throw new RuntimeException("You forgot to detect the id: " + currentId.getKind().toString());
@@ -359,9 +364,9 @@ public class CLRInfoRascalBridge {
 	public static void main(String[] args) throws Exception {
 		//IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
 		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/MiscUtil.dll")));
-		//IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
+		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
 		//IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
-		IValue result = readCLRInfo(VF.list(VF.string("/home/davy/Personal/Rascal CSharp/rascal-csharp/lib/ICSharpCode.NRefactory.dll")));
+		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/Personal/Rascal CSharp/rascal-csharp/lib/ICSharpCode.NRefactory.dll")));
 		
 		System.out.print(((IConstructor) result).getAnnotation("properties"));
 	}
