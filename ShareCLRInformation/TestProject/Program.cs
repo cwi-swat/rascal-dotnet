@@ -35,6 +35,11 @@ namespace TestProject
 			private set;
 		}
 	}
+	
+	public enum TestEnum {
+		FirstValue = 0,
+		SecondValue = 4
+	}
 
 	internal class CON<T> where T : StringComparer, new()
 	{

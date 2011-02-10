@@ -421,7 +421,12 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			{
 				entityId.Name = entityId.Name.Substring(0, genericNameTickIndex);
 			}
-			if (currentType.IsClass)
+			
+			if (currentType.IsEnum)
+			{
+				entityId.Kind = Id.Types.IdKind.Enumeration;
+			}
+			else if (currentType.IsClass)
 			{
 				if (entityId.Name.StartsWith("<>c__DisplayClass"))
 				{
@@ -441,10 +446,6 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			{
 				entityId.Kind = currentType.HasGenericParameters ? Id.Types.IdKind.GenericInterface : Id.Types.IdKind.Interface;
 			}
-			else if (currentType.IsEnum)
-			{
-				entityId.Kind = Id.Types.IdKind.Enumeration;
-			}
 			else
 			{
 				entityId.Kind = Id.Types.IdKind.Unkown;	
@@ -454,9 +455,25 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			{
 				entityId.ParamsList.AddRange(currentType.GenericParameters.Select(p => GenerateEntity(p)));
 			}
+			if (currentType.IsEnum && currentType.HasFields)
+			{
+				entityId.ItemsList.AddRange(currentType.Fields.Where(f => !f.IsSpecialName)
+					.Select(ei => GenerateEnumItem(ei)));
+			}
 			return entityId.Build();
 		}
-
+		
+		private static Entity GenerateEnumItem(FieldDefinition enumItem)
+		{
+			var result = Entity.CreateBuilder();
+			result.IdsList.Add(Id.CreateBuilder()
+				.SetKind(Id.Types.IdKind.EnumConstant)
+				.SetName(enumItem.Name)
+				.SetId_((int)enumItem.Constant)
+				.Build());
+			return result.Build();
+		}
+		
 		private static Entity GenerateEntity(GenericParameter p)
 		{
 			var result = Entity.CreateBuilder();
