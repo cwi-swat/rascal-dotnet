@@ -14,3 +14,7 @@ obj
 *.suo
 *.userprefs
 *.pidb
+*.protobin
+CSharpOptions.cs
+DescriptorProtoFile.cs
+
