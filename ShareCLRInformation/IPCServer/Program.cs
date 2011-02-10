@@ -386,6 +386,19 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			{
 				return GenerateEntity(((ByReferenceType)t).ElementType);
 			}
+			if (t.IsGenericInstance)
+			{
+				var actualT = (GenericInstanceType)t;
+				var genericType = GenerateEntity(t.Resolve());
+				var result = Entity.CreateBuilder();
+				result.IdsList.AddRange(genericType.IdsList.Take(genericType.IdsList.Count - 1));
+				var genericInstace = genericType.IdsList.Last().ToBuilder();
+				genericInstace.ParamsList.Clear();
+				genericInstace.ParamsList.AddRange(actualT.GenericArguments.Select(p => GenerateEntity(p)));	
+				result.AddIds(genericInstace);
+				return result.Build();
+				
+			}
 			return GenerateEntity(t.Resolve());
 		}
 

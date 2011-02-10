@@ -26,6 +26,7 @@ namespace TestProject
 		}
 		protected virtual string TestProtected()
 		{
+			Result = 129;
 			return "Test protected";
 		}
 		private Int16 Result;
@@ -33,6 +34,10 @@ namespace TestProject
 		public String Testing {
 			get;
 			private set;
+		}
+		
+		public IDictionary<C<String>, T> TestCollection() {
+			return null;	
 		}
 	}
 	
