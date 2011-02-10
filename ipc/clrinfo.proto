@@ -1,10 +1,10 @@
 package Landman.Rascal.CLRInfo.Protobuf;
 
 
-import "google/protobuf/csharp_options.proto";
+//import "google/protobuf/csharp_options.proto";
 
-option (google.protobuf.csharp_file_options).namespace = "Landman.Rascal.CLRInfo.Protobuf";
-option (google.protobuf.csharp_file_options).umbrella_classname = "CLRInfoProtos";
+//option (google.protobuf.csharp_file_options).namespace = "Landman.Rascal.CLRInfo.Protobuf";
+//option (google.protobuf.csharp_file_options).umbrella_classname = "CLRInfoProtos";
 
 option optimize_for = SPEED;
 
@@ -91,6 +91,7 @@ message Id {
 	optional int32 _Id = 7;
 	optional PrimitiveType _PrimitiveType = 8;
 	optional Entity ElementType = 9;
+	repeated Entity Items = 10;
 }
 
 message Constrain {

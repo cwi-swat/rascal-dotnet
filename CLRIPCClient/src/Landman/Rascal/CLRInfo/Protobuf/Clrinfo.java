@@ -1831,6 +1831,18 @@ public final class Clrinfo {
     public boolean hasElementType() { return hasElementType; }
     public Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity getElementType() { return elementType_; }
     
+    // repeated .Landman.Rascal.CLRInfo.Protobuf.Entity Items = 10;
+    public static final int ITEMS_FIELD_NUMBER = 10;
+    private java.util.List<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity> items_ =
+      java.util.Collections.emptyList();
+    public java.util.List<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity> getItemsList() {
+      return items_;
+    }
+    public int getItemsCount() { return items_.size(); }
+    public Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity getItems(int index) {
+      return items_.get(index);
+    }
+    
     private void initFields() {
       kind_ = Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Id.IdKind.Namespace;
       returnType_ = Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.getDefaultInstance();
@@ -1855,6 +1867,9 @@ public final class Clrinfo {
       }
       if (hasElementType()) {
         if (!getElementType().isInitialized()) return false;
+      }
+      for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity element : getItemsList()) {
+        if (!element.isInitialized()) return false;
       }
       return true;
     }
@@ -1888,6 +1903,9 @@ public final class Clrinfo {
       }
       if (hasElementType()) {
         output.writeMessage(9, getElementType());
+      }
+      for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity element : getItemsList()) {
+        output.writeMessage(10, element);
       }
       getUnknownFields().writeTo(output);
     }
@@ -1933,6 +1951,10 @@ public final class Clrinfo {
       if (hasElementType()) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(9, getElementType());
+      }
+      for (Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity element : getItemsList()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(10, element);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2080,6 +2102,10 @@ public final class Clrinfo {
           result.params_ =
             java.util.Collections.unmodifiableList(result.params_);
         }
+        if (result.items_ != java.util.Collections.EMPTY_LIST) {
+          result.items_ =
+            java.util.Collections.unmodifiableList(result.items_);
+        }
         Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Id returnMe = result;
         result = null;
         return returnMe;
@@ -2125,6 +2151,12 @@ public final class Clrinfo {
         }
         if (other.hasElementType()) {
           mergeElementType(other.getElementType());
+        }
+        if (!other.items_.isEmpty()) {
+          if (result.items_.isEmpty()) {
+            result.items_ = new java.util.ArrayList<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity>();
+          }
+          result.items_.addAll(other.items_);
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -2219,6 +2251,12 @@ public final class Clrinfo {
               }
               input.readMessage(subBuilder, extensionRegistry);
               setElementType(subBuilder.buildPartial());
+              break;
+            }
+            case 82: {
+              Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.Builder subBuilder = Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addItems(subBuilder.buildPartial());
               break;
             }
           }
@@ -2503,6 +2541,57 @@ public final class Clrinfo {
       public Builder clearElementType() {
         result.hasElementType = false;
         result.elementType_ = Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.getDefaultInstance();
+        return this;
+      }
+      
+      // repeated .Landman.Rascal.CLRInfo.Protobuf.Entity Items = 10;
+      public java.util.List<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity> getItemsList() {
+        return java.util.Collections.unmodifiableList(result.items_);
+      }
+      public int getItemsCount() {
+        return result.getItemsCount();
+      }
+      public Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity getItems(int index) {
+        return result.getItems(index);
+      }
+      public Builder setItems(int index, Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.items_.set(index, value);
+        return this;
+      }
+      public Builder setItems(int index, Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.Builder builderForValue) {
+        result.items_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addItems(Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        if (result.items_.isEmpty()) {
+          result.items_ = new java.util.ArrayList<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity>();
+        }
+        result.items_.add(value);
+        return this;
+      }
+      public Builder addItems(Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity.Builder builderForValue) {
+        if (result.items_.isEmpty()) {
+          result.items_ = new java.util.ArrayList<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity>();
+        }
+        result.items_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllItems(
+          java.lang.Iterable<? extends Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity> values) {
+        if (result.items_.isEmpty()) {
+          result.items_ = new java.util.ArrayList<Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Entity>();
+        }
+        super.addAll(values, result.items_);
+        return this;
+      }
+      public Builder clearItems() {
+        result.items_ = java.util.Collections.emptyList();
         return this;
       }
       
@@ -4383,7 +4472,7 @@ public final class Clrinfo {
       "o.Protobuf.Entity\022=\n\tConstrain\030\002 \002(\0132*.L",
       "andman.Rascal.CLRInfo.Protobuf.Constrain" +
       "\":\n\006Entity\0220\n\003Ids\030\001 \003(\0132#.Landman.Rascal" +
-      ".CLRInfo.Protobuf.Id\"\364\007\n\002Id\0228\n\004Kind\030\001 \002(" +
+      ".CLRInfo.Protobuf.Id\"\254\010\n\002Id\0228\n\004Kind\030\001 \002(" +
       "\0162*.Landman.Rascal.CLRInfo.Protobuf.Id.I" +
       "dKind\022\014\n\004Name\030\002 \001(\t\0227\n\006Params\030\003 \003(\0132\'.La" +
       "ndman.Rascal.CLRInfo.Protobuf.Entity\022;\n\n" +
@@ -4395,45 +4484,46 @@ public final class Clrinfo {
       "pe\030\010 \001(\01621.Landman.Rascal.CLRInfo.Protob" +
       "uf.Id.PrimitiveType\022<\n\013ElementType\030\t \001(\013" +
       "2\'.Landman.Rascal.CLRInfo.Protobuf.Entit" +
-      "y\"\347\002\n\006IdKind\022\r\n\tNamespace\020\000\022\t\n\005Class\020\001\022\020" +
-      "\n\014GenericClass\020\002\022\r\n\tInterface\020\003\022\024\n\020Gener" +
-      "icInterface\020\004\022\017\n\013Enumeration\020\005\022\022\n\016Anonym" +
-      "ousClass\020\006\022\020\n\014DisplayClass\020\007\022\n\n\006Method\020\n" +
-      "\022\017\n\013Constructor\020\013\022\r\n\tFinalizer\020\014\022\017\n\013Init" +
-      "ializer\020\r\022\t\n\005Field\020\024\022\014\n\010Property\020\025\022\t\n\005Ev",
-      "ent\020\026\022\r\n\tParameter\020\027\022\014\n\010Variable\020\030\022\020\n\014En" +
-      "umConstant\020\031\022\r\n\tPrimitive\020\036\022\t\n\005Array\020\037\022\021" +
-      "\n\rTypeParameter\020(\022\n\n\006Unkown\020)\022\014\n\010Wildcar" +
-      "d\020*\"\275\001\n\rPrimitiveType\022\010\n\004Bool\020\000\022\010\n\004Byte\020" +
-      "\001\022\t\n\005Sbyte\020\002\022\010\n\004Char\020\003\022\013\n\007Decimal\020\004\022\n\n\006D" +
-      "ouble\020\005\022\t\n\005Float\020\006\022\007\n\003Int\020\007\022\010\n\004Uint\020\010\022\010\n" +
-      "\004Long\020\t\022\t\n\005Ulong\020\n\022\n\n\006Object\020\013\022\t\n\005Short\020" +
-      "\014\022\n\n\006Ushort\020\r\022\n\n\006String\020\016\022\010\n\004Void\020\017\"\353\001\n\t" +
-      "Constrain\022F\n\004Kind\030\001 \002(\01628.Landman.Rascal" +
-      ".CLRInfo.Protobuf.Constrain.ConstrainKin",
-      "d\022@\n\017ConstrainEntity\030\002 \001(\0132\'.Landman.Ras" +
-      "cal.CLRInfo.Protobuf.Entity\"T\n\rConstrain" +
-      "Kind\022\010\n\004None\020\000\022\n\n\006Entity\020\001\022\013\n\007IsClass\020\002\022" +
-      "\014\n\010IsStruct\020\003\022\022\n\016HasConstructor\020\004\"(\n\022Inf" +
-      "ormationRequest\022\022\n\nAssemblies\030\001 \003(\t\"\326\004\n\023" +
-      "InformationResponse\0226\n\005Types\030\001 \003(\0132\'.Lan" +
-      "dman.Rascal.CLRInfo.Protobuf.Entity\0228\n\007M" +
-      "ethods\030\002 \003(\0132\'.Landman.Rascal.CLRInfo.Pr" +
-      "otobuf.Entity\0227\n\006Fields\030\003 \003(\0132\'.Landman." +
-      "Rascal.CLRInfo.Protobuf.Entity\022;\n\nProper",
-      "ties\030\004 \003(\0132\'.Landman.Rascal.CLRInfo.Prot" +
-      "obuf.Entity\022D\n\020TypesInheritance\030\n \003(\0132*." +
-      "Landman.Rascal.CLRInfo.Protobuf.EntityRe" +
-      "l\022E\n\021TypesImplementing\030\013 \003(\0132*.Landman.R" +
-      "ascal.CLRInfo.Protobuf.EntityRel\022?\n\013Meth" +
-      "odCalls\030\024 \003(\0132*.Landman.Rascal.CLRInfo.P" +
-      "rotobuf.EntityRel\022?\n\tModifiers\030\036 \003(\0132,.L" +
-      "andman.Rascal.CLRInfo.Protobuf.ModifierR" +
-      "el\022H\n\021GenericConstrains\030\037 \003(\0132-.Landman." +
-      "Rascal.CLRInfo.Protobuf.ConstrainRel*Z\n\010",
-      "Modifier\022\n\n\006Public\020\000\022\r\n\tProtected\020\001\022\014\n\010I" +
-      "nternal\020\002\022\013\n\007Private\020\003\022\n\n\006Static\020\004\022\014\n\010Ab" +
-      "stract\020\005B\002H\001"
+      "y\0226\n\005Items\030\n \003(\0132\'.Landman.Rascal.CLRInf" +
+      "o.Protobuf.Entity\"\347\002\n\006IdKind\022\r\n\tNamespac" +
+      "e\020\000\022\t\n\005Class\020\001\022\020\n\014GenericClass\020\002\022\r\n\tInte" +
+      "rface\020\003\022\024\n\020GenericInterface\020\004\022\017\n\013Enumera" +
+      "tion\020\005\022\022\n\016AnonymousClass\020\006\022\020\n\014DisplayCla" +
+      "ss\020\007\022\n\n\006Method\020\n\022\017\n\013Constructor\020\013\022\r\n\tFin",
+      "alizer\020\014\022\017\n\013Initializer\020\r\022\t\n\005Field\020\024\022\014\n\010" +
+      "Property\020\025\022\t\n\005Event\020\026\022\r\n\tParameter\020\027\022\014\n\010" +
+      "Variable\020\030\022\020\n\014EnumConstant\020\031\022\r\n\tPrimitiv" +
+      "e\020\036\022\t\n\005Array\020\037\022\021\n\rTypeParameter\020(\022\n\n\006Unk" +
+      "own\020)\022\014\n\010Wildcard\020*\"\275\001\n\rPrimitiveType\022\010\n" +
+      "\004Bool\020\000\022\010\n\004Byte\020\001\022\t\n\005Sbyte\020\002\022\010\n\004Char\020\003\022\013" +
+      "\n\007Decimal\020\004\022\n\n\006Double\020\005\022\t\n\005Float\020\006\022\007\n\003In" +
+      "t\020\007\022\010\n\004Uint\020\010\022\010\n\004Long\020\t\022\t\n\005Ulong\020\n\022\n\n\006Ob" +
+      "ject\020\013\022\t\n\005Short\020\014\022\n\n\006Ushort\020\r\022\n\n\006String\020" +
+      "\016\022\010\n\004Void\020\017\"\353\001\n\tConstrain\022F\n\004Kind\030\001 \002(\0162",
+      "8.Landman.Rascal.CLRInfo.Protobuf.Constr" +
+      "ain.ConstrainKind\022@\n\017ConstrainEntity\030\002 \001" +
+      "(\0132\'.Landman.Rascal.CLRInfo.Protobuf.Ent" +
+      "ity\"T\n\rConstrainKind\022\010\n\004None\020\000\022\n\n\006Entity" +
+      "\020\001\022\013\n\007IsClass\020\002\022\014\n\010IsStruct\020\003\022\022\n\016HasCons" +
+      "tructor\020\004\"(\n\022InformationRequest\022\022\n\nAssem" +
+      "blies\030\001 \003(\t\"\326\004\n\023InformationResponse\0226\n\005T" +
+      "ypes\030\001 \003(\0132\'.Landman.Rascal.CLRInfo.Prot" +
+      "obuf.Entity\0228\n\007Methods\030\002 \003(\0132\'.Landman.R" +
+      "ascal.CLRInfo.Protobuf.Entity\0227\n\006Fields\030",
+      "\003 \003(\0132\'.Landman.Rascal.CLRInfo.Protobuf." +
+      "Entity\022;\n\nProperties\030\004 \003(\0132\'.Landman.Ras" +
+      "cal.CLRInfo.Protobuf.Entity\022D\n\020TypesInhe" +
+      "ritance\030\n \003(\0132*.Landman.Rascal.CLRInfo.P" +
+      "rotobuf.EntityRel\022E\n\021TypesImplementing\030\013" +
+      " \003(\0132*.Landman.Rascal.CLRInfo.Protobuf.E" +
+      "ntityRel\022?\n\013MethodCalls\030\024 \003(\0132*.Landman." +
+      "Rascal.CLRInfo.Protobuf.EntityRel\022?\n\tMod" +
+      "ifiers\030\036 \003(\0132,.Landman.Rascal.CLRInfo.Pr" +
+      "otobuf.ModifierRel\022H\n\021GenericConstrains\030",
+      "\037 \003(\0132-.Landman.Rascal.CLRInfo.Protobuf." +
+      "ConstrainRel*Z\n\010Modifier\022\n\n\006Public\020\000\022\r\n\t" +
+      "Protected\020\001\022\014\n\010Internal\020\002\022\013\n\007Private\020\003\022\n" +
+      "\n\006Static\020\004\022\014\n\010Abstract\020\005B\002H\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -4477,7 +4567,7 @@ public final class Clrinfo {
           internal_static_Landman_Rascal_CLRInfo_Protobuf_Id_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Landman_Rascal_CLRInfo_Protobuf_Id_descriptor,
-              new java.lang.String[] { "Kind", "Name", "Params", "ReturnType", "Setter", "Getter", "Id", "PrimitiveType", "ElementType", },
+              new java.lang.String[] { "Kind", "Name", "Params", "ReturnType", "Setter", "Getter", "Id", "PrimitiveType", "ElementType", "Items", },
               Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Id.class,
               Landman.Rascal.CLRInfo.Protobuf.Clrinfo.Id.Builder.class);
           internal_static_Landman_Rascal_CLRInfo_Protobuf_Constrain_descriptor =

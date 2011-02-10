@@ -49,8 +49,8 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
           "CgZFbnRpdHkYASACKAsyJy5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3Rv" + 
           "YnVmLkVudGl0eRI9CglDb25zdHJhaW4YAiACKAsyKi5MYW5kbWFuLlJhc2Nh" + 
           "bC5DTFJJbmZvLlByb3RvYnVmLkNvbnN0cmFpbiI6CgZFbnRpdHkSMAoDSWRz" + 
-          "GAEgAygLMiMuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5JZCL0" + 
-          "BwoCSWQSOAoES2luZBgBIAIoDjIqLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8u" + 
+          "GAEgAygLMiMuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5JZCKs" + 
+          "CAoCSWQSOAoES2luZBgBIAIoDjIqLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8u" + 
           "UHJvdG9idWYuSWQuSWRLaW5kEgwKBE5hbWUYAiABKAkSNwoGUGFyYW1zGAMg" + 
           "AygLMicuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5FbnRpdHkS" + 
           "OwoKUmV0dXJuVHlwZRgEIAEoCzInLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8u" + 
@@ -60,42 +60,43 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
           "ZBgHIAEoBRJJCg5fUHJpbWl0aXZlVHlwZRgIIAEoDjIxLkxhbmRtYW4uUmFz" + 
           "Y2FsLkNMUkluZm8uUHJvdG9idWYuSWQuUHJpbWl0aXZlVHlwZRI8CgtFbGVt" + 
           "ZW50VHlwZRgJIAEoCzInLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9i" + 
-          "dWYuRW50aXR5IucCCgZJZEtpbmQSDQoJTmFtZXNwYWNlEAASCQoFQ2xhc3MQ" + 
-          "ARIQCgxHZW5lcmljQ2xhc3MQAhINCglJbnRlcmZhY2UQAxIUChBHZW5lcmlj" + 
-          "SW50ZXJmYWNlEAQSDwoLRW51bWVyYXRpb24QBRISCg5Bbm9ueW1vdXNDbGFz" + 
-          "cxAGEhAKDERpc3BsYXlDbGFzcxAHEgoKBk1ldGhvZBAKEg8KC0NvbnN0cnVj" + 
-          "dG9yEAsSDQoJRmluYWxpemVyEAwSDwoLSW5pdGlhbGl6ZXIQDRIJCgVGaWVs" + 
-          "ZBAUEgwKCFByb3BlcnR5EBUSCQoFRXZlbnQQFhINCglQYXJhbWV0ZXIQFxIM" + 
-          "CghWYXJpYWJsZRAYEhAKDEVudW1Db25zdGFudBAZEg0KCVByaW1pdGl2ZRAe" + 
-          "EgkKBUFycmF5EB8SEQoNVHlwZVBhcmFtZXRlchAoEgoKBlVua293bhApEgwK" + 
-          "CFdpbGRjYXJkECoivQEKDVByaW1pdGl2ZVR5cGUSCAoEQm9vbBAAEggKBEJ5" + 
-          "dGUQARIJCgVTYnl0ZRACEggKBENoYXIQAxILCgdEZWNpbWFsEAQSCgoGRG91" + 
-          "YmxlEAUSCQoFRmxvYXQQBhIHCgNJbnQQBxIICgRVaW50EAgSCAoETG9uZxAJ" + 
-          "EgkKBVVsb25nEAoSCgoGT2JqZWN0EAsSCQoFU2hvcnQQDBIKCgZVc2hvcnQQ" + 
-          "DRIKCgZTdHJpbmcQDhIICgRWb2lkEA8i6wEKCUNvbnN0cmFpbhJGCgRLaW5k" + 
-          "GAEgAigOMjguTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5Db25z" + 
-          "dHJhaW4uQ29uc3RyYWluS2luZBJACg9Db25zdHJhaW5FbnRpdHkYAiABKAsy" + 
-          "Jy5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVmLkVudGl0eSJUCg1D" + 
-          "b25zdHJhaW5LaW5kEggKBE5vbmUQABIKCgZFbnRpdHkQARILCgdJc0NsYXNz" + 
-          "EAISDAoISXNTdHJ1Y3QQAxISCg5IYXNDb25zdHJ1Y3RvchAEIigKEkluZm9y" + 
-          "bWF0aW9uUmVxdWVzdBISCgpBc3NlbWJsaWVzGAEgAygJItYEChNJbmZvcm1h" + 
-          "dGlvblJlc3BvbnNlEjYKBVR5cGVzGAEgAygLMicuTGFuZG1hbi5SYXNjYWwu" + 
-          "Q0xSSW5mby5Qcm90b2J1Zi5FbnRpdHkSOAoHTWV0aG9kcxgCIAMoCzInLkxh" + 
-          "bmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5EjcKBkZpZWxk" + 
-          "cxgDIAMoCzInLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50" + 
-          "aXR5EjsKClByb3BlcnRpZXMYBCADKAsyJy5MYW5kbWFuLlJhc2NhbC5DTFJJ" + 
-          "bmZvLlByb3RvYnVmLkVudGl0eRJEChBUeXBlc0luaGVyaXRhbmNlGAogAygL" + 
-          "MiouTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5FbnRpdHlSZWwS" + 
-          "RQoRVHlwZXNJbXBsZW1lbnRpbmcYCyADKAsyKi5MYW5kbWFuLlJhc2NhbC5D" + 
-          "TFJJbmZvLlByb3RvYnVmLkVudGl0eVJlbBI/CgtNZXRob2RDYWxscxgUIAMo" + 
-          "CzIqLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5UmVs" + 
-          "Ej8KCU1vZGlmaWVycxgeIAMoCzIsLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8u" + 
-          "UHJvdG9idWYuTW9kaWZpZXJSZWwSSAoRR2VuZXJpY0NvbnN0cmFpbnMYHyAD" + 
-          "KAsyLS5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVmLkNvbnN0cmFp" + 
-          "blJlbCpaCghNb2RpZmllchIKCgZQdWJsaWMQABINCglQcm90ZWN0ZWQQARIM" + 
-          "CghJbnRlcm5hbBACEgsKB1ByaXZhdGUQAxIKCgZTdGF0aWMQBBIMCghBYnN0" + 
-          "cmFjdBAFQjVIAcI+MAofTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1" + 
-          "ZhINQ0xSSW5mb1Byb3Rvcw==");
+          "dWYuRW50aXR5EjYKBUl0ZW1zGAogAygLMicuTGFuZG1hbi5SYXNjYWwuQ0xS" + 
+          "SW5mby5Qcm90b2J1Zi5FbnRpdHki5wIKBklkS2luZBINCglOYW1lc3BhY2UQ" + 
+          "ABIJCgVDbGFzcxABEhAKDEdlbmVyaWNDbGFzcxACEg0KCUludGVyZmFjZRAD" + 
+          "EhQKEEdlbmVyaWNJbnRlcmZhY2UQBBIPCgtFbnVtZXJhdGlvbhAFEhIKDkFu" + 
+          "b255bW91c0NsYXNzEAYSEAoMRGlzcGxheUNsYXNzEAcSCgoGTWV0aG9kEAoS" + 
+          "DwoLQ29uc3RydWN0b3IQCxINCglGaW5hbGl6ZXIQDBIPCgtJbml0aWFsaXpl" + 
+          "chANEgkKBUZpZWxkEBQSDAoIUHJvcGVydHkQFRIJCgVFdmVudBAWEg0KCVBh" + 
+          "cmFtZXRlchAXEgwKCFZhcmlhYmxlEBgSEAoMRW51bUNvbnN0YW50EBkSDQoJ" + 
+          "UHJpbWl0aXZlEB4SCQoFQXJyYXkQHxIRCg1UeXBlUGFyYW1ldGVyECgSCgoG" + 
+          "VW5rb3duECkSDAoIV2lsZGNhcmQQKiK9AQoNUHJpbWl0aXZlVHlwZRIICgRC" + 
+          "b29sEAASCAoEQnl0ZRABEgkKBVNieXRlEAISCAoEQ2hhchADEgsKB0RlY2lt" + 
+          "YWwQBBIKCgZEb3VibGUQBRIJCgVGbG9hdBAGEgcKA0ludBAHEggKBFVpbnQQ" + 
+          "CBIICgRMb25nEAkSCQoFVWxvbmcQChIKCgZPYmplY3QQCxIJCgVTaG9ydBAM" + 
+          "EgoKBlVzaG9ydBANEgoKBlN0cmluZxAOEggKBFZvaWQQDyLrAQoJQ29uc3Ry" + 
+          "YWluEkYKBEtpbmQYASACKA4yOC5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlBy" + 
+          "b3RvYnVmLkNvbnN0cmFpbi5Db25zdHJhaW5LaW5kEkAKD0NvbnN0cmFpbkVu" + 
+          "dGl0eRgCIAEoCzInLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYu" + 
+          "RW50aXR5IlQKDUNvbnN0cmFpbktpbmQSCAoETm9uZRAAEgoKBkVudGl0eRAB" + 
+          "EgsKB0lzQ2xhc3MQAhIMCghJc1N0cnVjdBADEhIKDkhhc0NvbnN0cnVjdG9y" + 
+          "EAQiKAoSSW5mb3JtYXRpb25SZXF1ZXN0EhIKCkFzc2VtYmxpZXMYASADKAki" + 
+          "1gQKE0luZm9ybWF0aW9uUmVzcG9uc2USNgoFVHlwZXMYASADKAsyJy5MYW5k" + 
+          "bWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVmLkVudGl0eRI4CgdNZXRob2Rz" + 
+          "GAIgAygLMicuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5FbnRp" + 
+          "dHkSNwoGRmllbGRzGAMgAygLMicuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Q" + 
+          "cm90b2J1Zi5FbnRpdHkSOwoKUHJvcGVydGllcxgEIAMoCzInLkxhbmRtYW4u" + 
+          "UmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5EkQKEFR5cGVzSW5oZXJp" + 
+          "dGFuY2UYCiADKAsyKi5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVm" + 
+          "LkVudGl0eVJlbBJFChFUeXBlc0ltcGxlbWVudGluZxgLIAMoCzIqLkxhbmRt" + 
+          "YW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5UmVsEj8KC01ldGhv" + 
+          "ZENhbGxzGBQgAygLMiouTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1" + 
+          "Zi5FbnRpdHlSZWwSPwoJTW9kaWZpZXJzGB4gAygLMiwuTGFuZG1hbi5SYXNj" + 
+          "YWwuQ0xSSW5mby5Qcm90b2J1Zi5Nb2RpZmllclJlbBJIChFHZW5lcmljQ29u" + 
+          "c3RyYWlucxgfIAMoCzItLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9i" + 
+          "dWYuQ29uc3RyYWluUmVsKloKCE1vZGlmaWVyEgoKBlB1YmxpYxAAEg0KCVBy" + 
+          "b3RlY3RlZBABEgwKCEludGVybmFsEAISCwoHUHJpdmF0ZRADEgoKBlN0YXRp" + 
+          "YxAEEgwKCEFic3RyYWN0EAVCNUgBwj4wCh9MYW5kbWFuLlJhc2NhbC5DTFJJ" + 
+          "bmZvLlByb3RvYnVmEg1DTFJJbmZvUHJvdG9z");
       pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
         descriptor = root;
         internal__static_Landman_Rascal_CLRInfo_Protobuf_EntityRel__Descriptor = Descriptor.MessageTypes[0];
@@ -117,7 +118,7 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         internal__static_Landman_Rascal_CLRInfo_Protobuf_Id__Descriptor = Descriptor.MessageTypes[4];
         internal__static_Landman_Rascal_CLRInfo_Protobuf_Id__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.Id, global::Landman.Rascal.CLRInfo.Protobuf.Id.Builder>(internal__static_Landman_Rascal_CLRInfo_Protobuf_Id__Descriptor,
-                new string[] { "Kind", "Name", "Params", "ReturnType", "Setter", "Getter", "Id_", "PrimitiveType", "ElementType", });
+                new string[] { "Kind", "Name", "Params", "ReturnType", "Setter", "Getter", "Id_", "PrimitiveType", "ElementType", "Items", });
         internal__static_Landman_Rascal_CLRInfo_Protobuf_Constrain__Descriptor = Descriptor.MessageTypes[5];
         internal__static_Landman_Rascal_CLRInfo_Protobuf_Constrain__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.Constrain, global::Landman.Rascal.CLRInfo.Protobuf.Constrain.Builder>(internal__static_Landman_Rascal_CLRInfo_Protobuf_Constrain__Descriptor,
@@ -1465,6 +1466,18 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       get { return elementType_; }
     }
     
+    public const int ItemsFieldNumber = 10;
+    private pbc::PopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.Entity> items_ = new pbc::PopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.Entity>();
+    public scg::IList<global::Landman.Rascal.CLRInfo.Protobuf.Entity> ItemsList {
+      get { return items_; }
+    }
+    public int ItemsCount {
+      get { return items_.Count; }
+    }
+    public global::Landman.Rascal.CLRInfo.Protobuf.Entity GetItems(int index) {
+      return items_[index];
+    }
+    
     public override bool IsInitialized {
       get {
         if (!hasKind) return false;
@@ -1482,6 +1495,9 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         }
         if (HasElementType) {
           if (!ElementType.IsInitialized) return false;
+        }
+        foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in ItemsList) {
+          if (!element.IsInitialized) return false;
         }
         return true;
       }
@@ -1515,6 +1531,9 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       }
       if (HasElementType) {
         output.WriteMessage(9, ElementType);
+      }
+      foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in ItemsList) {
+        output.WriteMessage(10, element);
       }
       UnknownFields.WriteTo(output);
     }
@@ -1552,6 +1571,9 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         }
         if (HasElementType) {
           size += pb::CodedOutputStream.ComputeMessageSize(9, ElementType);
+        }
+        foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in ItemsList) {
+          size += pb::CodedOutputStream.ComputeMessageSize(10, element);
         }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
@@ -1630,6 +1652,7 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
           throw new global::System.InvalidOperationException("build() has already been called on this Builder");
         }
         result.params_.MakeReadOnly();
+        result.items_.MakeReadOnly();
         Id returnMe = result;
         result = null;
         return returnMe;
@@ -1672,6 +1695,9 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         }
         if (other.HasElementType) {
           MergeElementType(other.ElementType);
+        }
+        if (other.items_.Count != 0) {
+          base.AddRange(other.items_, result.items_);
         }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
@@ -1777,6 +1803,12 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
               }
               input.ReadMessage(subBuilder, extensionRegistry);
               ElementType = subBuilder.BuildPartial();
+              break;
+            }
+            case 82: {
+              global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder subBuilder = global::Landman.Rascal.CLRInfo.Protobuf.Entity.CreateBuilder();
+              input.ReadMessage(subBuilder, extensionRegistry);
+              AddItems(subBuilder.BuildPartial());
               break;
             }
           }
@@ -2036,6 +2068,44 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       public Builder ClearElementType() {
         result.hasElementType = false;
         result.elementType_ = global::Landman.Rascal.CLRInfo.Protobuf.Entity.DefaultInstance;
+        return this;
+      }
+      
+      public pbc::IPopsicleList<global::Landman.Rascal.CLRInfo.Protobuf.Entity> ItemsList {
+        get { return result.items_; }
+      }
+      public int ItemsCount {
+        get { return result.ItemsCount; }
+      }
+      public global::Landman.Rascal.CLRInfo.Protobuf.Entity GetItems(int index) {
+        return result.GetItems(index);
+      }
+      public Builder SetItems(int index, global::Landman.Rascal.CLRInfo.Protobuf.Entity value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        result.items_[index] = value;
+        return this;
+      }
+      public Builder SetItems(int index, global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        result.items_[index] = builderForValue.Build();
+        return this;
+      }
+      public Builder AddItems(global::Landman.Rascal.CLRInfo.Protobuf.Entity value) {
+        pb::ThrowHelper.ThrowIfNull(value, "value");
+        result.items_.Add(value);
+        return this;
+      }
+      public Builder AddItems(global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder builderForValue) {
+        pb::ThrowHelper.ThrowIfNull(builderForValue, "builderForValue");
+        result.items_.Add(builderForValue.Build());
+        return this;
+      }
+      public Builder AddRangeItems(scg::IEnumerable<global::Landman.Rascal.CLRInfo.Protobuf.Entity> values) {
+        base.AddRange(values, result.items_);
+        return this;
+      }
+      public Builder ClearItems() {
+        result.items_.Clear();
         return this;
       }
     }

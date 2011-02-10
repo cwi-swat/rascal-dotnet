@@ -144,7 +144,7 @@ public class CLRInfoRascalBridge {
 	public CLRInfoRascalBridge(IValueFactory vf) {
 	}
 
-	public static IValue readCLRInfo(IList assemblyNames) {
+	public static IValue readCLRInfo(IList assemblyNames) throws Exception {
 		try {
 			ArrayList<String> actualAssemblies = new ArrayList<String>();
 			IListWriter locs = VF.listWriter(TF.sourceLocationType());
@@ -199,7 +199,8 @@ public class CLRInfoRascalBridge {
 			return result;
 		} catch (Exception ex) {
 			System.err.print(ex.toString());
-			return null;
+			throw ex;
+			//return null;
 		}
 		finally {
 			valueStore.clear();
@@ -355,7 +356,7 @@ public class CLRInfoRascalBridge {
 		return targetType.make(VF, VF.string(currentId.getName()), generateEntityList(currentId.getParamsList()));
 	}
 
-	public static void main(String[] args) throws UnknownHostException, IOException {
+	public static void main(String[] args) throws Exception {
 		//IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
 		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/MiscUtil.dll")));
 		//IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
