@@ -92,23 +92,23 @@ public class CLRInfoRascalBridge {
 
 		clazz = TF.constructor(store, idDataType, "class", TF.stringType(), "name");
 		genericClazz = TF.constructor(store, idDataType, "class", 
-				TF.stringType(), "name", TF.listType(entity), "params");
+				TF.stringType(), "name", TF.listType(entityDataType), "params");
 		interfaze = TF.constructor(store, idDataType, "interface", TF.stringType(), "name");
 		genericInterfaze = TF.constructor(store, idDataType, "interface", 
-				TF.stringType(), "name", TF.listType(entity), "params");
+				TF.stringType(), "name", TF.listType(entityDataType), "params");
 		anonymousClass = TF.constructor(store, idDataType, "anonymousClass", TF.integerType(), "nr");
 		displayClass = TF.constructor(store, idDataType, "displayClass", TF.integerType(), "nr");
 
 		typeParameter = TF.constructor(store, idDataType, "typeParameter", TF.stringType(), "name");
-		enumz = TF.constructor(store, idDataType, "enum", TF.stringType(), "name", TF.listType(entity), "items");
-		arrayz = TF.constructor(store, idDataType, "array", entity, "elementType");
+		enumz = TF.constructor(store, idDataType, "enum", TF.stringType(), "name", TF.listType(entityDataType), "items");
+		arrayz = TF.constructor(store, idDataType, "array", entityDataType, "elementType");
 		enumConstant = TF.constructor(store, idDataType, "enumConstant", TF.stringType(), "name", TF.integerType(), "id");
-		property = TF.constructor(store, idDataType, "property", TF.stringType(), "name", entity, "propertyType", entity, "setter", entity, "getter");
-		field = TF.constructor(store, idDataType, "field", TF.stringType(), "name", entity, "fieldType");
+		property = TF.constructor(store, idDataType, "property", TF.stringType(), "name", entityDataType, "propertyType", entityDataType, "setter", entityDataType, "getter");
+		field = TF.constructor(store, idDataType, "field", TF.stringType(), "name", entityDataType, "fieldType");
 
 		method = TF.constructor(store, idDataType, "method", TF.stringType(), "name", 
-				TF.listType(entity), "params", entity, "returnType");
-		constructor = TF.constructor(store, idDataType, "constr", TF.listType(entity), "params");
+				TF.listType(entityDataType), "params", entityDataType, "returnType");
+		constructor = TF.constructor(store, idDataType, "constr", TF.listType(entityDataType), "params");
 
 		none = TF.constructor(store, constrainDataType, "none");
 		isClass = TF.constructor(store, constrainDataType, "isClass");
@@ -130,13 +130,13 @@ public class CLRInfoRascalBridge {
 		
 
 		file = TF.constructor(store, resourceDataType, "file", TF.sourceLocationType(), "id");
-		store.declareAnnotation(resourceDataType, "types", TF.setType(entity));
-		store.declareAnnotation(resourceDataType, "properties", TF.setType(entity));
-		store.declareAnnotation(resourceDataType, "fields", TF.setType(entity));
+		store.declareAnnotation(resourceDataType, "types", TF.setType(entityDataType));
+		store.declareAnnotation(resourceDataType, "properties", TF.setType(entityDataType));
+		store.declareAnnotation(resourceDataType, "fields", TF.setType(entityDataType));
 		store.declareAnnotation(resourceDataType, "implements", entityRel);
 		store.declareAnnotation(resourceDataType, "extends", entityRel);
 		store.declareAnnotation(resourceDataType, "calls", entityRel);		
-		store.declareAnnotation(resourceDataType, "methods", TF.setType(entity));
+		store.declareAnnotation(resourceDataType, "methods", TF.setType(entityDataType));
 		store.declareAnnotation(resourceDataType, "genericConstrains", constrainRel);
 		store.declareAnnotation(resourceDataType, "modifiers", modifierRel);
 		
@@ -369,6 +369,7 @@ public class CLRInfoRascalBridge {
 		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/Personal/Rascal CSharp/rascal-csharp/lib/ICSharpCode.NRefactory.dll")));
 		
 		System.out.print(((IConstructor) result).getAnnotation("properties"));
+		
 	}
 
 }
