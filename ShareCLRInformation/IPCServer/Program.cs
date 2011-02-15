@@ -55,6 +55,7 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 						}
 						index++;
 					}
+					Console.WriteLine("\nFinished");
 				}
 
 			}
@@ -131,14 +132,14 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			try {
 #endif
 			result.ModifiersList.AddRange(allTypes.SelectMany(t => GenerateModifierRels(t)));
-			result.ModifiersList.AddRange(allTypes.SelectMany(t => t.Fields.SelectMany(f => GenerateModifierRels(f))));
+			result.ModifiersList.AddRange(allTypes.Where(t => !t.IsEnum).SelectMany(t => t.Fields.SelectMany(f => GenerateModifierRels(f))));
 			result.ModifiersList.AddRange(allMethods.SelectMany(m => GenerateModifierRels(m)));
 #if ignorefailures
 			} catch { }
 			try {
 #endif
 			result.PropertiesList.AddRange(allTypes.SelectMany(t => t.Properties.Select(p => GenerateEntity(p))));
-			result.FieldsList.AddRange(allTypes.SelectMany(t => t.Fields.Where(f => !f.Name.StartsWith("<"))
+			result.FieldsList.AddRange(allTypes.Where(t => !t.IsEnum).SelectMany(t => t.Fields.Where(f => !f.Name.StartsWith("<"))
 				.Select(f => GenerateEntity(f))));
 #if ignorefailures
 			} catch { }
