@@ -11,7 +11,7 @@ data Id = namespace(str name)
         | interface(str name, list[Entity] params)
         | anonymousClass(int nr) // C# anonymous classes are only internal
         | displayClass(int nr) 
-        | enum(str name, list[Entity] items)
+        | enum(str name, list[Entity] items, bool flaggable)
         
         | method(str name, list[Entity] params, Entity returnType)
         | constr(list[Entity] params)

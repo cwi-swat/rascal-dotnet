@@ -438,6 +438,7 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			if (currentType.IsEnum)
 			{
 				entityId.Kind = Id.Types.IdKind.Enumeration;
+				entityId.Flaggable = currentType.CustomAttributes.Any(a => a.AttributeType.FullName == "System.FlagsAttribute");
 			}
 			else if (currentType.IsClass)
 			{

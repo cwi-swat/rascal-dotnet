@@ -100,7 +100,7 @@ public class CLRInfoRascalBridge {
 		displayClass = TF.constructor(store, idDataType, "displayClass", TF.integerType(), "nr");
 
 		typeParameter = TF.constructor(store, idDataType, "typeParameter", TF.stringType(), "name");
-		enumz = TF.constructor(store, idDataType, "enum", TF.stringType(), "name", TF.listType(entityDataType), "items");
+		enumz = TF.constructor(store, idDataType, "enum", TF.stringType(), "name", TF.listType(entityDataType), "items", TF.boolType(), "flaggable");
 		arrayz = TF.constructor(store, idDataType, "array", entityDataType, "elementType");
 		enumConstant = TF.constructor(store, idDataType, "enumConstant", TF.stringType(), "name", TF.integerType(), "id");
 		property = TF.constructor(store, idDataType, "property", TF.stringType(), "name", entityDataType, "propertyType", entityDataType, "setter", entityDataType, "getter");
@@ -271,7 +271,7 @@ public class CLRInfoRascalBridge {
 					currentEntity.add(displayClass.make(VF, currentId.getId()));
 					break;
 				case Enumeration:
-					currentEntity.add(enumz.make(VF, VF.string(currentId.getName()), generateEntityList(currentId.getItemsList())));
+					currentEntity.add(enumz.make(VF, VF.string(currentId.getName()), generateEntityList(currentId.getItemsList()), VF.bool(currentId.getFlaggable())));
 					break;
 				case TypeParameter:
 					currentEntity.add(createTypeParameter(currentId));

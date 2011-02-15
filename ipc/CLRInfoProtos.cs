@@ -49,7 +49,7 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
           "CgZFbnRpdHkYASACKAsyJy5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3Rv" + 
           "YnVmLkVudGl0eRI9CglDb25zdHJhaW4YAiACKAsyKi5MYW5kbWFuLlJhc2Nh" + 
           "bC5DTFJJbmZvLlByb3RvYnVmLkNvbnN0cmFpbiI6CgZFbnRpdHkSMAoDSWRz" + 
-          "GAEgAygLMiMuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5JZCKs" + 
+          "GAEgAygLMiMuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5JZCK/" + 
           "CAoCSWQSOAoES2luZBgBIAIoDjIqLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8u" + 
           "UHJvdG9idWYuSWQuSWRLaW5kEgwKBE5hbWUYAiABKAkSNwoGUGFyYW1zGAMg" + 
           "AygLMicuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5FbnRpdHkS" + 
@@ -61,42 +61,43 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
           "Y2FsLkNMUkluZm8uUHJvdG9idWYuSWQuUHJpbWl0aXZlVHlwZRI8CgtFbGVt" + 
           "ZW50VHlwZRgJIAEoCzInLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9i" + 
           "dWYuRW50aXR5EjYKBUl0ZW1zGAogAygLMicuTGFuZG1hbi5SYXNjYWwuQ0xS" + 
-          "SW5mby5Qcm90b2J1Zi5FbnRpdHki5wIKBklkS2luZBINCglOYW1lc3BhY2UQ" + 
-          "ABIJCgVDbGFzcxABEhAKDEdlbmVyaWNDbGFzcxACEg0KCUludGVyZmFjZRAD" + 
-          "EhQKEEdlbmVyaWNJbnRlcmZhY2UQBBIPCgtFbnVtZXJhdGlvbhAFEhIKDkFu" + 
-          "b255bW91c0NsYXNzEAYSEAoMRGlzcGxheUNsYXNzEAcSCgoGTWV0aG9kEAoS" + 
-          "DwoLQ29uc3RydWN0b3IQCxINCglGaW5hbGl6ZXIQDBIPCgtJbml0aWFsaXpl" + 
-          "chANEgkKBUZpZWxkEBQSDAoIUHJvcGVydHkQFRIJCgVFdmVudBAWEg0KCVBh" + 
-          "cmFtZXRlchAXEgwKCFZhcmlhYmxlEBgSEAoMRW51bUNvbnN0YW50EBkSDQoJ" + 
-          "UHJpbWl0aXZlEB4SCQoFQXJyYXkQHxIRCg1UeXBlUGFyYW1ldGVyECgSCgoG" + 
-          "VW5rb3duECkSDAoIV2lsZGNhcmQQKiK9AQoNUHJpbWl0aXZlVHlwZRIICgRC" + 
-          "b29sEAASCAoEQnl0ZRABEgkKBVNieXRlEAISCAoEQ2hhchADEgsKB0RlY2lt" + 
-          "YWwQBBIKCgZEb3VibGUQBRIJCgVGbG9hdBAGEgcKA0ludBAHEggKBFVpbnQQ" + 
-          "CBIICgRMb25nEAkSCQoFVWxvbmcQChIKCgZPYmplY3QQCxIJCgVTaG9ydBAM" + 
-          "EgoKBlVzaG9ydBANEgoKBlN0cmluZxAOEggKBFZvaWQQDyLrAQoJQ29uc3Ry" + 
-          "YWluEkYKBEtpbmQYASACKA4yOC5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlBy" + 
-          "b3RvYnVmLkNvbnN0cmFpbi5Db25zdHJhaW5LaW5kEkAKD0NvbnN0cmFpbkVu" + 
-          "dGl0eRgCIAEoCzInLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYu" + 
-          "RW50aXR5IlQKDUNvbnN0cmFpbktpbmQSCAoETm9uZRAAEgoKBkVudGl0eRAB" + 
-          "EgsKB0lzQ2xhc3MQAhIMCghJc1N0cnVjdBADEhIKDkhhc0NvbnN0cnVjdG9y" + 
-          "EAQiKAoSSW5mb3JtYXRpb25SZXF1ZXN0EhIKCkFzc2VtYmxpZXMYASADKAki" + 
-          "1gQKE0luZm9ybWF0aW9uUmVzcG9uc2USNgoFVHlwZXMYASADKAsyJy5MYW5k" + 
-          "bWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVmLkVudGl0eRI4CgdNZXRob2Rz" + 
-          "GAIgAygLMicuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5FbnRp" + 
-          "dHkSNwoGRmllbGRzGAMgAygLMicuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Q" + 
-          "cm90b2J1Zi5FbnRpdHkSOwoKUHJvcGVydGllcxgEIAMoCzInLkxhbmRtYW4u" + 
-          "UmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5EkQKEFR5cGVzSW5oZXJp" + 
-          "dGFuY2UYCiADKAsyKi5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVm" + 
-          "LkVudGl0eVJlbBJFChFUeXBlc0ltcGxlbWVudGluZxgLIAMoCzIqLkxhbmRt" + 
-          "YW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5UmVsEj8KC01ldGhv" + 
-          "ZENhbGxzGBQgAygLMiouTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1" + 
-          "Zi5FbnRpdHlSZWwSPwoJTW9kaWZpZXJzGB4gAygLMiwuTGFuZG1hbi5SYXNj" + 
-          "YWwuQ0xSSW5mby5Qcm90b2J1Zi5Nb2RpZmllclJlbBJIChFHZW5lcmljQ29u" + 
-          "c3RyYWlucxgfIAMoCzItLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9i" + 
-          "dWYuQ29uc3RyYWluUmVsKloKCE1vZGlmaWVyEgoKBlB1YmxpYxAAEg0KCVBy" + 
-          "b3RlY3RlZBABEgwKCEludGVybmFsEAISCwoHUHJpdmF0ZRADEgoKBlN0YXRp" + 
-          "YxAEEgwKCEFic3RyYWN0EAVCNUgBwj4wCh9MYW5kbWFuLlJhc2NhbC5DTFJJ" + 
-          "bmZvLlByb3RvYnVmEg1DTFJJbmZvUHJvdG9z");
+          "SW5mby5Qcm90b2J1Zi5FbnRpdHkSEQoJRmxhZ2dhYmxlGAsgASgIIucCCgZJ" + 
+          "ZEtpbmQSDQoJTmFtZXNwYWNlEAASCQoFQ2xhc3MQARIQCgxHZW5lcmljQ2xh" + 
+          "c3MQAhINCglJbnRlcmZhY2UQAxIUChBHZW5lcmljSW50ZXJmYWNlEAQSDwoL" + 
+          "RW51bWVyYXRpb24QBRISCg5Bbm9ueW1vdXNDbGFzcxAGEhAKDERpc3BsYXlD" + 
+          "bGFzcxAHEgoKBk1ldGhvZBAKEg8KC0NvbnN0cnVjdG9yEAsSDQoJRmluYWxp" + 
+          "emVyEAwSDwoLSW5pdGlhbGl6ZXIQDRIJCgVGaWVsZBAUEgwKCFByb3BlcnR5" + 
+          "EBUSCQoFRXZlbnQQFhINCglQYXJhbWV0ZXIQFxIMCghWYXJpYWJsZRAYEhAK" + 
+          "DEVudW1Db25zdGFudBAZEg0KCVByaW1pdGl2ZRAeEgkKBUFycmF5EB8SEQoN" + 
+          "VHlwZVBhcmFtZXRlchAoEgoKBlVua293bhApEgwKCFdpbGRjYXJkECoivQEK" + 
+          "DVByaW1pdGl2ZVR5cGUSCAoEQm9vbBAAEggKBEJ5dGUQARIJCgVTYnl0ZRAC" + 
+          "EggKBENoYXIQAxILCgdEZWNpbWFsEAQSCgoGRG91YmxlEAUSCQoFRmxvYXQQ" + 
+          "BhIHCgNJbnQQBxIICgRVaW50EAgSCAoETG9uZxAJEgkKBVVsb25nEAoSCgoG" + 
+          "T2JqZWN0EAsSCQoFU2hvcnQQDBIKCgZVc2hvcnQQDRIKCgZTdHJpbmcQDhII" + 
+          "CgRWb2lkEA8i6wEKCUNvbnN0cmFpbhJGCgRLaW5kGAEgAigOMjguTGFuZG1h" + 
+          "bi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1Zi5Db25zdHJhaW4uQ29uc3RyYWlu" + 
+          "S2luZBJACg9Db25zdHJhaW5FbnRpdHkYAiABKAsyJy5MYW5kbWFuLlJhc2Nh" + 
+          "bC5DTFJJbmZvLlByb3RvYnVmLkVudGl0eSJUCg1Db25zdHJhaW5LaW5kEggK" + 
+          "BE5vbmUQABIKCgZFbnRpdHkQARILCgdJc0NsYXNzEAISDAoISXNTdHJ1Y3QQ" + 
+          "AxISCg5IYXNDb25zdHJ1Y3RvchAEIigKEkluZm9ybWF0aW9uUmVxdWVzdBIS" + 
+          "CgpBc3NlbWJsaWVzGAEgAygJItYEChNJbmZvcm1hdGlvblJlc3BvbnNlEjYK" + 
+          "BVR5cGVzGAEgAygLMicuTGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1" + 
+          "Zi5FbnRpdHkSOAoHTWV0aG9kcxgCIAMoCzInLkxhbmRtYW4uUmFzY2FsLkNM" + 
+          "UkluZm8uUHJvdG9idWYuRW50aXR5EjcKBkZpZWxkcxgDIAMoCzInLkxhbmRt" + 
+          "YW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5EjsKClByb3BlcnRp" + 
+          "ZXMYBCADKAsyJy5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVmLkVu" + 
+          "dGl0eRJEChBUeXBlc0luaGVyaXRhbmNlGAogAygLMiouTGFuZG1hbi5SYXNj" + 
+          "YWwuQ0xSSW5mby5Qcm90b2J1Zi5FbnRpdHlSZWwSRQoRVHlwZXNJbXBsZW1l" + 
+          "bnRpbmcYCyADKAsyKi5MYW5kbWFuLlJhc2NhbC5DTFJJbmZvLlByb3RvYnVm" + 
+          "LkVudGl0eVJlbBI/CgtNZXRob2RDYWxscxgUIAMoCzIqLkxhbmRtYW4uUmFz" + 
+          "Y2FsLkNMUkluZm8uUHJvdG9idWYuRW50aXR5UmVsEj8KCU1vZGlmaWVycxge" + 
+          "IAMoCzIsLkxhbmRtYW4uUmFzY2FsLkNMUkluZm8uUHJvdG9idWYuTW9kaWZp" + 
+          "ZXJSZWwSSAoRR2VuZXJpY0NvbnN0cmFpbnMYHyADKAsyLS5MYW5kbWFuLlJh" + 
+          "c2NhbC5DTFJJbmZvLlByb3RvYnVmLkNvbnN0cmFpblJlbCpaCghNb2RpZmll" + 
+          "chIKCgZQdWJsaWMQABINCglQcm90ZWN0ZWQQARIMCghJbnRlcm5hbBACEgsK" + 
+          "B1ByaXZhdGUQAxIKCgZTdGF0aWMQBBIMCghBYnN0cmFjdBAFQjVIAcI+MAof" + 
+          "TGFuZG1hbi5SYXNjYWwuQ0xSSW5mby5Qcm90b2J1ZhINQ0xSSW5mb1Byb3Rv" + 
+          "cw==");
       pbd::FileDescriptor.InternalDescriptorAssigner assigner = delegate(pbd::FileDescriptor root) {
         descriptor = root;
         internal__static_Landman_Rascal_CLRInfo_Protobuf_EntityRel__Descriptor = Descriptor.MessageTypes[0];
@@ -118,7 +119,7 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         internal__static_Landman_Rascal_CLRInfo_Protobuf_Id__Descriptor = Descriptor.MessageTypes[4];
         internal__static_Landman_Rascal_CLRInfo_Protobuf_Id__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.Id, global::Landman.Rascal.CLRInfo.Protobuf.Id.Builder>(internal__static_Landman_Rascal_CLRInfo_Protobuf_Id__Descriptor,
-                new string[] { "Kind", "Name", "Params", "ReturnType", "Setter", "Getter", "Id_", "PrimitiveType", "ElementType", "Items", });
+                new string[] { "Kind", "Name", "Params", "ReturnType", "Setter", "Getter", "Id_", "PrimitiveType", "ElementType", "Items", "Flaggable", });
         internal__static_Landman_Rascal_CLRInfo_Protobuf_Constrain__Descriptor = Descriptor.MessageTypes[5];
         internal__static_Landman_Rascal_CLRInfo_Protobuf_Constrain__FieldAccessorTable = 
             new pb::FieldAccess.FieldAccessorTable<global::Landman.Rascal.CLRInfo.Protobuf.Constrain, global::Landman.Rascal.CLRInfo.Protobuf.Constrain.Builder>(internal__static_Landman_Rascal_CLRInfo_Protobuf_Constrain__Descriptor,
@@ -1478,6 +1479,16 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       return items_[index];
     }
     
+    public const int FlaggableFieldNumber = 11;
+    private bool hasFlaggable;
+    private bool flaggable_ = false;
+    public bool HasFlaggable {
+      get { return hasFlaggable; }
+    }
+    public bool Flaggable {
+      get { return flaggable_; }
+    }
+    
     public override bool IsInitialized {
       get {
         if (!hasKind) return false;
@@ -1535,6 +1546,9 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in ItemsList) {
         output.WriteMessage(10, element);
       }
+      if (HasFlaggable) {
+        output.WriteBool(11, Flaggable);
+      }
       UnknownFields.WriteTo(output);
     }
     
@@ -1574,6 +1588,9 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         }
         foreach (global::Landman.Rascal.CLRInfo.Protobuf.Entity element in ItemsList) {
           size += pb::CodedOutputStream.ComputeMessageSize(10, element);
+        }
+        if (HasFlaggable) {
+          size += pb::CodedOutputStream.ComputeBoolSize(11, Flaggable);
         }
         size += UnknownFields.SerializedSize;
         memoizedSerializedSize = size;
@@ -1699,6 +1716,9 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
         if (other.items_.Count != 0) {
           base.AddRange(other.items_, result.items_);
         }
+        if (other.HasFlaggable) {
+          Flaggable = other.Flaggable;
+        }
         this.MergeUnknownFields(other.UnknownFields);
         return this;
       }
@@ -1809,6 +1829,10 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
               global::Landman.Rascal.CLRInfo.Protobuf.Entity.Builder subBuilder = global::Landman.Rascal.CLRInfo.Protobuf.Entity.CreateBuilder();
               input.ReadMessage(subBuilder, extensionRegistry);
               AddItems(subBuilder.BuildPartial());
+              break;
+            }
+            case 88: {
+              Flaggable = input.ReadBool();
               break;
             }
           }
@@ -2106,6 +2130,24 @@ namespace Landman.Rascal.CLRInfo.Protobuf {
       }
       public Builder ClearItems() {
         result.items_.Clear();
+        return this;
+      }
+      
+      public bool HasFlaggable {
+        get { return result.HasFlaggable; }
+      }
+      public bool Flaggable {
+        get { return result.Flaggable; }
+        set { SetFlaggable(value); }
+      }
+      public Builder SetFlaggable(bool value) {
+        result.hasFlaggable = true;
+        result.flaggable_ = value;
+        return this;
+      }
+      public Builder ClearFlaggable() {
+        result.hasFlaggable = false;
+        result.flaggable_ = false;
         return this;
       }
     }

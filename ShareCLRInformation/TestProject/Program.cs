@@ -45,7 +45,13 @@ namespace TestProject
 		FirstValue = 0,
 		SecondValue = 4
 	}
-
+	
+	[Flags]
+	public enum TestFlagEnum {
+		FirstValue = 0,
+		SecondValue = 4
+	}
+	
 	internal class CON<T> where T : StringComparer, new()
 	{
 		protected string TestCall(COMP<T> firstParam, CL<List<String>> secondParam)
