@@ -35,16 +35,25 @@ namespace Landman.Rascal.CLRInfo.IPCServer
 			while (true)
 			{
 				var newClient = server.AcceptTcpClient();
-				Console.WriteLine("Got new client: " + newClient.Client.ToString());
+				Console.WriteLine("Got new client.");
 				using (var clientStream = newClient.GetStream())
 				{
 					var request = InformationRequest.ParseDelimitedFrom(clientStream);
+					Console.WriteLine("Starting collection types for:");
+					Console.WriteLine(String.Join(Environment.NewLine, request.AssembliesList.Select(a => "  " + a).ToArray()));
 					var typesPartitioned = PartitionTypes(request.AssembliesList, 25);
 					SendAmountOfPartitionMessage((uint)typesPartitioned.Count, clientStream);
+					double index = 1;
 					foreach (var typedGroup in typesPartitioned)
 					{
 						var groupResponse = GenerateResponseFor(typedGroup);
 						groupResponse.WriteDelimitedTo(clientStream);
+						Console.Write("{0}% ", Math.Round(100 * (index / typesPartitioned.Count), 2));
+						if (index % 10 == 0)
+						{
+							Console.WriteLine();
+						}
+						index++;
 					}
 				}
 

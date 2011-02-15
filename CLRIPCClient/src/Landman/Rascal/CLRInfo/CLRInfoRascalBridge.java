@@ -364,12 +364,12 @@ public class CLRInfoRascalBridge {
 	public static void main(String[] args) throws Exception {
 		//IValue result = readCLRInfo(VF.list(VF.string("/usr/lib/mono/2.0/System.dll")));
 		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/MiscUtil.dll")));
-		IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
+		//IValue result = readCLRInfo(VF.list(VF.string("../../../TestProject/bin/Debug/TestProject.exe")));
 		//IValue result = readCLRInfo(VF.list(VF.string("c:/Windows/Microsoft.NET/Framework/v2.0.50727/System.dll")));
-		//IValue result = readCLRInfo(VF.list(VF.string("/home/davy/Personal/Rascal CSharp/rascal-csharp/lib/ICSharpCode.NRefactory.dll")));
+		IValue result = readCLRInfo(VF.list(VF.string("/home/davy/Personal/rascal-projects/rascal-csharp/lib/ICSharpCode.NRefactory.dll")));
 		
-		System.out.print(((IConstructor) result).getAnnotation("properties"));
-		
+		//System.out.print(((IConstructor) result).getAnnotation("properties"));
+		System.out.print("done");
 	}
 
 }
